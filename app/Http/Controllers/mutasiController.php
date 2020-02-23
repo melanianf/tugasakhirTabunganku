@@ -13,14 +13,22 @@ class mutasiController extends Controller
     {
         if ($request->ajax()) {
             $data = DB::table('transaksi')->get();
-            return Datatables::of($data)->make(true);
+            return Datatables::of($data)
+                ->addColumn('nama', function($data) {
+                    //fungsi persotoyan
+                    $temp = DB::table('siswa')->where('nis', $data->nis)->first();
+                    $nama_siswa = $temp->nama_lengkap;
+                    return $nama_siswa;
+                })->make(true);
         }
 
         $html = $htmlBuilder
             ->addColumn(['data' => 'kode_transaksi', 'name' => 'kode_transaksi', 'title' => 'Kode Transaksi'])
             ->addColumn(['data' => 'nis', 'name' => 'nis', 'title' => 'NIS'])
+            ->addColumn(['data' => 'nama', 'name' => 'nama', 'title' => 'Nama Siswa'])
             ->addColumn(['data' => 'jenis_tabungan', 'name' => 'jenis_tabungan', 'title' => 'Jenis Tabungan'])
             ->addColumn(['data' => 'created_at', 'name' => 'created_at', 'title' => 'Tanggal Transaksi', 'orderable' => 'false', 'searchable' => false]);
+            
 
         return view('mutasi.index')->with(compact('html'));
     }
