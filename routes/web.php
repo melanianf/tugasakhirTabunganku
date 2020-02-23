@@ -116,4 +116,16 @@ Route::group(['midlleware' => 'web'], function() {
             'uses' => 'BooksController@importExcel'
         ]);
     });
+
+    // Walikelas
+    Route::group(['prefix' => 'walikelas', 'middleware' => ['auth', 'role:walikelas']], function() {
+        Route::resource('tariktunai', 'TarikTunai');
+
+        // Daftar peminjaman
+        Route::get('mutasi', [
+            'as' => 'mutasi.index',
+            'uses' => 'mutasiController@index'
+        ]);
+
+    });
 });
