@@ -127,5 +127,11 @@ Route::group(['midlleware' => 'web'], function() {
             'uses' => 'mutasiController@index'
         ]);
 
+        // Setor
+        Route::get('tariktunai', [
+            'as' => 'tariktunai.index',
+            'uses' => 'TransaksiController@transaksiTarik'
+        ]);
+
     });
 });

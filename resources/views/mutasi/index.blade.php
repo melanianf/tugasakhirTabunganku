@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('dashboard')
-   Peminjaman
-   <small>Daftar Peminjaman</small>
+   MUTASI
+   <small>Daftar Transaksi</small>
 @endsection
 
 @section('breadcrumb')
    <li><a href="{{ url('home') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-   <li class="active">Peminjaman</li>
+   <li class="active">Mutasi</li>
 @endsection
 
 @section('content')
@@ -15,7 +15,7 @@
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Peminjaman</h3>
+                    <h2 class="box-title">Mutasi</h2>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">

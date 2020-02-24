@@ -136,7 +136,7 @@
                             @else
                                 <a href="#">
                                     <i class="fa fa-circle text-success"></i>
-                                    Member
+                                    Wali Kelas
                                 </a>
                             @endif
                         </div>

@@ -19,7 +19,8 @@ class mutasiController extends Controller
                     $temp = DB::table('siswa')->where('nis', $data->nis)->first();
                     $nama_siswa = $temp->nama_lengkap;
                     return $nama_siswa;
-                })->make(true);
+                })
+                ->make(true);
         }
 
         $html = $htmlBuilder
@@ -27,9 +28,10 @@ class mutasiController extends Controller
             ->addColumn(['data' => 'nis', 'name' => 'nis', 'title' => 'NIS'])
             ->addColumn(['data' => 'nama', 'name' => 'nama', 'title' => 'Nama Siswa'])
             ->addColumn(['data' => 'jenis_tabungan', 'name' => 'jenis_tabungan', 'title' => 'Jenis Tabungan'])
+            ->addColumn(['data' => 'jenis_transaksi', 'name' => 'jenis_transaksi', 'title' => 'Jenis Transaksi'])
+            ->addColumn(['data' => 'nominal', 'name' => 'nominal', 'title' => 'Nominal'])
             ->addColumn(['data' => 'created_at', 'name' => 'created_at', 'title' => 'Tanggal Transaksi', 'orderable' => 'false', 'searchable' => false]);
             
-
         return view('mutasi.index')->with(compact('html'));
     }
 }
