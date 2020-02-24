@@ -186,6 +186,13 @@
                             @endrole
 
                             @role('admin')
+                            <li class="treeview {!! Request::is('admin/siswa') ? 'active' : '' !!}">
+                                <a href="{{ route('siswa.index') }}">
+                                    <i class="fa fa-book"></i>
+                                    <span>Siswa</span>
+                                </a>
+                            </li>
+
                             <li class="treeview {!! Request::is('admin/authors*') ? 'active' : '' !!}">
                                 <a href="{{ route('authors.index') }}">
                                     <i class="fa fa-user-circle"></i>

@@ -43,7 +43,6 @@ class BooksController extends Controller
                     ]);
             })->make(true);
         }
-
         $html = $htmlBuilder
             ->addColumn(['data' => 'title', 'name' => 'title', 'title' => 'Judul'])
             ->addColumn(['data' => 'amount', 'name' => 'amount', 'title' => 'Jumlah'])
