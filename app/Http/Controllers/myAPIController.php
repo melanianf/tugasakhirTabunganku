@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\DB;
 
 class myAPIController extends Controller
 {
-	public function siswaLogin($username,$password)
+	public function siswaLogin(Request $request)
     {
+		$username = $request->username;
+		$password = $request->password;
         $datasiswa = siswa::where('nama_pengguna', $username)->where('katasandi', $password)->first();
         if ($datasiswa!=null) {
             $tokensiswa = new siswa; //Instansiasi Objek biar bisa panggil static function
@@ -21,7 +23,21 @@ class myAPIController extends Controller
 			$res['message'] = "Login Failed!";
 			return response($res);
 		}
-    }
+	}
+	//public function siswaLogin($username,$password)
+    //{
+    //    $datasiswa = siswa::where('nama_pengguna', $username)->where('katasandi', $password)->first();
+    //    if ($datasiswa!=null) {
+    //        $tokensiswa = new siswa; //Instansiasi Objek biar bisa panggil static function
+	//		$datasiswa->token = $tokensiswa->GenerateToken();
+	//		$datasiswa->save();
+	//		return response($datasiswa);
+    //    }
+	//	else{
+	//		$res['message'] = "Login Failed!";
+	//		return response($res);
+	//	}
+    //}
 
 	public function siswaLogout($username)
     {
@@ -44,7 +60,7 @@ class myAPIController extends Controller
 		}
     }
 
-	public function getTabunganReguler($nis,$token){
+	public function getTransaksi($nis,$token){
 		$datasiswa = siswa::where('nis', $nis)->where('token', $token)->first();
 		if ($datasiswa!=null) {
 			$data = DB::table('transaksi')->where('nis',$nis)->where('jenis_tabungan', $jenistabungan)->get();

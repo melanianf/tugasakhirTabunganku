@@ -12,12 +12,15 @@
 */
 
 Route::get('registrasi/name/{name}/email/{email}/password/{password}', 'Auth\RegisterController@createNewUser');
-Route::get('api/login/{username}/pass/{password}', 'myAPIController@siswaLogin');
+//Route::get('api/login/{username}/pass/{password}', 'myAPIController@siswaLogin');
 Route::get('api/logout/{username}', 'myAPIController@siswaLogout');
 Route::get('api/{jenistabungan}/nis/{nis}/t/{token}', 'myAPIController@getTransaksi');
 Route::get('api/detail/{jenistabungan}/nis/{nis}/t/{token}', 'myAPIController@getDetailTabungan');
 
+Route::post('api/login', 'myAPIController@siswaLogin');
+
 Route::group(['midlleware' => 'web'], function() {
+    //Route::post('api/login', 'myAPIController@siswaLogin');
 
     // Auth
     Auth::routes();
@@ -82,6 +85,7 @@ Route::group(['midlleware' => 'web'], function() {
     // Admin
     Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], function() {
         Route::resource('siswa', 'SiswaController');
+        Route::resource('walikelas', 'WalikelasController');
         Route::resource('authors', 'AuthorsController');
         Route::resource('books', 'BooksController');
         Route::resource('members', 'MembersController', [

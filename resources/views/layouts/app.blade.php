@@ -193,6 +193,13 @@
                                 </a>
                             </li>
 
+                            <li class="treeview {!! Request::is('admin/walikelas') ? 'active' : '' !!}">
+                                <a href="{{ route('walikelas.index') }}">
+                                    <i class="fa fa-book"></i>
+                                    <span>Wali Kelas</span>
+                                </a>
+                            </li>
+
                             <li class="treeview {!! Request::is('admin/authors*') ? 'active' : '' !!}">
                                 <a href="{{ route('authors.index') }}">
                                     <i class="fa fa-user-circle"></i>
@@ -354,10 +361,10 @@
 <footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
-        Larabuk
+        TabunganKu
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; {!! date("Y") !!} <a href="#">Larabuk</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; {!! date("Y") !!} <a href="#">TabunganKu</a>.</strong> All rights reserved.
 </footer>
 
 <!-- ./wrapper -->
