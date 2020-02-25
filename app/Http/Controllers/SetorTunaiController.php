@@ -8,7 +8,7 @@ use Yajra\Datatables\Html\Builder;
 use Yajra\Datatables\Datatables;
 use Session;
 
-class TarikTunai extends Controller
+class SetorTunaiController extends Controller
 {
     //
     public function index(Request $request, Builder $htmlBuilder)
@@ -32,7 +32,7 @@ class TarikTunai extends Controller
         ->addColumn(['data' => 'name', 'name' => 'name', 'title' => 'Nama'])
         ->addColumn(['data' => 'action', 'name' => 'action', 'title' => '', 'orderable' => false, 'searchable' => false]);
 
-        return view('tariktunai.index')->with(compact('html'));
+        return view('setortunai.index')->with(compact('html'));
     }
 
 }

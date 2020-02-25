@@ -127,6 +127,10 @@ Route::group(['midlleware' => 'web'], function() {
     // Walikelas
     Route::group(['prefix' => 'walikelas', 'middleware' => ['auth', 'role:walikelas']], function() {
         Route::resource('tariktunai', 'TarikTunai');
+        Route::resource('laporan', 'LaporanController');
+        Route::resource('setortunai', 'SetorTunaiController');
+        Route::resource('siswa_view', 'SiswaViewController');
+        Route::resource('jenistabungan_view', 'JenisTabunganViewController');
 
         // Daftar peminjaman
         Route::get('mutasi', [

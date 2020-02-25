@@ -244,15 +244,15 @@
                             @endrole
 
                             @role('walikelas')
-                            <li class="treeview {!! Request::is('admin/authors*') ? 'active' : '' !!}">
-                                <a href="{{ route('authors.index') }}">
+                            <li class="treeview {!! Request::is('admin/siswa_view*') ? 'active' : '' !!}">
+                                <a href="{{ route('siswa_view.index') }}">
                                     <i class="fa fa-user-circle"></i>
                                     <span>Siswa</span>
                                 </a>
                             </li>
 
-                            <li class="treeview {!! Request::is('admin/*books*') ? 'active' : '' !!}">
-                                <a href="{{ route('books.index') }}">
+                            <li class="treeview {!! Request::is('admin/jenistabungan_view') ? 'active' : '' !!}">
+                                <a href="{{ route('jenistabungan_view.index') }}">
                                     <i class="fa fa-book"></i>
                                     <span>Jenis Tabungan</span>
                                 </a>
@@ -265,8 +265,8 @@
                                 </a>
                             </li>
 
-                            <li class="treeview {!! Request::is('admin/statistics') ? 'active' : '' !!}">
-                                <a href="{{ route('statistics.index') }}">
+                            <li class="treeview {!! Request::is('walikelas/setortunai') ? 'active' : '' !!}">
+                                <a href="{{ route('setortunai.index') }}">
                                     <i class="fa fa-bars"></i>
                                     <span>Setor Tunai</span>
                                 </a>
@@ -286,8 +286,8 @@
                                 </a>
                             </li>
 
-                            <li class="treeview {!! Request::is('admin/statistics') ? 'active' : '' !!}">
-                                <a href="{{ route('statistics.index') }}">
+                            <li class="treeview {!! Request::is('walikelas/laporan') ? 'active' : '' !!}">
+                                <a href="{{ route('laporan.index') }}">
                                     <i class="fa fa-bars"></i>
                                     <span>Laporan</span>
                                 </a>
