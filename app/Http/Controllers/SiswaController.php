@@ -52,7 +52,7 @@ class SiswaController extends Controller
         return view('books.index')->with(compact('html'));
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
         $data = DB::table('siswa')->where('id',$id)->delete();
 
