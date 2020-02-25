@@ -200,6 +200,20 @@
                                 </a>
                             </li>
 
+                            <li class="treeview {!! Request::is('admin/kelas') ? 'active' : '' !!}">
+                                <a href="{{ route('kelas.index') }}">
+                                    <i class="fa fa-book"></i>
+                                    <span>Kelas</span>
+                                </a>
+                            </li>
+
+                            <li class="treeview {!! Request::is('admin/jenistabungan') ? 'active' : '' !!}">
+                                <a href="{{ route('jenistabungan.index') }}">
+                                    <i class="fa fa-book"></i>
+                                    <span>Jenis Tabungan</span>
+                                </a>
+                            </li>
+
                             <li class="treeview {!! Request::is('admin/authors*') ? 'active' : '' !!}">
                                 <a href="{{ route('authors.index') }}">
                                     <i class="fa fa-user-circle"></i>

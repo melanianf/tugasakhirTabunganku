@@ -86,6 +86,8 @@ Route::group(['midlleware' => 'web'], function() {
     Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], function() {
         Route::resource('siswa', 'SiswaController');
         Route::resource('walikelas', 'WalikelasController');
+        Route::resource('jenistabungan', 'JenisTabunganController');
+        Route::resource('kelas', 'KelasController');
         Route::resource('authors', 'AuthorsController');
         Route::resource('books', 'BooksController');
         Route::resource('members', 'MembersController', [
