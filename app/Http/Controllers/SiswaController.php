@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\siswa;
 use App\Book;
 use App\Author;
 use App\BorrowLog;
@@ -27,13 +28,15 @@ class SiswaController extends Controller
     {
         if ($request->ajax()) {
             $data = DB::table('siswa')->get();
-            return Datatables::of($data)->make(true);
-            //      ->addColumn('action', function($data) {
-            //          return view('datatable._action', [
-            //              'form_url'          => route('books.destroy', $data->id),
-            //              'confirm_message'    => 'Yakin mau menghapus? '. $data->nama_lengkap . '?'
-            //          ]);
-            // })->make(true);
+            return Datatables::of($data)//->make(true);
+                 ->addColumn('action', function($data) {
+                    return view('datatable._action', [
+                        'model'             => $data,
+                        'form_url'          => route('siswa.destroy', $data->id),
+                        'edit_url'          => route('siswa.edit', $data->id),
+                        'confirm_message'    => 'Yakin mau menghapus ' . $data->nama_lengkap . '?'
+                    ]);
+            })->make(true);
         }
 
         $html = $htmlBuilder
@@ -46,13 +49,16 @@ class SiswaController extends Controller
             ->addColumn(['data' => 'email', 'name' => 'email', 'title' => 'Email'])
             ->addColumn(['data' => 'nama_pengguna', 'name' => 'nama_pengguna', 'title' => 'Nama Pengguna'])
             ->addColumn(['data' => 'katasandi', 'name' => 'katasandi', 'title' => 'Kata Sandi'])
-            ->addColumn(['data' => 'aktif', 'name' => 'aktif', 'title' => 'Aktif']);
-            //->addColumn(['data' => 'action', 'name' => 'action', 'title' => 'Action', 'orderable' => false, 'searchable' => false]);
+            ->addColumn(['data' => 'aktif', 'name' => 'aktif', 'title' => 'Aktif'])
+            ->addColumn(['data' => 'action', 'name' => 'action', 'title' => 'Action', 'orderable' => false, 'searchable' => false]);
 
         return view('siswa.index')->with(compact('html'));
     }
-
-    public function destroy($id)
+    public function create()
+    {
+        return view('siswa.create');
+    }
+    public function destroy(Request $request, $id)
     {
         $data = DB::table('siswa')->where('id',$id)->delete();
 
@@ -67,4 +73,60 @@ class SiswaController extends Controller
 
         return redirect()->route('siswa.index');
     }
+
+    public function edit($id)
+    {
+        $data = DB::table('siswa')->where('id',$id)->first();
+        return view('siswa.edit')->with(compact('data'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = DB::table('siswa')->where('id',$id)->first();
+        $updated = DB::table('siswa')->where('id',$id)->update([
+            'nis' => $request->nim,
+            'nama_lengkap' => $request->nama_lengkap,
+            'kelas' => $request->kelas,
+            'angkatan' => $request->angkatan,
+            'ttl' => $request->ttl,
+            'telp_ortu' => $request->telp_ortu,
+            'email' => $request->email,
+            'nama_pengguna' => $request->nama_pengguna,
+            'katasandi' => $request->katasandi,
+            'aktif' => $request->aktif
+        ]);
+        
+        Session::flash("flash_notification", [
+            "level" => "success",
+            "icon" => "fa fa-check",
+            "message" => "Berhasil menyimpan! "//.$data->nama_lengkap
+        ]);
+        return redirect()->route('siswa.index');
+    }    
+
+    public function store(Request $request)
+    {
+        $created = siswa::create([
+            'nis' => $request->nis,
+            'nama_lengkap' => $request->nama_lengkap,
+            'kelas' => $request->kelas,
+            'angkatan' => $request->angkatan,
+            'ttl' => $request->ttl,
+            'telp_ortu' => $request->telp_ortu,
+            'email' => $request->email,
+            'nama_pengguna' => $request->nama_pengguna,
+            'katasandi' => $request->katasandi,
+            'aktif' => $request->aktif,
+            'token' => null,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+        
+        Session::flash("flash_notification", [
+            "level" => "success",
+            "icon" => "fa fa-check",
+            "message" => "Berhasil Menambahkan Data! "//.$data->nama_lengkap
+        ]);
+        return redirect()->route('siswa.index');
+    }    
 }
