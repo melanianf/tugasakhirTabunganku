@@ -15,10 +15,10 @@
     <div class="row">
         <div class="col-md-12">
             <div class="callout callout-success">
-              <h4>Selamat Datang di Larabuk</h4>
+              <h4>Selamat Datang di TabunganKu</h4>
 
-              <p>Sistem Informasi Perpustkaan Laravel 5.4 & AdminLTE</p>
-              <p>Dibuat oleh <a href="https://www.facebook.com/ryanrahman26" target="_blank">Ryan Rahman Setiawan</a>, lihat respository <a href="#" target="_blank">GitHub</a></p>
+              <p>Sistem Informasi Tabungan Siswa Laravel 5.4 & AdminLTE</p>
+              <p>Dibuat oleh <a href="https://www.instagram.com/melania.fitria" target="_blank">Melania Nur Fitriansa</a>, lihat respository <a href="#" target="_blank">GitHub</a></p>
             </div>
         </div>
     </div>
@@ -30,8 +30,8 @@
                 <span class="info-box-icon bg-aqua"><i class="ion ion-ios-person-outline"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">Total Penulis</span>
-                    <span class="info-box-number">{{ $author->count() }}<small> </small></span>
+                    <span class="info-box-text">Total Siswa</span>
+                    <span class="info-box-number">{{ $siswa->count() }}<small> </small></span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -43,8 +43,8 @@
                 <span class="info-box-icon bg-red"><i class="fa fa-book"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">Total Buku</span>
-                    <span class="info-box-number">{{ $book->count() }}</span>
+                    <span class="info-box-text">Total Wali Kelas</span>
+                    <span class="info-box-number">{{ $walikelas->count() }}</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -60,8 +60,8 @@
                 <span class="info-box-icon bg-green"><i class="ion ion-ios-people-outline"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">Total Member</span>
-                    <span class="info-box-number">{{ $member->count() }}</span>
+                    <span class="info-box-text">Total Kelas</span>
+                    <span class="info-box-number">{{ $kelas->count() }}</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -73,8 +73,8 @@
                 <span class="info-box-icon bg-yellow"><i class="ion ion-stats-bars"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">Total Peminjaman</span>
-                    <span class="info-box-number">{{ $borrow->count() }}</span>
+                    <span class="info-box-text">Total Jenis Tabungan</span>
+                    <span class="info-box-number">{{ $jenistabungan->count() }}</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>

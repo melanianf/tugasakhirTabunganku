@@ -3,36 +3,59 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Author;
+use App\Tabungan;
+use App\Transaksi;
 use Yajra\Datatables\Html\Builder;
 use Yajra\Datatables\Datatables;
 use Session;
 
 class TarikTunai extends Controller
 {
-    //
-    public function index(Request $request, Builder $htmlBuilder)
+    public function create()
     {
-        if ($request->ajax()) {
+        return view('tariktunai.create');
+    }
 
-            $authors = Author::select(['id', 'name']);
+    public function store(Request $request)
+    {
+        //Menyimpan Data pada Transaksi
+        //Menyiapkan Kode Transaksi
+        //Ex : T1REG123
+        //Tarik = T + Count() Transaksi where request->nis + 3 char pertama kapital jenis tabungan + NIS
 
-            return Datatables::of($authors)
-            ->addColumn('action', function($author) {
-                return view('datatable._action', [
-                    'model' => $author,
-                    'form_url' => route('authors.destroy', $author->id),
-                    'edit_url' => route('authors.edit', $author->id),
-                    'confirm_message' => 'Yakin mau menghapus ' . $author->name . '?'
-                ]);
-            })->make(true);
+        //Cek apakah saldo yang akan diambil mencukupi
+        $tabsiswa = Tabungan::where('nis', $request->nis)->where('jenis_tabungan', $request->jenis_tabungan)->first();
+        if ($tabsiswa->saldo >= $request->nominal){
+            //Menambahkan Saldo pada Tabungan
+            $updated = Tabungan::where('nis', $request->nis)->where('jenis_tabungan', $request->jenis_tabungan)->update([
+                'saldo' => $tabsiswa->saldo - $request->nominal,
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+
+            //Menambahkan Detail Transaksi
+            $transaksi = Transaksi::create([
+                'nis' => $request->nis,
+                'kode_transaksi' => "T4REG123",
+                'jenis_tabungan' => $request->jenis_tabungan,
+                'jenis_transaksi' => "tarik",
+                'nominal' => "$request->nominal",
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+
+            Session::flash("flash_notification", [
+                "level" => "success",
+                "icon" => "fa fa-check",
+                "message" => "Transaksi Berhasil!"
+            ]);
+        }else{
+            Session::flash("flash_notification", [
+                "level" => "success",
+                "icon" => "fa fa-check",
+                "message" => "Transaksi Gagal!"
+            ]);
         }
-
-        $html = $htmlBuilder
-        ->addColumn(['data' => 'name', 'name' => 'name', 'title' => 'Nama'])
-        ->addColumn(['data' => 'action', 'name' => 'action', 'title' => '', 'orderable' => false, 'searchable' => false]);
-
-        return view('tariktunai.index')->with(compact('html'));
+        return redirect()->route('mutasi.index');
     }
 
 }

@@ -131,6 +131,7 @@ Route::group(['midlleware' => 'web'], function() {
         Route::resource('setortunai', 'SetorTunaiController');
         Route::resource('siswa_view', 'SiswaViewController');
         Route::resource('jenistabungan_view', 'JenisTabunganViewController');
+        Route::resource('tabungan', 'TabunganController');
 
         // Daftar peminjaman
         Route::get('mutasi', [

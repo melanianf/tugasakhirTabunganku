@@ -2,13 +2,13 @@
 
 @section('dashboard')
     Profile
-    <small>Edit Profile</small>
+    <small>Penarikan Tunai</small>
 @endsection
 
 @section('breadcrumb')
     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="{{ url('/settings/profile/') }}">Profile</a></li>
-    <li class="active">Edit Profile</li>
+    <li><a href="{{ url('/settings/profile/') }}">Penarikan Tunai</a></li>
+    <li class="active">Formulir</li>
 @endsection
 
 @section('content')

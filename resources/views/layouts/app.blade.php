@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>TabunganKu</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
@@ -244,14 +244,14 @@
                             @endrole
 
                             @role('walikelas')
-                            <li class="treeview {!! Request::is('admin/siswa_view*') ? 'active' : '' !!}">
+                            <li class="treeview {!! Request::is('walikelas/siswa_view*') ? 'active' : '' !!}">
                                 <a href="{{ route('siswa_view.index') }}">
                                     <i class="fa fa-user-circle"></i>
                                     <span>Siswa</span>
                                 </a>
                             </li>
 
-                            <li class="treeview {!! Request::is('admin/jenistabungan_view') ? 'active' : '' !!}">
+                            <li class="treeview {!! Request::is('walikelas/jenistabungan_view') ? 'active' : '' !!}">
                                 <a href="{{ route('jenistabungan_view.index') }}">
                                     <i class="fa fa-book"></i>
                                     <span>Jenis Tabungan</span>
@@ -259,15 +259,15 @@
                             </li>
 
                             <li class="treeview {!! Request::is('walikelas/tariktunai') ? 'active' : '' !!}">
-                                <a href="{{ route('tariktunai.index') }}">
-                                    <i class="fa fa-user"></i>
+                                <a href="{{ route('tariktunai.create') }}">
+                                    <i class="fa fa-money"></i>
                                     <span>Tarik Tunai</span>
                                 </a>
                             </li>
 
                             <li class="treeview {!! Request::is('walikelas/setortunai') ? 'active' : '' !!}">
-                                <a href="{{ route('setortunai.index') }}">
-                                    <i class="fa fa-bars"></i>
+                                <a href="{{ route('setortunai.create') }}">
+                                    <i class="fa fa-money"></i>
                                     <span>Setor Tunai</span>
                                 </a>
                             </li>
@@ -279,16 +279,16 @@
                                 </a>
                             </li>
 
-                            <li class="treeview {!! Request::is('admin/statistics') ? 'active' : '' !!}">
-                                <a href="{{ route('statistics.index') }}">
-                                    <i class="fa fa-bars"></i>
+                            <li class="treeview {!! Request::is('walikelas/tabungan') ? 'active' : '' !!}">
+                                <a href="{{ route('tabungan.index') }}">
+                                    <i class="fa fa-book"></i>
                                     <span>Tabungan</span>
                                 </a>
                             </li>
 
                             <li class="treeview {!! Request::is('walikelas/laporan') ? 'active' : '' !!}">
                                 <a href="{{ route('laporan.index') }}">
-                                    <i class="fa fa-bars"></i>
+                                    <i class="fa fa-file-text"></i>
                                     <span>Laporan</span>
                                 </a>
                             </li>

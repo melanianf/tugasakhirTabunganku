@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Laratrust\LaratrustFacade as Laratrust;
 use App\Http\Requests;
 use App\Book;
+use App\siswa;
+use App\Walikelas;
+use App\Kelas;
+use App\JenisTabungan;
 use App\Author;
 use App\Role;
 use App\BorrowLog;
@@ -49,7 +53,15 @@ class HomeController extends Controller
 
             $borrow = BorrowLog::all();
 
-            return view('dashboard.admin', compact('author', 'book', 'member', 'borrow'));
+            $siswa = siswa::all();
+
+            $walikelas = Walikelas::all();
+
+            $kelas = Kelas::all();
+
+            $jenistabungan = JenisTabungan::all();
+
+            return view('dashboard.admin', compact('siswa', 'walikelas', 'kelas', 'jenistabungan'));
         }
 
         return view('login');
