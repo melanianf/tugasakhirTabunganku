@@ -1,39 +1,52 @@
 <div class="box-body">
-    <div class="form-group has-feedback{{ $errors->has('title') ? ' has-error' : '' }}">
-        {!! Form::label('title', 'Judul') !!}
+    <div class="form-group has-feedback{{ $errors->has('nip') ? ' has-error' : '' }}">
+        {!! Form::label('nip', 'NIP') !!}
 
-        {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Judul buku']) !!}
-        {!! $errors->first('title', '<p class="help-block">:message</p>') !!}
+        {!! Form::text('nip', null, ['class' => 'form-control', 'placeholder' => 'NIP']) !!}
+        {!! $errors->first('nip', '<p class="help-block">:message</p>') !!}
     </div>
+    <div class="form-group has-feedback{{ $errors->has('nama_lengkap') ? ' has-error' : '' }}">
+        {!! Form::label('nama_lengkap', 'Nama Lengkap') !!}
 
-    <div class="form-group has-feedback{{ $errors->has('author_id') ? ' has-error' : '' }}">
-        {!! Form::label('author_id', 'Penulis') !!}
-
-        {!! Form::select('author_id', App\Author::pluck('name','id')->all(), null, ['class' => 'form-control js-select2']) !!}
-        {!! $errors->first('author_id', '<p class="help-block">:message</p>') !!}
+        {!! Form::text('nama_lengkap', null, ['class' => 'form-control', 'placeholder' => 'Nama Lengkap']) !!}
+        {!! $errors->first('nama_lengkap', '<p class="help-block">:message</p>') !!}
     </div>
+    <div class="form-group has-feedback{{ $errors->has('alamat') ? ' has-error' : '' }}">
+        {!! Form::label('alamat', 'Alamat') !!}
 
-    <div class="form-group has-feedback{{ $errors->has('amount') ? ' has-error' : '' }}">
-        {!! Form::label('amount', 'Jumlah') !!}
-
-        {!! Form::number('amount', null, ['class' => 'form-control', 'min' => 1, 'placeholder' => 'Jumlah buku']) !!}
-        {!! $errors->first('amount', '<p class="help-block">:message</p>') !!}
-        @if (isset($book))
-            <p class="help-block">{{ $book->borrowed }} buku sedang dipinjam</p>
-        @endif
+        {!! Form::text('alamat', null, ['class' => 'form-control', 'placeholder' => 'Alamat']) !!}
+        {!! $errors->first('alamat', '<p class="help-block">:message</p>') !!}
     </div>
+    <div class="form-group has-feedback{{ $errors->has('telepon') ? ' has-error' : '' }}">
+        {!! Form::label('telepon', 'Telepon') !!}
 
-    <div class="form-group has-feedback{{ $errors->has('cover') ? ' has-error' : '' }}">
-        {!! Form::label('cover', 'Cover') !!}
-
-        {!! Form::file('cover') !!}
-        @if (isset($book) && $book->cover)
-            <p> {!! Html::image(asset('img/'.$book->cover), null, ['class' => 'img-rounded img-responsive']) !!} </p>
-        @endif
-        <p class="help-block">Size file (JPG/JPEG/PNG/GIF) maks 1MB</p>
-        {!! $errors->first('cover', '<p class="help-block">:message</p>') !!}
+        {!! Form::text('telepon', null, ['class' => 'form-control', 'placeholder' => 'Telepon']) !!}
+        {!! $errors->first('telepon', '<p class="help-block">:message</p>') !!}
     </div>
-</div>
+    <div class="form-group has-feedback{{ $errors->has('email') ? ' has-error' : '' }}">
+        {!! Form::label('email', 'Email') !!}
+
+        {!! Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Email']) !!}
+        {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
+    </div>
+    <div class="form-group has-feedback{{ $errors->has('nama_pengguna') ? ' has-error' : '' }}">
+        {!! Form::label('nama_pengguna', 'Nama Pengguna') !!}
+
+        {!! Form::text('nama_pengguna', null, ['class' => 'form-control', 'placeholder' => 'Nama Pengguna']) !!}
+        {!! $errors->first('nama_pengguna', '<p class="help-block">:message</p>') !!}
+    </div>
+    <div class="form-group has-feedback{{ $errors->has('katasandi') ? ' has-error' : '' }}">
+        {!! Form::label('katasandi', 'Kata Sandi') !!}
+
+        {!! Form::text('katasandi', null, ['class' => 'form-control', 'placeholder' => 'Kata Sandi']) !!}
+        {!! $errors->first('katasandi', '<p class="help-block">:message</p>') !!}
+    </div>
+    <div class="form-group has-feedback{{ $errors->has('aktif') ? ' has-error' : '' }}">
+        {!! Form::label('aktif', 'Aktif') !!}
+
+        {!! Form::text('aktif', null, ['class' => 'form-control', 'placeholder' => 'Aktif']) !!}
+        {!! $errors->first('aktif', '<p class="help-block">:message</p>') !!}
+    </div>
 <!-- /.box-body -->
 
 <div class="box-footer">

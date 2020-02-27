@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('dashboard')
-    Buku
-    <small>Tambah Buku</small>
+    Kelas
+    <small>Tambah Kelas</small>
 @endsection
 
 @section('breadcrumb')
     <li><a href="{{ url('home') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="{{ url('/admin/books') }}">Buku</a></li>
-    <li class="active">Tambah Buku</li>
+    <li><a href="{{ url('/admin/kelas') }}">Kelas</a></li>
+    <li class="active">Tambah Kelas</li>
 @endsection
 
 @section('content')
@@ -20,8 +20,8 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                {!! Form::open(['url' => route('books.store'), 'method' => 'post', 'files' => 'true']) !!}
-                    @include('books._form')
+                {!! Form::open(['url' => route('kelas.store'), 'method' => 'post']) !!}
+                    @include('kelas._form')
                 {!! Form::close() !!}
             </div>
             <!-- /.box -->

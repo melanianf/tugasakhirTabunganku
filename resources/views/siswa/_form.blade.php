@@ -6,13 +6,7 @@
         {!! $errors->first('nis', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group has-feedback{{ $errors->has('nama_lengkap') ? ' has-error' : '' }}">
-        {!! Form::label('nama_lengkap', 'NamaLengkap') !!}
-
-        {!! Form::text('nama_lengkap', null, ['class' => 'form-control', 'placeholder' => 'Nama Lengkap']) !!}
-        {!! $errors->first('nama_lengkap', '<p class="help-block">:message</p>') !!}
-    </div>
-    <div class="form-group has-feedback{{ $errors->has('nama_lengkap') ? ' has-error' : '' }}">
-        {!! Form::label('nama_lengkap', 'NamaLengkap') !!}
+        {!! Form::label('nama_lengkap', 'Nama Lengkap') !!}
 
         {!! Form::text('nama_lengkap', null, ['class' => 'form-control', 'placeholder' => 'Nama Lengkap']) !!}
         {!! $errors->first('nama_lengkap', '<p class="help-block">:message</p>') !!}
@@ -36,7 +30,7 @@
         {!! $errors->first('ttl', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group has-feedback{{ $errors->has('telp_ortu') ? ' has-error' : '' }}">
-        {!! Form::label('telp_ortu', 'TelpOrtu') !!}
+        {!! Form::label('telp_ortu', 'Telp Ortu') !!}
 
         {!! Form::text('telp_ortu', null, ['class' => 'form-control', 'placeholder' => 'Telp Ortu']) !!}
         {!! $errors->first('telp_ortu', '<p class="help-block">:message</p>') !!}
@@ -48,13 +42,13 @@
         {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group has-feedback{{ $errors->has('nama_pengguna') ? ' has-error' : '' }}">
-        {!! Form::label('nama_pengguna', 'NamaPengguna') !!}
+        {!! Form::label('nama_pengguna', 'Nama Pengguna') !!}
 
         {!! Form::text('nama_pengguna', null, ['class' => 'form-control', 'placeholder' => 'Nama Pengguna']) !!}
         {!! $errors->first('nama_pengguna', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group has-feedback{{ $errors->has('katasandi') ? ' has-error' : '' }}">
-        {!! Form::label('katasandi', 'KataSandi') !!}
+        {!! Form::label('katasandi', 'Kata Sandi') !!}
 
         {!! Form::text('katasandi', null, ['class' => 'form-control', 'placeholder' => 'Kata Sandi']) !!}
         {!! $errors->first('katasandi', '<p class="help-block">:message</p>') !!}

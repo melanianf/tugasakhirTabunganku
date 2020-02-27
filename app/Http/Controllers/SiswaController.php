@@ -84,7 +84,7 @@ class SiswaController extends Controller
     {
         $data = DB::table('siswa')->where('id',$id)->first();
         $updated = DB::table('siswa')->where('id',$id)->update([
-            'nis' => $request->nim,
+            'nis' => $request->nis,
             'nama_lengkap' => $request->nama_lengkap,
             'kelas' => $request->kelas,
             'angkatan' => $request->angkatan,
@@ -93,7 +93,8 @@ class SiswaController extends Controller
             'email' => $request->email,
             'nama_pengguna' => $request->nama_pengguna,
             'katasandi' => $request->katasandi,
-            'aktif' => $request->aktif
+            'aktif' => $request->aktif,
+            'updated_at' => date('Y-m-d H:i:s')
         ]);
         
         Session::flash("flash_notification", [
