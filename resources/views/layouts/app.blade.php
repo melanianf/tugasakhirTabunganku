@@ -188,14 +188,14 @@
                             @role('admin')
                             <li class="treeview {!! Request::is('admin/siswa') ? 'active' : '' !!}">
                                 <a href="{{ route('siswa.index') }}">
-                                    <i class="fa fa-book"></i>
+                                    <i class="fa fa-user-circle"></i>
                                     <span>Siswa</span>
                                 </a>
                             </li>
 
                             <li class="treeview {!! Request::is('admin/walikelas') ? 'active' : '' !!}">
                                 <a href="{{ route('walikelas.index') }}">
-                                    <i class="fa fa-book"></i>
+                                    <i class="fa fa-user-circle"></i>
                                     <span>Wali Kelas</span>
                                 </a>
                             </li>
@@ -214,7 +214,7 @@
                                 </a>
                             </li>
 
-                            <li class="treeview {!! Request::is('admin/authors*') ? 'active' : '' !!}">
+                            <!-- <li class="treeview {!! Request::is('admin/authors*') ? 'active' : '' !!}">
                                 <a href="{{ route('authors.index') }}">
                                     <i class="fa fa-user-circle"></i>
                                     <span>Penulis</span>
@@ -240,7 +240,7 @@
                                     <i class="fa fa-bars"></i>
                                     <span>Statistics</span>
                                 </a>
-                            </li>
+                            </li> -->
                             @endrole
 
                             @role('walikelas')
@@ -318,7 +318,7 @@
                             <li class="treeview {!! Request::is('logout') ? 'active' : '' !!}">
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="fa fa-sign-out"></i>
-                                    <span>Sign out</span>
+                                    <span>Keluar</span>
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

@@ -21,7 +21,7 @@
                 <div class="box-body">
                     <table class="table table-bordered">
                         <tr>
-                            <td class="text-muted">Name</td>
+                            <td class="text-muted">Nama</td>
                             <td>{{ auth()->user()->name }}</td>
                         </tr>
                         <tr>

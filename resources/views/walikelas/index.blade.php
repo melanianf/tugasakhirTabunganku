@@ -21,7 +21,7 @@
                 <div class="box-body">
                     <p>
                         <a class="btn btn-success" href="{{ url('/admin/walikelas/create') }}">Tambah</a>
-                        <a class="btn btn-warning" href="{{ url('/admin/export/books') }}">Export</a>
+                        <!-- <a class="btn btn-warning" href="{{ url('/admin/export/books') }}">Export</a> -->
                     </p>
                     {!! $html->table(['class' => 'table table-bordered table-striped']) !!}
                 </div>
