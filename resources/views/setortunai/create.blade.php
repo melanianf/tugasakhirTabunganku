@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('dashboard')
-    Tarik Tunai
-    <small>Transaksi Penarikan Tunai</small>
+    Setor Tunai
+    <small>Transaksi Penyetoran Tunai</small>
 @endsection
 
 @section('breadcrumb')
     <li><a href="{{ url('home') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="{{ url('/admin/siswa') }}">Siswa</a></li>
-    <li class="active">Tambah Siswa</li>
+    <li><a href="{{ url('/admin/siswa') }}">Setor Tunai</a></li>
+    <li class="active">Setor Tunai</li>
 @endsection
 
 @section('content')
@@ -16,7 +16,7 @@
         <div class="col-md-6">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Formulir Penarikan Tunai</h3>
+                    <h3 class="box-title">Formulir Penyetoran Tunai</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->

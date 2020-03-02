@@ -26,11 +26,11 @@
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Buku Dipinjam</h3>
+                    <h3 class="box-title">Tabungan Siswa</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    Sistem Tabungan Digital
+                    Sistem Tabungan Siswa Digital
                 </div>
                 <!-- /.box-body -->
             </div>

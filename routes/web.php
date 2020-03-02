@@ -16,7 +16,6 @@ Route::get('registrasi/name/{name}/email/{email}/password/{password}', 'Auth\Reg
 Route::get('api/logout/{username}', 'myAPIController@siswaLogout');
 Route::get('api/{jenistabungan}/nis/{nis}/t/{token}', 'myAPIController@getTransaksi');
 Route::get('api/detail/{jenistabungan}/nis/{nis}/t/{token}', 'myAPIController@getDetailTabungan');
-
 Route::post('api/login', 'myAPIController@siswaLogin');
 
 Route::group(['midlleware' => 'web'], function() {

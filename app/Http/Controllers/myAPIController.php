@@ -60,7 +60,7 @@ class myAPIController extends Controller
 		}
     }
 
-	public function getTransaksi($nis,$token){
+	public function getTransaksi($jenistabungan,$nis,$token){
 		$datasiswa = siswa::where('nis', $nis)->where('token', $token)->first();
 		if ($datasiswa!=null) {
 			$data = DB::table('transaksi')->where('nis',$nis)->where('jenis_tabungan', $jenistabungan)->get();

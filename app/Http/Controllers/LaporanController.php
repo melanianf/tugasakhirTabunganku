@@ -32,6 +32,7 @@ class LaporanController extends Controller
             ->addColumn(['data' => 'nominal', 'name' => 'nominal', 'title' => 'Nominal'])
             ->addColumn(['data' => 'created_at', 'name' => 'created_at', 'title' => 'Tanggal Transaksi', 'orderable' => 'false', 'searchable' => false]);
             
-        return view('laporan.index')->with(compact('html'));
+        //return view('laporan.index')->with(compact('html'));
+        return abort(404, 'Page not found');
     }
 }
