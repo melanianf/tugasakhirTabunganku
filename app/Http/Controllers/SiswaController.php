@@ -49,6 +49,7 @@ class SiswaController extends Controller
             ->addColumn(['data' => 'email', 'name' => 'email', 'title' => 'Email'])
             ->addColumn(['data' => 'nama_pengguna', 'name' => 'nama_pengguna', 'title' => 'Nama Pengguna'])
             ->addColumn(['data' => 'katasandi', 'name' => 'katasandi', 'title' => 'Kata Sandi'])
+            ->addColumn(['data' => 'avatar', 'name' => 'avatar', 'title' => 'Foto Profil'])
             ->addColumn(['data' => 'aktif', 'name' => 'aktif', 'title' => 'Aktif'])
             ->addColumn(['data' => 'action', 'name' => 'action', 'title' => 'Action', 'orderable' => false, 'searchable' => false]);
 
@@ -93,6 +94,7 @@ class SiswaController extends Controller
             'email' => $request->email,
             'nama_pengguna' => $request->nama_pengguna,
             'katasandi' => $request->katasandi,
+            'avatar' => $request->avatar,
             'aktif' => $request->aktif,
             'updated_at' => date('Y-m-d H:i:s')
         ]);
@@ -102,7 +104,13 @@ class SiswaController extends Controller
             "icon" => "fa fa-check",
             "message" => "Berhasil menyimpan! "//.$data->nama_lengkap
         ]);
+
+        // if ($request->hasFile('avatar')) {
+        //     $insert = mysqli_query($conn, "INSERT INTO siswa VALUES (NULL, '".$_POST["nis"]."','".$_POST["nama_lengkap"]."', '".$_POST["kelas"]."','".$_POST["angkatan"]."','".$_POST["ttl"]."','".$_POST["telp_ortu"]."','".$_POST["email"]."','".$_POST["nama_pengguna"]."', '".$_POST["katasandi"]."', '".$_POST["avatar"]."')")
+        // }
+        
         return redirect()->route('siswa.index');
+
     }    
 
     public function store(Request $request)
@@ -117,6 +125,7 @@ class SiswaController extends Controller
             'email' => $request->email,
             'nama_pengguna' => $request->nama_pengguna,
             'katasandi' => $request->katasandi,
+            'avatar' => $request->avatar,
             'aktif' => $request->aktif,
             'token' => null,
             'created_at' => date('Y-m-d H:i:s'),

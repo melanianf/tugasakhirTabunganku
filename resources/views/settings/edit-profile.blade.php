@@ -36,13 +36,13 @@
                         {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
                     </div>
 
-                    <!-- <div class="form-group has-feedback{{ $errors->has('avatar') ? ' has-error' : '' }}">
+                    <div class="form-group has-feedback{{ $errors->has('avatar') ? ' has-error' : '' }}">
                         {!! Form::label('avatar', 'Foto Profil') !!}
 
                         {!! Form::file('avatar', ['class' => 'form-control']) !!}
                         <p class="help-block">Pilih foto profil</p>
                         {!! $errors->first('avatar', '<p class="help-block">:message</p>') !!}
-                    </div> -->
+                    </div>
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
