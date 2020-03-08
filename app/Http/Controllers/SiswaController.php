@@ -49,7 +49,6 @@ class SiswaController extends Controller
             ->addColumn(['data' => 'email', 'name' => 'email', 'title' => 'Email'])
             ->addColumn(['data' => 'nama_pengguna', 'name' => 'nama_pengguna', 'title' => 'Nama Pengguna'])
             ->addColumn(['data' => 'katasandi', 'name' => 'katasandi', 'title' => 'Kata Sandi'])
-            ->addColumn(['data' => 'avatar', 'name' => 'avatar', 'title' => 'Foto Profil'])
             ->addColumn(['data' => 'aktif', 'name' => 'aktif', 'title' => 'Aktif'])
             ->addColumn(['data' => 'action', 'name' => 'action', 'title' => 'Action', 'orderable' => false, 'searchable' => false]);
 
@@ -105,9 +104,37 @@ class SiswaController extends Controller
             "message" => "Berhasil menyimpan! "//.$data->nama_lengkap
         ]);
 
-        // if ($request->hasFile('avatar')) {
-        //     $insert = mysqli_query($conn, "INSERT INTO siswa VALUES (NULL, '".$_POST["nis"]."','".$_POST["nama_lengkap"]."', '".$_POST["kelas"]."','".$_POST["angkatan"]."','".$_POST["ttl"]."','".$_POST["telp_ortu"]."','".$_POST["email"]."','".$_POST["nama_pengguna"]."', '".$_POST["katasandi"]."', '".$_POST["avatar"]."')")
-        // }
+        // Isi field cover jika ada cover yang diupload
+        if ($request->hasFile('avatar')) {
+
+            // Mengambil cover yang diupload berikut ektensinya
+            $filename = null;
+            $uploaded_avatar = $request->file('avatar');
+            $extension = $uploaded_avatar->getClientOriginalExtension();
+
+            // Membuat nama file random dengan extension
+            $filename = md5(time()) . '.' . $extension;
+
+            // Menyimpan cover ke folder public/img
+            $destinationPath = public_path() . DIRECTORY_SEPARATOR . 'img';
+            $uploaded_avatar->move($destinationPath, $filename);
+
+            // Hapus cover lama, jika ada
+            if ($data->cover) {
+                $old_cover = $data->cover;
+                $filepath = public_path() . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . $data->cover;
+
+                try {
+                    File::delete($filepath);
+                } catch (FileNotFoundException $e) {
+                    // File sudah dihapus/tidak ada
+                }
+            }
+
+            // Ganti field cover dengan cover yang baru
+            $data->cover = $filename;
+            $data->save();
+        }
         
         return redirect()->route('siswa.index');
 

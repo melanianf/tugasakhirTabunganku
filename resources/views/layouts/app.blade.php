@@ -214,7 +214,7 @@
                                 </a>
                             </li>
 
-                            <!-- <li class="treeview {!! Request::is('admin/authors*') ? 'active' : '' !!}">
+                            <li class="treeview {!! Request::is('admin/authors*') ? 'active' : '' !!}">
                                 <a href="{{ route('authors.index') }}">
                                     <i class="fa fa-user-circle"></i>
                                     <span>Penulis</span>
@@ -240,7 +240,7 @@
                                     <i class="fa fa-bars"></i>
                                     <span>Statistics</span>
                                 </a>
-                            </li> -->
+                            </li> 
                             @endrole
 
                             @role('walikelas')
