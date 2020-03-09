@@ -60,8 +60,8 @@ class myAPIController extends Controller
 		}
     }
 
-	public function getTransaksi($jenistabungan,$nis,$token){
-		$datasiswa = siswa::where('nis', $nis)->where('token', $token)->first();
+	public function getTransaksi($jenistabungan,$token){
+		$datasiswa = siswa::where('token', $token)->first();
 		if ($datasiswa!=null) {
 			$data = DB::table('transaksi')->where('nis',$nis)->where('jenis_tabungan', $jenistabungan)->get();
 			if(count($data)>0){
@@ -77,8 +77,8 @@ class myAPIController extends Controller
 		}
     }
 
-	public function getDetailTabungan($jenistabungan,$nis,$token){
-		$datasiswa = siswa::where('nis', $nis)->where('token', $token)->first();
+	public function getDetailTabungan($jenistabungan,$token){
+		$datasiswa = siswa::where('token', $token)->first();
 		if ($datasiswa!=null) {
 			//ambil status tabungan
 			$data = DB::table('jenis_tabungan')->where('nama',$jenistabungan)->get();

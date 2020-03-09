@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="{{ asset('/admin-lte/bootstrap/css/bootstrap.min.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous"> -->
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <!-- jvectormap -->
@@ -23,6 +25,7 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
         folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ asset('/admin-lte/dist/css/skins/_all-skins.min.css') }}">
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -188,21 +191,21 @@
                             @role('admin')
                             <li class="treeview {!! Request::is('admin/siswa') ? 'active' : '' !!}">
                                 <a href="{{ route('siswa.index') }}">
-                                    <i class="fa fa-user-circle"></i>
+                                    <i class="fa fa-group"></i>
                                     <span>Siswa</span>
                                 </a>
                             </li>
 
                             <li class="treeview {!! Request::is('admin/walikelas') ? 'active' : '' !!}">
                                 <a href="{{ route('walikelas.index') }}">
-                                    <i class="fa fa-user-circle"></i>
+                                    <i class="fa fa-user"></i>
                                     <span>Wali Kelas</span>
                                 </a>
                             </li>
 
                             <li class="treeview {!! Request::is('admin/kelas') ? 'active' : '' !!}">
                                 <a href="{{ route('kelas.index') }}">
-                                    <i class="fa fa-book"></i>
+                                    <i class="fa fa-window-restore"></i>
                                     <span>Kelas</span>
                                 </a>
                             </li>
@@ -235,12 +238,12 @@
                                 </a>
                             </li> -->
 
-                            <li class="treeview {!! Request::is('admin/statistics') ? 'active' : '' !!}">
+                            <!-- <li class="treeview {!! Request::is('admin/statistics') ? 'active' : '' !!}">
                                 <a href="{{ route('statistics.index') }}">
                                     <i class="fa fa-bars"></i>
                                     <span>Statistics</span>
                                 </a>
-                            </li> 
+                            </li>  -->
                             @endrole
 
                             @role('walikelas')

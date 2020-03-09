@@ -14,8 +14,8 @@
 Route::get('registrasi/name/{name}/email/{email}/password/{password}', 'Auth\RegisterController@createNewUser');
 //Route::get('api/login/{username}/pass/{password}', 'myAPIController@siswaLogin');
 Route::get('api/logout/{username}', 'myAPIController@siswaLogout');
-Route::get('api/{jenistabungan}/nis/{nis}/t/{token}', 'myAPIController@getTransaksi');
-Route::get('api/detail/{jenistabungan}/nis/{nis}/t/{token}', 'myAPIController@getDetailTabungan');
+Route::get('api/{jenistabungan}/t/{token}', 'myAPIController@getTransaksi');
+Route::get('api/detail/{jenistabungan}/t/{token}', 'myAPIController@getDetailTabungan');
 Route::post('api/login', 'myAPIController@siswaLogin');
 
 Route::group(['midlleware' => 'web'], function() {
@@ -92,7 +92,7 @@ Route::group(['midlleware' => 'web'], function() {
         Route::resource('members', 'MembersController', [
             'only' => ['index', 'show', 'destroy']
         ]);
-
+        
         // Daftar peminjaman
         Route::get('statistics', [
             'as' => 'statistics.index',
