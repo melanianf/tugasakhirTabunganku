@@ -104,7 +104,7 @@ class SiswaController extends Controller
             "message" => "Berhasil menyimpan! "//.$data->nama_lengkap
         ]);
 
-        // Isi field cover jika ada cover yang diupload
+        // Isi field cover jika ada avatar yang diupload
         if ($request->hasFile('avatar')) {
 
             // Mengambil cover yang diupload berikut ektensinya
