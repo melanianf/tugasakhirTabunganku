@@ -14,7 +14,7 @@
 Route::get('registrasi/name/{name}/email/{email}/password/{password}', 'Auth\RegisterController@createNewUser');
 //Route::get('api/login/{username}/pass/{password}', 'myAPIController@siswaLogin');
 Route::get('api/logout/{username}', 'myAPIController@siswaLogout');
-Route::get('api/{jenistabungan}/t/{token}', 'myAPIController@getTransaksi');
+Route::get('api/{jenistabungan}/t/{token}','myAPIController@getTransaksi');
 Route::get('api/detail/{jenistabungan}/t/{token}', 'myAPIController@getDetailTabungan');
 Route::post('api/login', 'myAPIController@siswaLogin');
 

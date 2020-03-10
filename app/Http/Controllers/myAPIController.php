@@ -63,7 +63,7 @@ class myAPIController extends Controller
 	public function getTransaksi($jenistabungan,$token){
 		$datasiswa = siswa::where('token', $token)->first();
 		if ($datasiswa!=null) {
-			$data = DB::table('transaksi')->where('nis',$nis)->where('jenis_tabungan', $jenistabungan)->get();
+			$data = DB::table('transaksi')->where('jenis_tabungan', $jenistabungan)->get();
 			if(count($data)>0){
 				return response($data);
 			}
@@ -99,7 +99,7 @@ class myAPIController extends Controller
 			}
 
 			//ambil total saldo tabungan 
-			$data = DB::table('tabungan')->where('nis',$nis)->where('jenis_tabungan',$jenistabungan)->get();
+			$data = DB::table('tabungan')->where('nis',$datasiswa->nis)->where('jenis_tabungan',$jenistabungan)->get();
 			if(count($data)>0){
 				foreach($data as $datasaldo){
 					$saldoTabungan=$datasaldo->saldo;
@@ -112,7 +112,7 @@ class myAPIController extends Controller
 			//ambil nama wali kelas
 			//1_ambil kelas mengunakan nis
 			//2_ambil nama wali kelas dari tabel kelas
-			$data = DB::table('siswa')->where('nis',$nis)->get();
+			$data = DB::table('siswa')->where('token', $token)->get();
 			if(count($data)>0){
 				foreach($data as $datasiswa){
 					$kelas_siswa = $datasiswa->kelas;
@@ -132,7 +132,7 @@ class myAPIController extends Controller
 			}
 
 			//ambil detail transaksi terakhir
-			$data = DB::table('transaksi')->where('nis',$nis)->get();
+			$data = DB::table('transaksi')->where('nis',$datasiswa->nis)->get();
 			if(count($data)>0){
 				foreach($data as $transaksi){
 					$nominal_trans=$transaksi->nominal;
@@ -147,7 +147,7 @@ class myAPIController extends Controller
 				$tanggal_trans="error!";
 			}
 			$res['message'] = "Success!";
-			$res['nis'] = $nis;
+			$res['nis'] = $datasiswa->nis;
 			$res['jenis_tabungan'] = $jenistabungan;
 			$res['status'] = $status_tabungan;
 			$res['deskripsi'] = $deskripsi_tabungan;
