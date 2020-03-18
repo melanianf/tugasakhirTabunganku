@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\siswa;
 use Illuminate\Support\Facades\DB;
 
+
 class myAPIController extends Controller
 {
 	public function siswaLogin(Request $request)
@@ -76,8 +77,53 @@ class myAPIController extends Controller
 			$res['message'] = "Login Needed!";
 			return response($res);
 		}
-    }
-
+	}
+	public function getSaldoAll($token){
+		$datasiswa = siswa::where('token', $token)->first();
+		if ($datasiswa!=null) {
+			$saldoSiswa = DB::table('tabungan')->where('nis', $datasiswa->nis)->get();
+			if(count($saldoSiswa)>0){
+				return response($saldoSiswa);
+			}
+			else{
+				$res['message'] = "Empty!";
+				return response($res);
+			}
+		}else{
+			$res['message'] = "Login Needed!";
+			return response($res);
+		}
+	}
+	public function getSaldo($jenistabungan, $token){
+		$datasiswa = siswa::where('token', $token)->first();
+		if ($datasiswa!=null) {
+			$saldoSiswa = DB::table('tabungan')->where('nis', $datasiswa->nis)->where('jenis_tabungan', $jenistabungan)->get();
+			if(count($saldoSiswa)>0){
+				return response($saldoSiswa);
+			}
+			else{
+				$res['message'] = "Empty!";
+				return response($res);
+			}
+		}else{
+			$res['message'] = "Login Needed!";
+			return response($res);
+		}
+	}
+	
+	public function editNomor(Request $request){
+		$datasiswa = siswa::where('token', $request->token)->first();
+		if ($datasiswa!=null) {
+			$datasiswa = siswa::where('token', $request->token)->update([
+				'telp_ortu' => $request->nomor
+			]);
+			$res['message'] = "Edit Nomor Telfon Sukses!";
+			return response($res);
+		}else{
+			$res['message'] = "Siswa Tidak Ditemukan!";
+			return response($res);
+		}
+	}
 	public function getDetailTabungan($jenistabungan,$token){
 		$datasiswa = siswa::where('token', $token)->first();
 		if ($datasiswa!=null) {
