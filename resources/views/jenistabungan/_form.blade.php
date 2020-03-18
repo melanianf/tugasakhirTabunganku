@@ -12,13 +12,9 @@
         {!! $errors->first('deksripsi', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group row">
-        <div class="col-sm-2"><b>Aktif</b></div>
+        <div class="col-sm-1"><b>Aktif</b></div>
             <div class="col-sm-10">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck1">
-                <!-- <label class="form-check-label" for="gridCheck1">
-                    Example checkbox
-                </label> -->
+                <input type="checkbox" name="aktif" value=1>
             </div>
         </div>
     </div>

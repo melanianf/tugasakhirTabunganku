@@ -82,6 +82,9 @@ class SiswaController extends Controller
 
     public function update(Request $request, $id)
     {
+        if($request->aktif!=1){
+            $request->aktif=0;
+        }
         $data = DB::table('siswa')->where('id',$id)->first();
         $updated = DB::table('siswa')->where('id',$id)->update([
             'nis' => $request->nis,

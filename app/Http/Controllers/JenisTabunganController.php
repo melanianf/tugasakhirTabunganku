@@ -76,6 +76,10 @@ class JenisTabunganController extends Controller
 
     public function update(Request $request, $id)
     {
+        if($request->aktif!=1){
+            $request->aktif=0;
+        }
+        
         $data = DB::table('jenis_tabungan')->where('id',$id)->first();
         $updated = DB::table('jenis_tabungan')->where('id',$id)->update([
             'nama' => $request->nama,

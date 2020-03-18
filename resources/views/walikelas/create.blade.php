@@ -20,7 +20,7 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                {!! Form::open(['url' => route('walikelas.store'), 'method' => 'post']) !!}
+                {!! Form::open(['url' => route('walikelas.store'), 'method' => 'post', 'files' => 'true']) !!}
                     @include('walikelas._form')
                 {!! Form::close() !!}
             </div>

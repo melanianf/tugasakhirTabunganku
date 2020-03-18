@@ -109,6 +109,10 @@ Route::group(['midlleware' => 'web'], function() {
             'as' => 'export.books.post',
             'uses' => 'BooksController@exportPost'
         ]);
+        Route::post('export/upload', [
+            'as' => 'export.books.post',
+            'uses' => 'BooksController@exportPost'
+        ]);
 
         // Download template buku
         Route::get('template/books', [
@@ -121,6 +125,12 @@ Route::group(['midlleware' => 'web'], function() {
             'as' => 'import.books',
             'uses' => 'BooksController@importExcel'
         ]);
+
+        Route::put('walikelas/upload', [
+            'as' => 'walikelas.upload',
+            'uses' => 'WalikelasController@upload'
+        ]);
+
     });
 
     // Walikelas

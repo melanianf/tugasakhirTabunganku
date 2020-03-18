@@ -82,10 +82,10 @@
             {!! Form::close() !!}
 
             <a href=" ">Lupa password</a><br>
-            <a href=" " class="text-center">Daftar baru</a>
+            <!-- <a href=" " class="text-center">Daftar baru</a> -->
 
-            <!-- <a href="{{ route('password.request') }}">Lupa password</a><br>
-            <a href="{{ route('register') }}" class="text-center">Daftar baru</a> -->
+            <!-- <a href="{{ route('password.request') }}">Lupa password</a><br> -->
+            <a href="{{ route('register') }}" class="text-center">Daftar baru</a>
 
         </div>
         <!-- /.login-box-body -->

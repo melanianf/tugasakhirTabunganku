@@ -42,10 +42,11 @@
             <a href="{{ url('/') }}"><b>Lara</b>buk</a>
         </div>
         <!-- /.login-logo -->
+        <a href=" ">Admin</a> <a>|</a> <a href=" ">Wali Kelas</a>
         <div class="login-box-body">
             @include('layouts._flash')
 
-            <p class="login-box-msg">Daftar baru</p>
+            <p class="login-box-msg">Registrasi Wali Kelas</p>
 
             {!! Form::open(['url' => route('register'), 'files' => 'true', 'method' => 'post']) !!}
 

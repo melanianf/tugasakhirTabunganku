@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Book;
+use App\User;
 use App\Walikelas;
+use App\Role;
 use App\BorrowLog;
 use Yajra\Datatables\Html\Builder;
 use Yajra\Datatables\Datatables;
@@ -80,6 +82,9 @@ class WalikelasController extends Controller
 
     public function update(Request $request, $id)
     {
+        if($request->aktif!=1){
+            $request->aktif=0;
+        }
         $data = DB::table('wali_kelas')->where('id',$id)->first();
         $updated = DB::table('wali_kelas')->where('id',$id)->update([
             'nip' => $request->nip,
@@ -102,7 +107,51 @@ class WalikelasController extends Controller
     }    
 
     public function store(Request $request)
-    {
+    {   
+        if($request->aktif!=1){
+            $request->aktif=0;
+        }
+        
+        $theFileName=null;
+        //Register To System
+        $user = User::create([
+            'name' => $request->nama_lengkap,
+            'email' => $request->email,
+            'password' => bcrypt($request->katasandi),
+            'is_verified'=> true,
+        ]);
+
+        // Isi field cover jika ada avatar yang diupload
+        if ($request->hasFile('avatar')) {
+            // Mengambil file yang diupload
+            $uploaded_avatar = $request->file('avatar');
+
+            // Mengambil extension file
+            $extension = $uploaded_avatar->getClientOriginalExtension();
+
+            // Membuat nama file random berikut extension
+            $filename = md5(time()) . "." . $extension;
+
+            // Menyimpan cover ke folder public/img
+            $destinationPath = public_path() . DIRECTORY_SEPARATOR . 'img';
+            $uploaded_avatar->move($destinationPath, $filename);
+
+            // Mengisi field cover di book dengan filename yang baru dibuat
+            $user->avatar = $filename;
+            $theFileName = $filename;
+            $user->save();
+
+        } else {
+
+            // Jika tidak ada cover yang diupload, pilih member_avatar.png
+            $filename = "member_avatar.png";
+            $theFileName = $filename;
+            $user->avatar = $filename;
+            $user->save();
+        }
+        $memberRole = Role::where('name', 'walikelas')->first();
+        $user->attachRole($memberRole);
+
         $created = Walikelas::create([
             'nip' => $request->nip,
             'nama_lengkap' => $request->nama_lengkap,
@@ -113,9 +162,10 @@ class WalikelasController extends Controller
             'katasandi' => $request->katasandi,
             'aktif' => $request->aktif,
             'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
+            'updated_at' => date('Y-m-d H:i:s'),
+            'avatar' => $theFileName
         ]);
-        
+
         Session::flash("flash_notification", [
             "level" => "success",
             "icon" => "fa fa-check",
@@ -123,4 +173,57 @@ class WalikelasController extends Controller
         ]);
         return redirect()->route('walikelas.index');
     }    
+
+    public function upload(Request $request, $id)
+    {
+        $getName = DB::table('wali_kelas')->where('id',$id)->first();
+        $user = DB::table('users')->where('name',$getName->nama_lengkap)->first();
+
+        // Isi field cover jika ada cover yang diupload
+        if ($request->hasFile('avatar')) {
+
+            // Mengambil cover yang diupload berikut ekstensinya
+            $filename = null;
+            $uploaded_avatar = $request->file('avatar');
+            $extension = $uploaded_avatar->getClientOriginalExtension();
+
+            // Membuat nama file random dengan extension
+            $filename = md5(time()) . '.' . $extension;
+            $destinationPath = public_path() . DIRECTORY_SEPARATOR . 'img';
+
+            // Memindahkan file ke folder public/img
+            $uploaded_avatar->move($destinationPath, $filename);
+
+            // Hapus cover lama, jika ada
+            if ($user->avatar!=null) {
+                $old_avatar = $user->avatar;
+
+                // Jika tidak menggunakan member_avatar.png / admin_avatar.png hapus avatar
+                if (!$old_avatar == "member_avatar.png" || "admin_avatar.png") {
+                    $filepath = public_path() . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . $user->avatar;
+
+                    try {
+                        File::delete($filepath);
+                    } catch (FileNotFoundException $e) {
+                        // File sudah dihapus/tidak ada
+                    }
+                }
+            }
+            // Ganti field cover dengan cover yang baru
+            $user->avatar = $filename;
+            $updated = DB::table('wali_kelas')->where('nama_lengkap',$user->name)->update([
+                'avatar' => $filename
+            ]);
+            $user->save();
+        }
+        $user->save();
+
+        Session::flash("flash_notification", [
+            "level" => "success",
+            "icon" => "fa fa-check",
+            "message" => "Foto berhasil diupload"
+        ]);
+
+        return redirect()->route('walikelas.index');
+    }
 }

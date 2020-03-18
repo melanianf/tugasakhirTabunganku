@@ -41,17 +41,24 @@
         {!! Form::text('katasandi', null, ['class' => 'form-control', 'placeholder' => 'Kata Sandi']) !!}
         {!! $errors->first('katasandi', '<p class="help-block">:message</p>') !!}
     </div>
+    <div class="form-group has-feedback{{ $errors->has('avatar') ? ' has-error' : '' }}">
+        {!! Form::label('avatar', 'Foto Profil') !!}
+
+        {!! Form::file('avatar', ['class' => 'form-control']) !!}
+        <!-- <p class="help-block">Pilih foto profil</p> -->
+        @if (isset($data) && $data->avatar)
+            <p> {!! Html::image(asset('img/'.$data->avatar), null, ['class' => 'img-rounded img-responsive']) !!} </p>
+        @endif
+        {!! $errors->first('avatar', '<p class="help-block">:message</p>') !!}
+    </div>
     <div class="form-group row">
-        <div class="col-sm-2"><b>Aktif</b></div>
+        <div class="col-sm-1"><b>Aktif</b></div>
             <div class="col-sm-10">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck1">
-                <!-- <label class="form-check-label" for="gridCheck1">
-                    Example checkbox
-                </label> -->
+                <input type="checkbox" name="aktif" value=1>
             </div>
         </div>
     </div>
+
     <!-- <div class="form-group has-feedback{{ $errors->has('aktif') ? ' has-error' : '' }}">
         {!! Form::label('aktif', 'Aktif') !!}
 
