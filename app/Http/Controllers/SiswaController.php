@@ -144,7 +144,11 @@ class SiswaController extends Controller
     }    
 
     public function store(Request $request)
-    {
+    {        
+        if($request->aktif!=1){
+            $request->aktif=0;
+        }
+
         $created = siswa::create([
             'nis' => $request->nis,
             'nama_lengkap' => $request->nama_lengkap,
@@ -155,12 +159,40 @@ class SiswaController extends Controller
             'email' => $request->email,
             'nama_pengguna' => $request->nama_pengguna,
             'katasandi' => $request->katasandi,
-            'avatar' => $request->avatar,
             'aktif' => $request->aktif,
             'token' => null,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ]);
+        
+        $theFileName=null;
+        if ($request->hasFile('avatar')) {
+            // Mengambil file yang diupload
+            $uploaded_avatar = $request->file('avatar');
+
+            // Mengambil extension file
+            $extension = $uploaded_avatar->getClientOriginalExtension();
+
+            // Membuat nama file random berikut extension
+            $filename = md5(time()) . "." . $extension;
+
+            // Menyimpan cover ke folder public/img
+            $destinationPath = public_path() . DIRECTORY_SEPARATOR . 'img';
+            $uploaded_avatar->move($destinationPath, $filename);
+
+            // Mengisi field cover di book dengan filename yang baru dibuat
+            $created->avatar = $filename;
+            $theFileName = $filename;
+            $created->save();
+
+        } else {
+
+            // Jika tidak ada cover yang diupload, pilih member_avatar.png
+            $filename = "member_avatar.png";
+            $theFileName = $filename;
+            $created->avatar = $filename;
+            $created->save();
+        }
         
         Session::flash("flash_notification", [
             "level" => "success",
