@@ -214,9 +214,9 @@ class WalikelasController extends Controller
             $updated = DB::table('wali_kelas')->where('nama_lengkap',$user->name)->update([
                 'avatar' => $filename
             ]);
-            $user->save();
+            //$user->save();
         }
-        $user->save();
+        //$user->save();
 
         Session::flash("flash_notification", [
             "level" => "success",

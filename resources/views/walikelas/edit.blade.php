@@ -34,7 +34,7 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                {!! Form::model($data,['url' => route('walikelas.update',' $data->id'), 'method' => 'put', 'files' => 'true']) !!}
+                {!! Form::model($data, ['url' => route('walikelas.upload', $data->id), 'method' => 'put', 'files' => 'true']) !!}
                     @include('walikelas._formUpload')
                 {!! Form::close() !!}
             </div>
