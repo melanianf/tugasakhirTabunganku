@@ -27,6 +27,18 @@
             <!-- /.box -->
         </div>
         <!-- /.col (left) -->
+        <div class="col-md-6">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Upload</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                {!! Form::open(['url' => route('import.books'), 'method' => 'post', 'files' => 'true', 'class' => 'form-horizontal']) !!}
+                    @include('books._import')
+                {!! Form::close() !!}
+            </div>
+        </div>
         <!-- /.col (right)-->
     </div>
     <!-- /.row -->

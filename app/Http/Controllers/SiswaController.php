@@ -201,4 +201,57 @@ class SiswaController extends Controller
         ]);
         return redirect()->route('siswa.index');
     }    
+
+    public function upload(Request $request, $id)
+    {
+        $getName = DB::table('wali_kelas')->where('id',$id)->first();
+        $user = DB::table('users')->where('name',$getName->nama_lengkap)->first();
+
+        // Isi field cover jika ada cover yang diupload
+        if ($request->hasFile('avatar')) {
+
+            // Mengambil cover yang diupload berikut ekstensinya
+            $filename = null;
+            $uploaded_avatar = $request->file('avatar');
+            $extension = $uploaded_avatar->getClientOriginalExtension();
+
+            // Membuat nama file random dengan extension
+            $filename = md5(time()) . '.' . $extension;
+            $destinationPath = public_path() . DIRECTORY_SEPARATOR . 'img';
+
+            // Memindahkan file ke folder public/img
+            $uploaded_avatar->move($destinationPath, $filename);
+
+            // Hapus cover lama, jika ada
+            if ($user->avatar!=null) {
+                $old_avatar = $user->avatar;
+
+                // Jika tidak menggunakan member_avatar.png / admin_avatar.png hapus avatar
+                if (!$old_avatar == "member_avatar.png" || "admin_avatar.png") {
+                    $filepath = public_path() . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . $user->avatar;
+
+                    try {
+                        File::delete($filepath);
+                    } catch (FileNotFoundException $e) {
+                        // File sudah dihapus/tidak ada
+                    }
+                }
+            }
+            // Ganti field cover dengan cover yang baru
+            $user->avatar = $filename;
+            $updated = DB::table('wali_kelas')->where('nama_lengkap',$user->name)->update([
+                'avatar' => $filename
+            ]);
+            //$user->save();
+        }
+        //$user->save();
+
+        Session::flash("flash_notification", [
+            "level" => "success",
+            "icon" => "fa fa-check",
+            "message" => "Foto berhasil diupload"
+        ]);
+
+        return redirect()->route('walikelas.index');
+    }
 }

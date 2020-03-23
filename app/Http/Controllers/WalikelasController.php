@@ -117,8 +117,7 @@ class WalikelasController extends Controller
         $user = User::create([
             'name' => $request->nama_lengkap,
             'email' => $request->email,
-            'password' => bcrypt($request->katasandi),
-            'is_verified'=> true,
+            'password' => bcrypt($request->katasandi)
         ]);
 
         // Isi field cover jika ada avatar yang diupload
@@ -165,6 +164,7 @@ class WalikelasController extends Controller
             'updated_at' => date('Y-m-d H:i:s'),
             'avatar' => $theFileName
         ]);
+        $user->verify();
 
         Session::flash("flash_notification", [
             "level" => "success",
