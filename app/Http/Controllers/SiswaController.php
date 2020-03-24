@@ -80,7 +80,7 @@ class SiswaController extends Controller
         return view('siswa.edit')->with(compact('data'));
     }
 
-    public function update(Request $request, $id)
+    public function updateData(Request $request, $id)
     {
         if($request->aktif!=1){
             $request->aktif=0;
@@ -96,7 +96,6 @@ class SiswaController extends Controller
             'email' => $request->email,
             'nama_pengguna' => $request->nama_pengguna,
             'katasandi' => $request->katasandi,
-            'avatar' => $request->avatar,
             'aktif' => $request->aktif,
             'updated_at' => date('Y-m-d H:i:s')
         ]);
@@ -106,39 +105,6 @@ class SiswaController extends Controller
             "icon" => "fa fa-check",
             "message" => "Berhasil menyimpan! "//.$data->nama_lengkap
         ]);
-
-        // Isi field cover jika ada avatar yang diupload
-        if ($request->hasFile('avatar')) {
-
-            // Mengambil cover yang diupload berikut ektensinya
-            $filename = null;
-            $uploaded_avatar = $request->file('avatar');
-            $extension = $uploaded_avatar->getClientOriginalExtension();
-
-            // Membuat nama file random dengan extension
-            $filename = md5(time()) . '.' . $extension;
-
-            // Menyimpan cover ke folder public/img
-            $destinationPath = public_path() . DIRECTORY_SEPARATOR . 'img';
-            $uploaded_avatar->move($destinationPath, $filename);
-
-            // Hapus cover lama, jika ada
-            if ($data->cover) {
-                $old_cover = $data->cover;
-                $filepath = public_path() . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . $data->cover;
-
-                try {
-                    File::delete($filepath);
-                } catch (FileNotFoundException $e) {
-                    // File sudah dihapus/tidak ada
-                }
-            }
-
-            // Ganti field cover dengan cover yang baru
-            $data->cover = $filename;
-            $data->save();
-        }
-        
         return redirect()->route('siswa.index');
 
     }    
@@ -161,38 +127,10 @@ class SiswaController extends Controller
             'katasandi' => $request->katasandi,
             'aktif' => $request->aktif,
             'token' => null,
+            'avatar' => "member_avatar.png",
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ]);
-        
-        $theFileName=null;
-        if ($request->hasFile('avatar')) {
-            // Mengambil file yang diupload
-            $uploaded_avatar = $request->file('avatar');
-
-            // Mengambil extension file
-            $extension = $uploaded_avatar->getClientOriginalExtension();
-
-            // Membuat nama file random berikut extension
-            $filename = md5(time()) . "." . $extension;
-
-            // Menyimpan cover ke folder public/img
-            $destinationPath = public_path() . DIRECTORY_SEPARATOR . 'img';
-            $uploaded_avatar->move($destinationPath, $filename);
-
-            // Mengisi field cover di book dengan filename yang baru dibuat
-            $created->avatar = $filename;
-            $theFileName = $filename;
-            $created->save();
-
-        } else {
-
-            // Jika tidak ada cover yang diupload, pilih member_avatar.png
-            $filename = "member_avatar.png";
-            $theFileName = $filename;
-            $created->avatar = $filename;
-            $created->save();
-        }
         
         Session::flash("flash_notification", [
             "level" => "success",
@@ -204,8 +142,7 @@ class SiswaController extends Controller
 
     public function upload(Request $request, $id)
     {
-        $getName = DB::table('wali_kelas')->where('id',$id)->first();
-        $user = DB::table('users')->where('name',$getName->nama_lengkap)->first();
+        $data = DB::table('siswa')->where('id',$id)->first();
 
         // Isi field cover jika ada cover yang diupload
         if ($request->hasFile('avatar')) {
@@ -223,8 +160,8 @@ class SiswaController extends Controller
             $uploaded_avatar->move($destinationPath, $filename);
 
             // Hapus cover lama, jika ada
-            if ($user->avatar!=null) {
-                $old_avatar = $user->avatar;
+            if ($data->avatar!=null) {
+                $old_avatar = $data->avatar;
 
                 // Jika tidak menggunakan member_avatar.png / admin_avatar.png hapus avatar
                 if (!$old_avatar == "member_avatar.png" || "admin_avatar.png") {
@@ -239,10 +176,10 @@ class SiswaController extends Controller
             }
             // Ganti field cover dengan cover yang baru
             $user->avatar = $filename;
-            $updated = DB::table('wali_kelas')->where('nama_lengkap',$user->name)->update([
-                'avatar' => $filename
+            $updated = DB::table('siswa')->where('id',$id)->update([
+                'avatar' => $filename,
+                'updated_at' => date('Y-m-d H:i:s')
             ]);
-            //$user->save();
         }
         //$user->save();
 

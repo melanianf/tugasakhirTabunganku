@@ -9,6 +9,15 @@
         {!! $errors->first('avatar', '<p class="help-block">:message</p>') !!}
     </div>
 
+    <!-- <div class="form-group has-feedback{{ $errors->has('aktif') ? ' has-error' : '' }}">
+        {!! Form::label('aktif', 'Aktif') !!}
+
+        {!! Form::text('aktif', null, ['class' => 'form-control', 'placeholder' => 'Aktif']) !!}
+        {!! $errors->first('aktif', '<p class="help-block">:message</p>') !!}
+    </div> -->
+<!-- /.box-body -->
+
+
     <div class="box-footer">
         {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}
     </div>

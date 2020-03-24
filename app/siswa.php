@@ -9,7 +9,7 @@ class siswa extends Model
 	protected $table = "siswa";
 	protected $fillable = [
         'nis', 'nama_lengkap', 'kelas', 'angkatan', 'ttl', 'telp_ortu', 'email', 'nama_pengguna', 
-        'katasandi', 'token','aktif','created_at','updated_at'
+        'katasandi', 'token','aktif','created_at','updated_at','avatar'
     ];
 
 	//fungsi buat generate token

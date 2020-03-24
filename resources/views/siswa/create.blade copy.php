@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('dashboard')
-    Wali Kelas
-    <small>Tambah Wali Kelas</small>
+    Siswa
+    <small>Tambah Siswa</small>
 @endsection
 
 @section('breadcrumb')
     <li><a href="{{ url('home') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="{{ url('/admin/walikelas') }}">Wali Kelas</a></li>
-    <li class="active">Tambah Wali Kelas</li>
+    <li><a href="{{ url('/admin/siswa') }}">Siswa</a></li>
+    <li class="active">Tambah Siswa</li>
 @endsection
 
 @section('content')
@@ -20,14 +20,13 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                {!! Form::open(['url' => route('walikelas.store'), 'method' => 'post', 'files' => 'true']) !!}
-                    @include('walikelas._form')
+                {!! Form::open(['url' => route('siswa.store'), 'method' => 'post', 'files' => 'true']) !!}
+                    @include('siswa._form')
                 {!! Form::close() !!}
             </div>
             <!-- /.box -->
         </div>
         <!-- /.col (left) -->
-
         <!-- <div class="col-md-6">
             <div class="box box-info">
                 <div class="box-header with-border">

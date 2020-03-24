@@ -1,6 +1,5 @@
 <div class="box-body">
-<div class="form-group has-feedback{{ $errors->has('nis') ? ' has-error' : '' }}">
-    <div>
+    <div class="form-group has-feedback{{ $errors->has('nis') ? ' has-error' : '' }}">
         {!! Form::label('nis', 'NIS') !!}
 
         {!! Form::text('nis', null, ['class' => 'form-control', 'placeholder' => 'NIS']) !!}
@@ -54,7 +53,7 @@
         {!! Form::text('katasandi', null, ['class' => 'form-control', 'placeholder' => 'Kata Sandi']) !!}
         {!! $errors->first('katasandi', '<p class="help-block">:message</p>') !!}
     </div>
-    
+
     <div class="form-group row">
         <div class="col-sm-1"><b>Aktif</b></div>
             <div class="col-sm-10">
@@ -62,7 +61,13 @@
             </div>
         </div>
     </div>
-</div>
+
+    <!-- <div class="form-group has-feedback{{ $errors->has('aktif') ? ' has-error' : '' }}">
+        {!! Form::label('aktif', 'Aktif') !!}
+
+        {!! Form::text('aktif', null, ['class' => 'form-control', 'placeholder' => 'Aktif']) !!}
+        {!! $errors->first('aktif', '<p class="help-block">:message</p>') !!}
+    </div> -->
 <!-- /.box-body -->
 
 <div class="box-footer">

@@ -16,16 +16,16 @@
         <div class="col-md-6">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Ubah Data Siswa</h3>
+                    <h3 class="box-title">Ubah Data</h3>
                 </div>
                 <!-- /.box-header -->
-                {!! Form::model($data, ['url' => route('siswa.updateData', $data->id), 'method' => 'put']) !!}
+                {!! Form::model($data, ['url' => route('siswa.update', $data->id), 'method' => 'put']) !!}
                     @include('siswa._form')
                 {!! Form::close() !!}
             </div>
             <!-- /.box -->
         </div>
-        <!-- /.col (left) -->
+        <!-- /.col -->
 
         <div class="col-md-6">
             <div class="box box-info">
@@ -33,14 +33,11 @@
                     <h3 class="box-title">Upload</h3>
                 </div>
                 <!-- /.box-header -->
-                <!-- form start -->
                 {!! Form::model($data, ['url' => route('siswa.upload', $data->id), 'method' => 'put', 'files' => 'true']) !!}
                     @include('siswa._formUpload')
                 {!! Form::close() !!}
             </div>
         </div>
-        <!-- /.col -->
     </div>
     <!-- /.row -->
 @endsection
-

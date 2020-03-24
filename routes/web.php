@@ -133,11 +133,15 @@ Route::group(['midlleware' => 'web'], function() {
             'as' => 'walikelas.upload',
             'uses' => 'WalikelasController@upload'
         ]);
-        Route::put('walikelas/update/{id}', [
-            'as' => 'walikelas.upload',
-            'uses' => 'WalikelasController@upload'
+
+        Route::put('siswa/upload', [
+            'as' => 'siswa.upload',
+            'uses' => 'SiswaController@upload'
         ]);
-        
+        Route::put('siswa/updateData', [
+            'as' => 'siswa.updateData',
+            'uses' => 'SiswaController@updateData'
+        ]);
         Route::post('/walikelas/update/{id}', 'WalikelasController@upload');
 
     });
