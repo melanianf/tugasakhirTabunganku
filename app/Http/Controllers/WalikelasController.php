@@ -171,6 +171,7 @@ class WalikelasController extends Controller
             "icon" => "fa fa-check",
             "message" => "Berhasil Menambahkan Data! "//.$data->nama_lengkap
         ]);
+        $user->verify();
         return redirect()->route('walikelas.index');
     }    
 
