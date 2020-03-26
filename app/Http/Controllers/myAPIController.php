@@ -65,7 +65,36 @@ class myAPIController extends Controller
 		$datasiswa = siswa::where('token', $token)->first();
 		if ($datasiswa!=null) {
 			$data = DB::table('transaksi')->where('jenis_tabungan', $jenistabungan)->where('nis', $datasiswa->nis)->get();
+			foreach($data as $transaksi){
+				$date = $transaksi->updated_at;
+				$month = date('Y', strtotime($date));
+				$year = date('Y', strtotime($date));
+				//kalo lewat dari bulan juli(7 keatas) maka tahun +1
+				if($month>7){
+					$tahun1 = (string)$year."-";
+					$tahun2Int = (int)$year + 1;
+					$tahun2 = (string)$tahun2Int; 
+					$periode = $tahun1.$tahun2;
+					$transaksi->periode = $periode;
+				}else{
+					$tahun1 = (string)$year;
+					$tahun2Int = (int)$year - 1;
+					$tahun2 = (string)$tahun2Int."-"; 
+					$periode = $tahun2.$tahun1;
+					$transaksi->periode = $periode;
+				}
+				
+				//Get status tabungan
+				$dataTabungan = DB::table('jenis_tabungan')->where('nama', $transaksi->jenis_tabungan)->first();
+				$statusTabungan = $dataTabungan->aktif;
+				if($statusTabungan!=1){
+					$transaksi->status_tabungan = "Non Aktif";
+				}
+				else{
+					$transaksi->status_tabungan = "Aktif";
+				}
 
+			}
 			if(count($data)>0){
 				return response($data);
 			}
