@@ -8,7 +8,11 @@
         @endif
         {!! $errors->first('avatar', '<p class="help-block">:message</p>') !!}
     </div>
+<<<<<<< HEAD
 
+=======
+<!-- /.box-body -->
+>>>>>>> mytemp
     <div class="box-footer">
         {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}
     </div>

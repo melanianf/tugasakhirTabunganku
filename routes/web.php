@@ -129,6 +129,7 @@ Route::group(['midlleware' => 'web'], function() {
             'uses' => 'BooksController@importExcel'
         ]);
 
+<<<<<<< HEAD
         Route::put('walikelas/upload', [
             'as' => 'walikelas.upload',
             'uses' => 'WalikelasController@upload'
@@ -142,6 +143,21 @@ Route::group(['midlleware' => 'web'], function() {
             'as' => 'siswa.updateData',
             'uses' => 'SiswaController@updateData'
         ]);
+=======
+        // Route::put('walikelas/upload', [
+        //     'as' => 'walikelas.upload',
+        //     'uses' => 'WalikelasController@upload'
+        // ]);
+        Route::put('walikelas/update/{id}', [
+            'as' => 'walikelas.upload',
+            'uses' => 'WalikelasController@upload'
+        ]);
+        Route::put('siswa/update/{id}', [
+            'as' => 'siswa.upload',
+            'uses' => 'SiswaController@upload'
+        ]);
+        
+>>>>>>> mytemp
         Route::post('/walikelas/update/{id}', 'WalikelasController@upload');
 
     });

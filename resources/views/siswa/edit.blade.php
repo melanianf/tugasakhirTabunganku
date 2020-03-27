@@ -40,6 +40,18 @@
             </div>
         </div>
         <!-- /.col -->
+        <div class="col-md-6">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Upload</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                {!! Form::model($data, ['url' => route('siswa.upload', $data->id), 'method' => 'put', 'files' => 'true']) !!}
+                    @include('siswa._formUpload')
+                {!! Form::close() !!}
+            </div>
+        </div>
     </div>
     <!-- /.row -->
 @endsection

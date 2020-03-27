@@ -171,13 +171,14 @@ class WalikelasController extends Controller
             "icon" => "fa fa-check",
             "message" => "Berhasil Menambahkan Data! "//.$data->nama_lengkap
         ]);
+        $user->verify();
         return redirect()->route('walikelas.index');
     }    
 
     public function upload(Request $request, $id)
     {
         $getName = DB::table('wali_kelas')->where('id',$id)->first();
-        $user = DB::table('users')->where('name',$getName->nama_lengkap)->first();
+        $user = User::where('name',$getName->nama_lengkap)->first();
 
         // Isi field cover jika ada cover yang diupload
         if ($request->hasFile('avatar')) {
@@ -211,10 +212,14 @@ class WalikelasController extends Controller
             }
             // Ganti field cover dengan cover yang baru
             $user->avatar = $filename;
+            $user->save();
             $updated = DB::table('wali_kelas')->where('nama_lengkap',$user->name)->update([
                 'avatar' => $filename
             ]);
+<<<<<<< HEAD
             $user->save();
+=======
+>>>>>>> mytemp
         }
         //$user->save();
 

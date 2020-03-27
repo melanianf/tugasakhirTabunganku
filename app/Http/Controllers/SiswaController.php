@@ -105,6 +105,10 @@ class SiswaController extends Controller
             "icon" => "fa fa-check",
             "message" => "Berhasil menyimpan! "//.$data->nama_lengkap
         ]);
+<<<<<<< HEAD
+=======
+        
+>>>>>>> mytemp
         return redirect()->route('siswa.index');
 
     }    
@@ -138,8 +142,13 @@ class SiswaController extends Controller
             "message" => "Berhasil Menambahkan Data! "//.$data->nama_lengkap
         ]);
         return redirect()->route('siswa.index');
+<<<<<<< HEAD
     }    
 
+=======
+    }   
+    
+>>>>>>> mytemp
     public function upload(Request $request, $id)
     {
         $data = DB::table('siswa')->where('id',$id)->first();
@@ -165,7 +174,11 @@ class SiswaController extends Controller
 
                 // Jika tidak menggunakan member_avatar.png / admin_avatar.png hapus avatar
                 if (!$old_avatar == "member_avatar.png" || "admin_avatar.png") {
+<<<<<<< HEAD
                     $filepath = public_path() . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . $user->avatar;
+=======
+                    $filepath = public_path() . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . $data->avatar;
+>>>>>>> mytemp
 
                     try {
                         File::delete($filepath);
@@ -175,7 +188,11 @@ class SiswaController extends Controller
                 }
             }
             // Ganti field cover dengan cover yang baru
+<<<<<<< HEAD
             $user->avatar = $filename;
+=======
+            //$user->avatar = $filename;
+>>>>>>> mytemp
             $updated = DB::table('siswa')->where('id',$id)->update([
                 'avatar' => $filename,
                 'updated_at' => date('Y-m-d H:i:s')
@@ -189,6 +206,10 @@ class SiswaController extends Controller
             "message" => "Foto berhasil diupload"
         ]);
 
+<<<<<<< HEAD
         return redirect()->route('walikelas.index');
+=======
+        return redirect()->route('siswa.index');
+>>>>>>> mytemp
     }
 }
