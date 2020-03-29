@@ -128,11 +128,30 @@ class SiswaController extends Controller
             'katasandi' => $request->katasandi,
             'aktif' => $request->aktif,
             'token' => null,
-            'avatar' => "member_avatar.png",
+            //'avatar' => "member_avatar.png",
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ]);
-        
+
+        // Isi field cover jika ada cover yang diupload
+        if ($request->hasFile('avatar')) {
+
+            // Mengambil cover yang diupload berikut ekstensinya
+            $filename = null;
+            $uploaded_avatar = $request->file('avatar');
+            $extension = $uploaded_avatar->getClientOriginalExtension();
+
+            // Membuat nama file random dengan extension
+            $filename = md5(time()) . '.' . $extension;
+            $destinationPath = public_path() . DIRECTORY_SEPARATOR . 'img';
+
+            // Memindahkan file ke folder public/img
+            $uploaded_avatar->move($destinationPath, $filename);
+
+            $created->avatar = $filename;
+        }
+        $created->save();
+
         Session::flash("flash_notification", [
             "level" => "success",
             "icon" => "fa fa-check",

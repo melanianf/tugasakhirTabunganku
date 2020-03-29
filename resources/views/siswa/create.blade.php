@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('dashboard')
-    Buku
-    <small>Tambah Buku</small>
+    Siswa
+    <small>Tambah Siswa</small>
 @endsection
 
 @section('breadcrumb')
@@ -15,8 +15,8 @@
     <div class="row">
         <div class="col-md-6">
             <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Isi Form</h3>
+                <div class="box-header">
+                    <h3 class="box-title">Tambah Siswa</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->

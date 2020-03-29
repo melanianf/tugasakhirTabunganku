@@ -15,13 +15,13 @@
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Siswa</h3>
+                    <h3 class="box-title">Daftar Siswa</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
                     <p>
                         <a class="btn btn-success" href="{{ url('/admin/siswa/create') }}">Tambah</a>
-                        <!-- <a class="btn btn-warning" href="{{ url('/admin/export/books') }}">Export</a> -->
+                        <a class="btn btn-warning" href="{{ url('/admin/export/books') }}">Export</a>
                     </p>
                     {!! $html->table(['class' => 'table table-bordered table-striped']) !!}
                 </div>
