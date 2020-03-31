@@ -19,7 +19,7 @@
                     <h3 class="box-title">Edit Siswa</h3>
                 </div>
                 <!-- /.box-header -->
-                {!! Form::model($data, ['url' => route('siswa.update', $data->id), 'method' => 'put']) !!}
+                {!! Form::model($data, ['url' => route('siswa.update', $data->id), 'method' => 'put', 'files' => 'true']) !!}
                     @include('siswa._form')
                 {!! Form::close() !!}
             </div>

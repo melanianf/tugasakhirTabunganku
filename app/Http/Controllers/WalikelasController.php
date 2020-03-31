@@ -86,7 +86,9 @@ class WalikelasController extends Controller
             $request->aktif=0;
         }
         $data = DB::table('wali_kelas')->where('id',$id)->first();
-        $updated = DB::table('wali_kelas')->where('id',$id)->update([
+
+        //Update Tabel Walikelas
+        $updateOne = DB::table('wali_kelas')->where('id',$id)->update([
             'nip' => $request->nip,
             'nama_lengkap' => $request->nama_lengkap,
             'alamat' => $request->alamat,
@@ -97,6 +99,56 @@ class WalikelasController extends Controller
             'aktif' => $request->aktif,
             'updated_at' => date('Y-m-d H:i:s')
         ]);
+
+        //Update Tabel Users
+        $updateTwo = DB::table('users')->where('name',$data->nama_lengkap)->update([
+            'name' => $request->nama_lengkap,
+            'email' => $request->email,
+            'password' => bcrypt($request->katasandi),
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+
+
+
+        // Remove File lama
+        if ($request->hasFile('avatar')) {
+
+            // Mengambil cover yang diupload berikut ekstensinya
+            $filename = null;
+            $uploaded_avatar = $request->file('avatar');
+            $extension = $uploaded_avatar->getClientOriginalExtension();
+
+            // Membuat nama file random dengan extension
+            $filename = md5(time()) . '.' . $extension;
+            $destinationPath = public_path() . DIRECTORY_SEPARATOR . 'img';
+
+            // Memindahkan file ke folder public/img
+            $uploaded_avatar->move($destinationPath, $filename);
+
+            // Hapus cover lama, jika ada
+            if ($data->avatar!=null) {
+                $old_avatar = $data->avatar;
+
+                // Jika tidak menggunakan member_avatar.png / admin_avatar.png hapus avatar
+                if (!$old_avatar == "member_avatar.png" || "admin_avatar.png") {
+                    $filepath = public_path() . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . $data->avatar;
+
+                    try {
+                        File::delete($filepath);
+                    } catch (FileNotFoundException $e) {
+                        // File sudah dihapus/tidak ada
+                    }
+                }
+            }
+            $updateOne = DB::table('wali_kelas')->where('id',$id)->update([
+                'avatar' => $filename
+            ]);
+            $updateTwo = DB::table('users')->where('name',$data->nama_lengkap)->update([
+                'avatar' => $filename
+            ]);
+        }
+        //$updateTwo->save();
+
         
         Session::flash("flash_notification", [
             "level" => "success",

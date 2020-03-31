@@ -19,7 +19,7 @@
                     <h3 class="box-title">Edit Wali Kelas</h3>
                 </div>
                 <!-- /.box-header -->
-                {!! Form::model($data, ['url' => route('walikelas.update', $data->id), 'method' => 'put']) !!}
+                {!! Form::model($data, ['url' => route('walikelas.update', $data->id), 'method' => 'put', 'files' => 'true']) !!}
                     @include('walikelas._form')
                 {!! Form::close() !!}
             </div>

@@ -20,7 +20,7 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                {!! Form::open(['url' => route('siswa.store'), 'method' => 'post', 'files' => 'true']) !!}
+                {!! Form::open(['url' => route('siswa.store'), 'method' => 'post', 'files' => 'true', 'files' => 'true']) !!}
                     @include('siswa._form')
                 {!! Form::close() !!}
             </div>
