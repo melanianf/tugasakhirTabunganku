@@ -301,7 +301,7 @@
                                 <a href="#">
                                     <i class="fa fa-cogs"></i> <span>Pengaturan</span>
                                     <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
+                                        <i class="fa fa-angle-right pull-right"></i>
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">

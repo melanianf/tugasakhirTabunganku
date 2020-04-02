@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="box box-primary">
-                <div class="box-header with-border">
+                <div class="box-header">
                     <h3 class="box-title">Edit Kelas</h3>
                 </div>
                 <!-- /.box-header -->

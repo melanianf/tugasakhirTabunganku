@@ -60,7 +60,9 @@ class WalikelasController extends Controller
     }
     public function destroy(Request $request, $id)
     {
+        $walikelas = DB::table('wali_kelas')->where('id',$id)->first();
         $data = DB::table('wali_kelas')->where('id',$id)->delete();
+        $data = DB::table('users')->where('name',$walikelas->nama_lengkap)->delete();
 
         // Handle hapus buku via ajax
         if ($request->ajax()) return response()->json(['id' => $id]);
