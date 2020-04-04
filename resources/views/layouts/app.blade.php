@@ -216,6 +216,18 @@
                                     <span>Jenis Tabungan</span>
                                 </a>
                             </li>
+                            <li class="treeview {!! Request::is('admin/*books*') ? 'active' : '' !!}">
+                                <a href="{{ route('books.index') }}">
+                                    <i class="fa fa-book"></i>
+                                    <span>Buku</span>
+                                </a>
+                            </li>
+                            <li class="treeview {!! Request::is('admin/authors*') ? 'active' : '' !!}">
+                                <a href="{{ route('authors.index') }}">
+                                    <i class="fa fa-user-circle"></i>
+                                    <span>Penulis</span>
+                                </a>
+                            </li>
 
                             <!-- <li class="treeview {!! Request::is('admin/authors*') ? 'active' : '' !!}">
                                 <a href="{{ route('authors.index') }}">

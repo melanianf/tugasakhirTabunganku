@@ -80,4 +80,5 @@
 
 <div class="box-footer">
     {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}
+    <!-- {!! Form::submit('Kembali', ['class' => 'btn btn-primary1']) !!} -->
 </div>
