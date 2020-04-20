@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\siswa;
 use App\tabungan;
+use App\Kelas;
 use App\Book;
 use App\Author;
 use App\BorrowLog;
@@ -36,6 +37,19 @@ class TabunganController extends Controller
                     $nama_siswa = $temp->nama_lengkap;
                     return $nama_siswa;
                 })
+                ->addColumn('kelas', function($data) {
+                    //fungsi persotoyan
+                    $siswa = DB::table('siswa')->where('nis', $data->nis)->first();
+                    $temp = $siswa->kelas;
+                    return $temp;
+                })
+                ->addColumn('walikelas', function($data) {
+                    //fungsi persotoyan
+                    $siswa = DB::table('siswa')->where('nis', $data->nis)->first();
+                    $kelas = DB::table('kelas')->where('kelas', $siswa->kelas)->first();
+                    $temp = $kelas->wali_kelas;
+                    return $temp;
+                })
                 ->make(true);
         }
 
@@ -43,8 +57,67 @@ class TabunganController extends Controller
             ->addColumn(['data' => 'nis', 'name' => 'nis', 'title' => 'NIS'])
             ->addColumn(['data' => 'nama', 'name' => 'nama', 'title' => 'Nama Siswa'])
             ->addColumn(['data' => 'jenis_tabungan', 'name' => 'jenis_tabungan', 'title' => 'Jenis Tabungan'])
-            ->addColumn(['data' => 'saldo', 'name' => 'saldo', 'title' => 'Saldo']);
+            ->addColumn(['data' => 'saldo', 'name' => 'saldo', 'title' => 'Saldo'])
+            ->addColumn(['data' => 'kelas', 'name' => 'kelas', 'title' => 'Kelas'])
+            ->addColumn(['data' => 'walikelas', 'name' => 'walikelas', 'title' => 'Wali Kelas']);
 
         return view('tabungan.index')->with(compact('html'));
     }
+    public function export()
+    {
+        return view('tabungan.export');
+    }
+
+    public function exportPost(Request $request)
+    {
+        $dataTabungan = Tabungan::whereIn('nis', $request->get('id_siswa'))->get();
+        //Data Enrichment
+        // $siswa = DB::table('siswa')->where('nis', $dataTabungan->nis)->get();
+        // $kelas = DB::table('kelas')->where('kelas', $siswa->kelas)->get();
+        // $dataTabungan->nama_siswa = $siswa->nama_lengkap;
+        // $dataTabungan->kelas = $siswa->kelas;
+        // $dataTabungan->walikelas = $kelas->wali_kelas;
+        foreach($dataTabungan as $data){
+            $siswa = siswa::where('nis', $data->nis)->first();
+            $kelas = DB::table('kelas')->where('kelas', $siswa->kelas)->first();
+            $data->nama_siswa = $siswa->nama_lengkap;
+            $data->kelas = $siswa->kelas;
+            $data->walikelas = $kelas->wali_kelas;
+        }
+        $handler = 'export' . ucfirst($request->get('type'));
+
+        return $this->$handler($dataTabungan);
+    }
+
+    private function exportXls($dataTabungan)
+    {
+        Excel::create('DataTabungan', function($excel) use ($dataTabungan) {
+            // Set property
+            $excel->setTitle('Data Tabungan')
+                ->setCreator(Auth::user()->name);
+
+            $excel->sheet('Data Tabungan', function($sheet) use ($dataTabungan) {
+                $row = 1;
+                $sheet->row($row, [
+                    'nis',
+                    'nama',
+                    'jenis_tabungan',
+                    'saldo',
+                    'kelas',
+                    'walikelas'
+                ]);
+                foreach ($dataTabungan as $tabungan) {
+                    $sheet->row(++$row, [
+                        $tabungan->nis,
+                        $tabungan->nama_siswa,
+                        $tabungan->jenis_tabungan,
+                        $tabungan->saldo,
+                        $tabungan->kelas,
+                        $tabungan->walikelas
+                    ]);
+                }
+            });
+        })->export('xls');
+    }
+
 }

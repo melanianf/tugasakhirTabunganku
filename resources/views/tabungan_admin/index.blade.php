@@ -19,9 +19,6 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <p>
-                        <a class="btn btn-warning" href="{{ url('/admin/export/tabungan') }}">Export</a>
-                    </p>
                     {!! $html->table(['class' => 'table table-bordered table-striped']) !!}
                 </div>
                 <!-- /.box-body -->

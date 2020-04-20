@@ -40,29 +40,9 @@ class myAPIController extends Controller
 	//	}
     //}
 
-	//public function siswaLogout($username)
-    //{
-    //    $datasiswa = siswa::where('nama_pengguna', $username)->first();
-    //    if ($datasiswa!=null) {
-	//		if($datasiswa->token != null){
-	//			$tokensiswa = new siswa;
-	//			$datasiswa->token = $tokensiswa->RemoveToken();
-	//			$datasiswa->save();
-	//			$res['message'] = "Logout Success!";
-	//			return response($res);
-	//		}else{
-	//			$res['message'] = "Logout Success!";
-	//			return response($res);
-	//		}
-    //    }
-	//	else{
-	//		$res['message'] = "Data Not Found!";
-	//		return response($res);
-	//	}
-    //}
-	public function siswaLogout(Request $request)
+	public function siswaLogout($username)
     {
-        $datasiswa = siswa::where('token', $request->token)->first();
+        $datasiswa = siswa::where('nama_pengguna', $username)->first();
         if ($datasiswa!=null) {
 			if($datasiswa->token != null){
 				$tokensiswa = new siswa;

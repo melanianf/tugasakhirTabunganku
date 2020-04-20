@@ -13,13 +13,12 @@
 
 Route::get('registrasi/name/{name}/email/{email}/password/{password}', 'Auth\RegisterController@createNewUser');
 //Route::get('api/login/{username}/pass/{password}', 'myAPIController@siswaLogin');
-//Route::get('api/logout/{username}', 'myAPIController@siswaLogout');
+Route::get('api/logout/{username}', 'myAPIController@siswaLogout');
 Route::get('api/{jenistabungan}/t/{token}','myAPIController@getTransaksi');
 Route::get('api/detail/{jenistabungan}/t/{token}', 'myAPIController@getDetailTabungan');
 Route::get('api/getSaldoAll/{token}', 'myAPIController@getSaldoAll');
 Route::get('api/getSaldo/{jenistabungan}/t/{token}', 'myAPIController@getSaldo');
 Route::post('api/login', 'myAPIController@siswaLogin');
-Route::post('api/logout', 'myAPIController@siswaLogout');
 Route::post('api/editTelp', 'myAPIController@editNomor');
 
 Route::group(['midlleware' => 'web'], function() {

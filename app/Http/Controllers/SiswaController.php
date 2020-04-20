@@ -23,36 +23,36 @@ use Validator;
 
 class SiswaController extends Controller
 {
-    //
     public function index(Request $request, Builder $htmlBuilder)
     {
         if ($request->ajax()) {
-            $data = DB::table('siswa')->get();
+            $data = DB::table('siswa')->get(); 
             return Datatables::of($data)//->make(true);
-                 ->addColumn('action', function($data) {
-                    return view('datatable._action', [
-                        'model'             => $data,
-                        'form_url'          => route('siswa.destroy', $data->id),
-                        'edit_url'          => route('siswa.edit', $data->id),
-                        'confirm_message'    => 'Yakin mau menghapus ' . $data->nama_lengkap . '?'
+                 ->addColumn('action', function($data) { // menambahkan tabel berisikan 2 fungsi. Penambahan kolom jenis ini dapat dilakukan
+                    return view('datatable._action', [   //  apabila informasi dari kolom berada diluar dari tabel  yang ingin di tampilkan 
+                        'model'             => $data,     
+                        'form_url'          => route('siswa.destroy', $data->id), //fungsi untuk menghapus siswa ynng dipilih
+                        'edit_url'          => route('siswa.edit', $data->id), //fungsi untuk menghapus siswa ynng dipilih
+                        'confirm_message'    => 'Yakin mau menghapus ' . $data->nama_lengkap . '?' //menampilkan pop-up sebelum data akan dihapus
                     ]);
             })->make(true);
         }
 
         $html = $htmlBuilder
-            ->addColumn(['data' => 'nis', 'name' => 'nis', 'title' => 'NIS'])
-            ->addColumn(['data' => 'nama_lengkap', 'name' => 'nama_lengkap', 'title' => 'Nama Lengkap'])
-            ->addColumn(['data' => 'kelas', 'name' => 'kelas', 'title' => 'Kelas'])
-            ->addColumn(['data' => 'angkatan', 'name' => 'angkatan', 'title' => 'Angkatan'])
-            ->addColumn(['data' => 'ttl', 'name' => 'ttl', 'title' => 'TTL'])
-            ->addColumn(['data' => 'telp_ortu', 'name' => 'telp_ortu', 'title' => 'Telp Ortu'])
-            ->addColumn(['data' => 'email', 'name' => 'email', 'title' => 'Email'])
-            ->addColumn(['data' => 'nama_pengguna', 'name' => 'nama_pengguna', 'title' => 'Nama Pengguna'])
-            ->addColumn(['data' => 'katasandi', 'name' => 'katasandi', 'title' => 'Kata Sandi'])
-            ->addColumn(['data' => 'aktif', 'name' => 'aktif', 'title' => 'Aktif'])
+            ->addColumn(['data' => 'nis', 'name' => 'nis', 'title' => 'NIS']) //menambahkan kolom NIS, data dan name diisikan field pada tabel
+            ->addColumn(['data' => 'nama_lengkap', 'name' => 'nama_lengkap', 'title' => 'Nama Lengkap']) //menambahkan kolom Nama Lengkap
+            ->addColumn(['data' => 'kelas', 'name' => 'kelas', 'title' => 'Kelas']) //menambahkan kolom Kelas
+            ->addColumn(['data' => 'angkatan', 'name' => 'angkatan', 'title' => 'Angkatan']) //menambahkan kolom Angkatan
+            ->addColumn(['data' => 'ttl', 'name' => 'ttl', 'title' => 'TTL']) //menambahkan kolom TTL
+            ->addColumn(['data' => 'telp_ortu', 'name' => 'telp_ortu', 'title' => 'Telp Ortu']) //menambahkan kolom Telp Ortu
+            ->addColumn(['data' => 'email', 'name' => 'email', 'title' => 'Email']) //menambahkan kolom Email
+            ->addColumn(['data' => 'nama_pengguna', 'name' => 'nama_pengguna', 'title' => 'Nama Pengguna']) //menambahkan kolom Nama Pengguna
+            ->addColumn(['data' => 'katasandi', 'name' => 'katasandi', 'title' => 'Kata Sandi']) //menambahkan kolom Kata Sandi
+            ->addColumn(['data' => 'aktif', 'name' => 'aktif', 'title' => 'Aktif']) //menambahkan kolom Aktif
             ->addColumn(['data' => 'action', 'name' => 'action', 'title' => 'Action', 'orderable' => false, 'searchable' => false]);
-
-        return view('siswa.index')->with(compact('html'));
+            // menambahkan kolom Action, kolom ini tidak dapat di urutkan maupun dicari, maka perlu dilakukan penambahan 'orderable' => false,
+            // 'searchable' => false
+        return view('siswa.index')->with(compact('html')); //Mengirimkan Data Tables untuk di tampilkan pada view siswa.index
     }
     public function create()
     {

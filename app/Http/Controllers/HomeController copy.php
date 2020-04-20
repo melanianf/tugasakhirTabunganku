@@ -34,24 +34,10 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        if (Laratrust::hasRole('member')) {
-
-            $borrowLogs = Auth::user()->borrowLogs()->borrowed()->get();
-
-            return view('dashboard.member', compact('borrowLogs'));
-        }
-		else if (Laratrust::hasRole('walikelas')) {
+		if (Laratrust::hasRole('walikelas')) {
             return view('dashboard.guru');
         }
         else if (Laratrust::hasRole('admin')) {
-
-            $author = Author::all();
-
-            $book = Book::all();
-
-            $member = Role::where('name', 'member')->first()->users;
-
-            $borrow = BorrowLog::all();
 
             $siswa = siswa::all();
 
