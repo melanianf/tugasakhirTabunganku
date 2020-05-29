@@ -186,6 +186,7 @@
                                     <span>Buku</span>
                                 </a>
                             </li>
+                            
                             @endrole
 
                             @role('admin')
@@ -218,7 +219,7 @@
                             </li>
                             <li class="treeview {!! Request::is('admin/tabungan') ? 'active' : '' !!}">
                                 <a href="{{ route('tabungansiswa.index') }}">
-                                    <i class="fa fa-book"></i>
+                                    <i class="fa fa-credit-card-alt" aria-hidden="true"></i>
                                     <span>Tabungan</span>
                                 </a>
                             </li>

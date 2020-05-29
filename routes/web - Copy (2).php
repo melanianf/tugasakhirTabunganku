@@ -10,56 +10,17 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-//DIPAKAI
 
-//Login Siswa
-Route::post('api/login', 'myAPIController@siswaLogin');
-
-//Logout
-//Route::get('api/logout/{token}', 'myAPIController@siswaLogout');
-Route::post('api/logout/{token}', 'myAPIController@siswaLogout');
-
-//Profile Siswa
-Route::get('api/detail_profile/{token}', 'myAPIController@getSiswa');
-
-//List Transaksi Siswa
-Route::get('api/transaksi/{token}', 'myAPIController@getTransaksiSiswa');
-
-//GET SALDO SISWA
-Route::get('api/getSaldo/{token}', 'myAPIController@getSaldoSiswa');
-
-//List Tabungan
-Route::get('api/tabungan', 'myAPIController@getJenisTabungan');
-
-//EDIT NO TELP ORTU
-Route::put('api/editTelp/{token}', 'myAPIController@editNomor');
-
-//EDIT Password
-//Route::put('api/editPasswd/{token}', 'myAPIController@editNomor');
-Route::put('api/editPasswd', 'myAPIController@editPassword');
-
-//GET SALDO
-Route::get('api/getSaldoAll/{token}', 'myAPIController@getSaldoAll');
-
-//GET WALI KELAS 
-Route::get('api/getKelas/{token}', 'myAPIController@getKelas');
-
-//TRANSAKSI TERATAS
-Route::get('api/getTransaksiTerakhir/{token}', 'myAPIController@getTransaksiTerakhir');
-
-//TIDAK DIPAKAI
-
-//Registrasi Wali kelas
 Route::get('registrasi/name/{name}/email/{email}/password/{password}', 'Auth\RegisterController@createNewUser');
 //Route::get('api/login/{username}/pass/{password}', 'myAPIController@siswaLogin');
-
-//List Transaksi 
+//Route::get('api/logout/{username}', 'myAPIController@siswaLogout');
 Route::get('api/{jenistabungan}/t/{token}','myAPIController@getTransaksi');
-
-//Detail Transaksi
 Route::get('api/detail/{jenistabungan}/t/{token}', 'myAPIController@getDetailTabungan');
-
-Route::get('api/getSaldo/{jenistabungan}/{token}', 'myAPIController@getSaldo');
+Route::get('api/getSaldoAll/{token}', 'myAPIController@getSaldoAll');
+Route::get('api/getSaldo/{jenistabungan}/t/{token}', 'myAPIController@getSaldo');
+Route::post('api/login', 'myAPIController@siswaLogin');
+Route::post('api/logout', 'myAPIController@siswaLogout');
+Route::post('api/editTelp', 'myAPIController@editNomor');
 
 Route::group(['midlleware' => 'web'], function() {
 
@@ -68,10 +29,8 @@ Route::group(['midlleware' => 'web'], function() {
 
     // Index
     Route::get('/', 'HomeController@index');
-
     Route::get('/home', 'HomeController@index');
 
-    Route::resource('tabungansiswa', 'TabunganController');
     //
     // Member
     //
@@ -127,11 +86,15 @@ Route::group(['midlleware' => 'web'], function() {
     // Admin
     Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], function() {
         Route::resource('siswa', 'SiswaController');
+        //Route::post('/siswa/edit, 'SiswaController@edit');
+        //Route::get('/siswa/index, 'SiswaController@index');
+
         Route::resource('walikelas', 'WalikelasController');
         Route::resource('jenistabungan', 'JenisTabunganController');
         Route::resource('kelas', 'KelasController');
         Route::resource('authors', 'AuthorsController');
         Route::resource('books', 'BooksController');
+        Route::resource('tabungansiswa', 'TabunganController');
         Route::resource('members', 'MembersController', [
             'only' => ['index', 'show', 'destroy']
         ]);
@@ -156,8 +119,8 @@ Route::group(['midlleware' => 'web'], function() {
             'as' => 'export.books.post',
             'uses' => 'BooksController@exportPost'
         ]);
-		
-		// Export Tabungan
+        
+        // Export Tabungan
         Route::get('export/tabungan', [
             'as' => 'export.tabungan',
             'uses' => 'TabunganController@export'
@@ -177,11 +140,6 @@ Route::group(['midlleware' => 'web'], function() {
         Route::post('import/books', [
             'as' => 'import.books',
             'uses' => 'BooksController@importExcel'
-        ]);
-
-        Route::put('walikelas/upload', [
-            'as' => 'walikelas.upload',
-            'uses' => 'WalikelasController@upload'
         ]);
 
         // Route::put('walikelas/upload', [

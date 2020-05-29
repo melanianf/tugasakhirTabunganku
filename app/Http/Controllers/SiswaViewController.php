@@ -25,8 +25,12 @@ class SiswaViewController extends Controller
     //
     public function index(Request $request, Builder $htmlBuilder)
     {
+		//cari kelas dari guru yang login
+		$nama_guru = Auth::user()->name;
+		$kelas_guru = DB::table('kelas')->where('wali_kelas',$nama_guru)->first();
+		
         if ($request->ajax()) {
-            $data = DB::table('siswa')->get();
+            $data = DB::table('siswa')->where('kelas',$kelas_guru->kelas)->get();
             return Datatables::of($data)->make(true);
             //      ->addColumn('action', function($data) {
             //          return view('datatable._action', [

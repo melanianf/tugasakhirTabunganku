@@ -18,6 +18,23 @@ class SetorTunaiController extends Controller
 
     public function store(Request $request)
     {
+		// Validasi
+        $this->validate($request, [
+            'nis' => 'required|numeric|min:10' ,
+            'jenis_tabungan' => 'required|alpha_dash' ,
+			'nominal' => 'required|numeric|min:0|not_in:0' ,
+        ], [
+			'nis.required' => 'Anda belum memasukan nomor induk siswa!',
+			'nis.numeric' => 'nis hanya dapat terdiri dari angka!',
+            'nis.min' => 'nis tidak valid!',
+			'jenis_tabungan.required' => 'Anda belum memasukan jenis tabungan!',
+			'jenis_tabungan.alpha_dash' => 'Kelas hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Reguler_12',
+            'nominal.required' => 'Anda belum memasukan nominal transaksi!',
+			'nominal.numeric' => 'nominal hanya dapat terdiri dari angka!',
+			'nominal.min' => 'nominal tidak valid!',
+			'nominal.not_in' => 'nominal tidak valid!',
+        ]);
+		
         //Menyimpan Data pada Transaksi
         //Menyiapkan Kode Transaksi
         //Ex : T1REG123
@@ -57,7 +74,5 @@ class SetorTunaiController extends Controller
         }
         return redirect()->route('mutasi.index');
     }
-
-    
 
 }

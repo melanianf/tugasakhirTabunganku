@@ -80,5 +80,7 @@
 
 <div class="box-footer">
     {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}
+    
+    <button type="button" class = "btn btn-batal" onclick="window.location='{{ route('siswa.index') }}'">Batal</button>
     <!-- {!! Form::submit('Kembali', ['class' => 'btn btn-primary1']) !!} -->
 </div>

@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('dashboard')
-    Buku
-    <small>Tambah Buku</small>
+    Kelas
+    <small>Tambah Kelas</small>
 @endsection
 
 @section('breadcrumb')
     <li><a href="{{ url('home') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="{{ url('/admin/books') }}">Buku</a></li>
-    <li class="active">Tambah Buku</li>
+    <li><a href="{{ url('/admin/books') }}">Kelas</a></li>
+    <li class="active">Tambah Kelas</li>
 @endsection
 
 @section('content')
@@ -16,7 +16,7 @@
         <div class="col-md-6">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title">Isi Form</h3>
+                    <h3 class="box-title">Tambah Kelas</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->

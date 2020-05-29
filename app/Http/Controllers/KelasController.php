@@ -74,6 +74,21 @@ class KelasController extends Controller
 
     public function update(Request $request, $id)
     {
+		// Validasi
+        $this->validate($request, [
+            'kelas' => 'required|alpha_dash|unique:Kelas,kelas' ,
+            //'wali_kelas' => 'required|regex:/^[\pL\s\-]+$/u|unique:Kelas,wali_kelas|exists:Walikelas,nama_lengkap' ,
+			'wali_kelas' => 'required|regex:/^[\pL\s\-]+$/u|unique:Kelas,wali_kelas' ,
+        ], [
+			'kelas.required' => 'Anda belum memasukan nama kelas!',
+			'kelas.alpha_dash' => 'Kelas hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : XII-A',
+			'kelas.unique' => 'Kelas sudah di tambahkan!',
+            'wali_kelas.required' => 'Anda belum memasukan nama walikelas!',
+			'wali_kelas.regex' => 'Nama walikelas hanya dapat terdiri dari alfabet dan spasi!',
+			'wali_kelas.unique' => 'Walikelas sudah di tambahkan!',
+			//'wali_kelas.exists' => 'Walikelas belum terdaftar!',
+        ]);
+		
         $data = DB::table('kelas')->where('id',$id)->first();
         $updated = DB::table('kelas')->where('id',$id)->update([
             'kelas' => $request->kelas,
@@ -84,13 +99,26 @@ class KelasController extends Controller
         Session::flash("flash_notification", [
             "level" => "success",
             "icon" => "fa fa-check",
-            "message" => "Berhasil menyimpan! "//.$data->nama_lengkap
+            "message" => "Kelas ".$data->kelas." berhasil diubah!"
         ]);
         return redirect()->route('kelas.index');
     }    
 
     public function store(Request $request)
     {
+		$this->validate($request, [
+            'kelas' => 'required|alpha_dash|unique:Kelas,kelas' ,
+            'wali_kelas' => 'required|regex:/^[\pL\s\-]+$/u|unique:Kelas,wali_kelas|exists:App\Walikelas,nama_lengkap' ,
+        ], [
+			'kelas.required' => 'Anda belum memasukan nama kelas!',
+			'kelas.alpha_dash' => 'Kelas hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : XII-A',
+			'kelas.unique' => 'Kelas sudah di tambahkan!',
+            'wali_kelas.required' => 'Anda belum memasukan nama walikelas!',
+			'wali_kelas.regex' => 'Nama walikelas hanya dapat terdiri dari alfabet dan spasi!',
+			'wali_kelas.unique' => 'Walikelas sudah di tambahkan!',
+			'wali_kelas.exists' => 'Walikelas belum terdaftar!',
+        ]);
+		
         $created = Kelas::create([
             'kelas' => $request->kelas,
             'wali_kelas' => $request->wali_kelas,
@@ -101,7 +129,7 @@ class KelasController extends Controller
         Session::flash("flash_notification", [
             "level" => "success",
             "icon" => "fa fa-check",
-            "message" => "Berhasil Menambahkan Data! "//.$data->nama_lengkap
+            "message" => "Kelas ".$request->kelas." berhasil ditambahkan!"
         ]);
         return redirect()->route('kelas.index');
     }

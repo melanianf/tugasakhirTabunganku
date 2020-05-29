@@ -393,53 +393,5 @@ class myAPIController extends Controller
 	//	}
 	//}
 	
-	//Menampilkan data kelas siswa
-	public function getKelas($token){
-		$datasiswa = siswa::where('token', $token)->first();
-		if($datasiswa!=null){
-			$data_kelas = DB::table('kelas')->where('kelas',$datasiswa->kelas)->first();
-			$data_wali = DB::table('wali_kelas')->where('nama_lengkap', $data_kelas->wali_kelas)->first();
-			if($datasiswa!=null){
-				return response()->json([
-				'status' => 'success',
-				'data_kelas' => $data_kelas,
-				'data_wali' => $data_wali
-				]);
-			}
-			else{
-				return response()->json([
-					'status' => 'empty',
-				]);
-			}
-		}
-		else{
-			return response()->json([
-				'status' => 'error!',
-			]);
-		}
-	}
-
-	//transaksi teratas milik siswa -> untuk badge notification
-	public function getTransaksiTerakhir($token){
-		$datasiswa = siswa::where('token',$token)->first();
-		if($datasiswa!=null){
-			$data_transaksi = DB::table('transaksi')->where('nis',$datasiswa->nis)->orderByDesc('created_at')->first(); 
-			if($datasiswa!=null){
-				return response()->json([
-					'status' => 'success',
-					'data_transaksi' => $data_transaksi
-				]);
-			}
-			else{
-				return response()->json([
-					'status' => 'empty',
-				]);
-			}
-		}else{
-			return response()->json([
-				'status' => 'error!',
-			]);
-		}
-	}
 
 }

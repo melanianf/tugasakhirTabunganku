@@ -16,9 +16,9 @@
         <div class="col-md-12">
             <div class="callout callout-success">
               <h4>Selamat Datang di TabunganKu</h4>
-
-              <p>Sistem Informasi Tabungan Siswa Laravel 5.4 & AdminLTE</p>
-              <p>Dibuat oleh <a href="https://www.instagram.com/melania.fitria" target="_blank">Melania Nur Fitriansa</a>, lihat respository <a href="#" target="_blank">GitHub</a></p>
+              <p>Sistem Tabungan Siswa Digital</p>
+              <!-- <p>Sistem Informasi Tabungan Siswa Laravel 5.4 & AdminLTE</p>
+              <p>Dibuat oleh <a href="https://www.instagram.com/melania.fitria" target="_blank">Melania Nur Fitriansa</a>, lihat respository <a href="#" target="_blank">GitHub</a></p> -->
             </div>
         </div>
     </div>

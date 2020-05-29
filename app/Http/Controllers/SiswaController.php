@@ -24,7 +24,7 @@ use Validator;
 class SiswaController extends Controller
 {
     public function index(Request $request, Builder $htmlBuilder)
-    {
+    {	
         if ($request->ajax()) {
             $data = DB::table('siswa')->get(); 
             return Datatables::of($data)//->make(true);
@@ -82,6 +82,33 @@ class SiswaController extends Controller
 
     public function update(Request $request, $id)
     {
+		$this->validate($request, [
+            'nis' => 'required|numeric|min:10' ,
+            'nama_lengkap' => 'required|regex:/^[\pL\s\-]+$/u',
+            'avatar' => 'nullable',
+			'kelas' => 'required|alpha_dash' ,
+			'angkatan' => 'required|numeric' ,
+			'email' => 'required|email|unique:siswa,email',
+			'nama_pengguna' => 'required|alpha_dash' ,
+			'katasandi' => 'required',
+        ], [
+			'nis.required' => 'Anda belum memasukan nomor induk siswa!',
+			'nis.numeric' => 'nis hanya dapat terdiri dari angka!',
+            'nis.min' => 'nis tidak valid!',
+			'nama_lengkap.required' => 'Anda belum memasukan nama siswa!',
+			'nama_lengkap.regex' => 'nama hanya dapat terdiri dari alfabet dan spasi!',            
+			'kelas.required' => 'Anda belum memasukan kelas siswa!',
+			'kelas.alpha_dash' => 'Kelas hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Reguler_12',
+			'angkatan.required' => 'Anda belum memasukan angkatan siswa!',
+			'angkatan.numeric' => 'Angkatan hanya dapat terdiri dari angka!',
+			'email.required' => 'Anda belum memasukan email siswa!',
+			'email.email' => 'Email tidak valid!',
+			'email.unique' => 'Email sudah terdaftar pada sistem!',
+			'nama_pengguna.required' => 'Anda belum memasukan nama_pengguna siswa!',
+			'nama_pengguna.alpha_dash' => 'Nama pengguna hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Reguler_12',
+			'katasandi.required' => 'Anda belum memasukan nama_pengguna siswa!',
+        ]);
+		
         if($request->aktif!=1){
             $request->aktif=0;
         }
@@ -146,7 +173,37 @@ class SiswaController extends Controller
     }    
 
     public function store(Request $request)
-    {        
+    {
+		$this->validate($request, [
+            'nis' => 'required|numeric|min:10' ,
+            'nama_lengkap' => 'required|regex:/^[\pL\s\-]+$/u',
+            'avatar' => 'nullable',
+			'kelas' => 'required|alpha_dash' ,
+			'angkatan' => 'required|numeric' ,
+			'email' => 'required|email|unique:siswa,email',
+			'nama_pengguna' => 'required|alpha_dash' ,
+			'katasandi' => 'required',
+			'telp_ortu' => 'required|numeric',
+        ], [
+			'nis.required' => 'Anda belum memasukan nomor induk siswa!',
+			'nis.numeric' => 'nis hanya dapat terdiri dari angka!',
+            'nis.min' => 'nis tidak valid!',
+			'nama_lengkap.required' => 'Anda belum memasukan nama siswa!',
+			'nama_lengkap.regex' => 'nama hanya dapat terdiri dari alfabet dan spasi!',            
+			'kelas.required' => 'Anda belum memasukan kelas siswa!',
+			'kelas.alpha_dash' => 'Kelas hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Reguler_12',
+			'angkatan.required' => 'Anda belum memasukan angkatan siswa!',
+			'angkatan.numeric' => 'Angkatan hanya dapat terdiri dari angka!',
+			'telp_ortu.required' => 'Anda belum memasukan nomor telefon walimurid!',
+			'telp_ortu.numeric' => 'Nomor telefon hanya dapat terdiri dari angka!',
+			'email.required' => 'Anda belum memasukan email siswa!',
+			'email.email' => 'Email tidak valid!',
+			'email.unique' => 'Email sudah terdaftar pada sistem!',
+			'nama_pengguna.required' => 'Anda belum memasukan nama_pengguna siswa!',
+			'nama_pengguna.alpha_dash' => 'Nama pengguna hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Reguler_12',
+			'katasandi.required' => 'Anda belum memasukan nama_pengguna siswa!',
+        ]);
+		
         if($request->aktif!=1){
             $request->aktif=0;
         }

@@ -62,7 +62,7 @@ class JenisTabunganController extends Controller
         Session::flash("flash_notification", [
             "level" => "success",
             "icon" => "fa fa-check",
-            "message" => "Data berhasil dihapus"
+            "message" => "Data berhasil dihapus!"
         ]);
 
         return redirect()->route('jenistabungan.index');
@@ -76,6 +76,16 @@ class JenisTabunganController extends Controller
 
     public function update(Request $request, $id)
     {
+		// Validasi
+        $this->validate($request, [
+            'nama' => 'required|alpha_dash' ,
+            'deskripsi' => 'required',
+        ], [
+            'nama.required' => 'Anda belum memasukan nama tabungan',
+			'nama.alpha_dash' => 'nama hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Reguler_12',
+			'deskripsi.required' => 'Anda belum memasukan deskripsi',
+        ]);
+		
         if($request->aktif!=1){
             $request->aktif=0;
         }
@@ -91,13 +101,23 @@ class JenisTabunganController extends Controller
         Session::flash("flash_notification", [
             "level" => "success",
             "icon" => "fa fa-check",
-            "message" => "Berhasil menyimpan! "//.$data->nama_lengkap
+            "message" => "Tabungan ".$request->nama." Berhasil di Perbarui!"
         ]);
         return redirect()->route('jenistabungan.index');
     }    
 
     public function store(Request $request)
     {
+		// Validasi
+        $this->validate($request, [
+            'nama' => 'required|alpha_dash' ,
+            'deskripsi' => 'required',
+        ], [
+            'nama.required' => 'Anda belum memasukan nama tabungan',
+			'nama.alpha_dash' => 'nama hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Reguler_12',
+			'deskripsi.required' => 'Anda belum memasukan deskripsi',
+        ]);
+		
         $created = JenisTabungan::create([
             'nama' => $request->nama,
             'deskripsi' => $request->deskripsi,
@@ -109,7 +129,7 @@ class JenisTabunganController extends Controller
         Session::flash("flash_notification", [
             "level" => "success",
             "icon" => "fa fa-check",
-            "message" => "Berhasil Menambahkan Data! "//.$data->nama_lengkap
+            "message" => "Tabungan ".$request->nama." Berhasil di Tambahkan!"
         ]);
         return redirect()->route('jenistabungan.index');
     }

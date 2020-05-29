@@ -28,4 +28,6 @@
 
 <div class="box-footer">
     {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}
+
+    {!! Form::submit('Batal', ['class' => 'btn btn-batal']) !!}
 </div>

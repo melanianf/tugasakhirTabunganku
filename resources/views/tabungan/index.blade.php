@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('dashboard')
-   TABUNGAN
+   Tabungan
    <small>Total Saldo</small>
 @endsection
 

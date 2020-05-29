@@ -62,6 +62,7 @@ class WalikelasController extends Controller
     {
         $walikelas = DB::table('wali_kelas')->where('id',$id)->first();
         $data = DB::table('wali_kelas')->where('id',$id)->delete();
+		$nama_walikelas = $walikelas->nama_lengkap;
         $data = DB::table('users')->where('name',$walikelas->nama_lengkap)->delete();
 
         // Handle hapus buku via ajax
@@ -70,7 +71,7 @@ class WalikelasController extends Controller
         Session::flash("flash_notification", [
             "level" => "success",
             "icon" => "fa fa-check",
-            "message" => "Data berhasil dihapus"
+            "message" => "Data ".$nama_walikelas." berhasil dihapus!"
         ]);
 
         return redirect()->route('walikelas.index');
@@ -84,6 +85,31 @@ class WalikelasController extends Controller
 
     public function update(Request $request, $id)
     {
+		$this->validate($request, [
+            'nip' => 'required|numeric|min:18' ,
+            'nama_lengkap' => 'required|regex:/^[\pL\s\-]+$/u',
+            'avatar' => 'nullable',
+			'alamat' => 'required',
+			'telepon' => 'required|numeric',
+			//'email' => 'required|email|unique:Walikelas,email',
+			'email' => 'required|email',
+			'nama_pengguna' => 'required|alpha_dash' ,
+			'katasandi' => 'required',
+			
+        ], [
+			'nip.required' => 'Anda belum memasukan nomor induk siswa!',
+			'nip.numeric' => 'nis hanya dapat terdiri dari angka!',
+            'nip.min' => 'nis tidak valid!',
+			'nama_lengkap.required' => 'Anda belum memasukan nama siswa!',
+			'nama_lengkap.regex' => 'nama hanya dapat terdiri dari alfabet dan spasi!',            
+			'email.required' => 'Anda belum memasukan email siswa!',
+			'email.email' => 'Email tidak valid!',
+			//'email.unique' => 'Email sudah terdaftar pada sistem!',
+			'nama_pengguna.required' => 'Anda belum memasukan nama_pengguna siswa!',
+			'nama_pengguna.alpha_dash' => 'Nama pengguna hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Reguler_12',
+			'katasandi.required' => 'Anda belum memasukan nama_pengguna siswa!',
+        ]);
+		
         if($request->aktif!=1){
             $request->aktif=0;
         }
@@ -155,13 +181,38 @@ class WalikelasController extends Controller
         Session::flash("flash_notification", [
             "level" => "success",
             "icon" => "fa fa-check",
-            "message" => "Berhasil menyimpan! "//.$data->nama_lengkap
+            "message" => "Data ".$request->nama_pengguna." berhasil di ubah!"
         ]);
         return redirect()->route('walikelas.index');
     }    
 
     public function store(Request $request)
     {   
+		$this->validate($request, [
+            'nip' => 'required|numeric|min:18' ,
+            'nama_lengkap' => 'required|regex:/^[\pL\s\-]+$/u',
+            'avatar' => 'nullable',
+			'alamat' => 'required',
+			'telepon' => 'required|numeric',
+			//'email' => 'required|email|unique:Walikelas,email',
+			'email' => 'required|email',
+			'nama_pengguna' => 'required|alpha_dash' ,
+			'katasandi' => 'required',
+			
+        ], [
+			'nip.required' => 'Anda belum memasukan nomor induk siswa!',
+			'nip.numeric' => 'nis hanya dapat terdiri dari angka!',
+            'nip.min' => 'nis tidak valid!',
+			'nama_lengkap.required' => 'Anda belum memasukan nama siswa!',
+			'nama_lengkap.regex' => 'nama hanya dapat terdiri dari alfabet dan spasi!',            
+			'email.required' => 'Anda belum memasukan email siswa!',
+			'email.email' => 'Email tidak valid!',
+			//'email.unique' => 'Email sudah terdaftar pada sistem!',
+			'nama_pengguna.required' => 'Anda belum memasukan nama_pengguna siswa!',
+			'nama_pengguna.alpha_dash' => 'Nama pengguna hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Reguler_12',
+			'katasandi.required' => 'Anda belum memasukan nama_pengguna siswa!',
+        ]);
+		
         if($request->aktif!=1){
             $request->aktif=0;
         }
@@ -223,7 +274,7 @@ class WalikelasController extends Controller
         Session::flash("flash_notification", [
             "level" => "success",
             "icon" => "fa fa-check",
-            "message" => "Berhasil Menambahkan Data! "//.$data->nama_lengkap
+            "message" => "Data ".$request->nama_pengguna." berhasil di tambahkan!"
         ]);
         $user->verify();
         return redirect()->route('walikelas.index');
