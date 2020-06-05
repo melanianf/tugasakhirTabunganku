@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Html\Builder;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
-use App\Tabungan;
 
 class LaporanController extends Controller
 {
@@ -15,17 +14,12 @@ class LaporanController extends Controller
 		//$from = date('2018-01-01');
 		//$to = date('2018-05-02');
 		//Reservation::whereBetween('reservation_from', [$from, $to])->get();
-		$from = strtotime($request->tanggal_awal);
-		$from_date = date('Y-m-d H:i:s', $from); 
-		$to = strtotime($request->tanggal_akhir);
-		$to_date = date('Y-m-d H:i:s', $to); 
-		$tabsis = $request->jenistab; 
-		
-		//$data = DB::table('transaksi')->whereBetween(DB::raw('DATE(created_at)'), array($from_date, $to_date))->get();
-		$data = DB::table('transaksi')->get();
+		$from = date($request->tanggal_awal);
+		$to = date($request->tanggal_akhir);
+        $today = date('Y-m-d H:i:s');
+        
         if ($request->ajax()) {
-            //$data = DB::table('transaksi')->whereBetween(DB::raw('DATE(created_at)'), array($from_date, $to_date))->get();
-			//$data = DB::table('transaksi')->where('jenis_tabungan',$request->jenistab)->get();
+            $data = DB::table('transaksi')->whereBetween(DB::raw('DATE(created_at)'), array($from, $to))->get();
             return Datatables::of($data)
                 ->addColumn('nama', function($data) {
                     //fungsi persotoyan
@@ -47,9 +41,8 @@ class LaporanController extends Controller
             
         return view('laporan.index')->with(compact('html'));
         //return abort(404, 'Page not found');
-		//return $request->jenistab;
     }
-	public function periode()
+	public function periode(Request $request)
     {
         return view('laporan.create');
     }

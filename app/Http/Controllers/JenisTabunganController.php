@@ -78,11 +78,11 @@ class JenisTabunganController extends Controller
     {
 		// Validasi
         $this->validate($request, [
-            'nama' => 'required|alpha_dash' ,
+            //'nama' => 'required|alpha_dash' ,
             'deskripsi' => 'required',
         ], [
-            'nama.required' => 'Anda belum memasukan nama tabungan',
-			'nama.alpha_dash' => 'nama hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Reguler_12',
+            //'nama.required' => 'Anda belum memasukan nama tabungan',
+			//'nama.alpha_dash' => 'nama hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Reguler_12',
 			'deskripsi.required' => 'Anda belum memasukan deskripsi',
         ]);
 		
@@ -92,7 +92,7 @@ class JenisTabunganController extends Controller
         
         $data = DB::table('jenis_tabungan')->where('id',$id)->first();
         $updated = DB::table('jenis_tabungan')->where('id',$id)->update([
-            'nama' => $request->nama,
+            //'nama' => $request->nama,
             'deskripsi' => $request->deskripsi,
             'aktif' => $request->aktif,
             'updated_at' => date('Y-m-d H:i:s')

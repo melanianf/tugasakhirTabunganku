@@ -2,12 +2,11 @@
 
 @section('dashboard')
     Password
-    <small>Ubah Password</small>
+    <small>Edit Password</small>
 @endsection
 
 @section('breadcrumb')
     <li><a href="{{ url('home') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="{{ url('/settings/profile/') }}">Profile</a></li>
     <li class="active">Ubah Password</li>
 @endsection
 
@@ -15,8 +14,8 @@
     <div class="row">
         <div class="col-md-6">
             <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Ubah Password</h3>
+                <div class="box-header">
+                    <h3 class="box-title">Edit Password</h3>
                 </div>
                 <!-- /.box-header -->
                 {!! Form::open(['url' => url('/settings/password'), 'method' => 'post']) !!}
@@ -47,6 +46,8 @@
 
                     <div class="box-footer">
                         {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}
+
+                        <!-- {!! Form::submit('Reset', ['class' => 'btn btn-batal']) !!} -->
                     </div>
                 {!! Form::close() !!}
             </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\siswa;
+use App\Kelas;
 use App\Book;
 use App\Author;
 use App\BorrowLog;
@@ -35,7 +36,18 @@ class SiswaController extends Controller
                         'edit_url'          => route('siswa.edit', $data->id), //fungsi untuk menghapus siswa ynng dipilih
                         'confirm_message'    => 'Yakin mau menghapus ' . $data->nama_lengkap . '?' //menampilkan pop-up sebelum data akan dihapus
                     ]);
-            })->make(true);
+				})
+				->addColumn('status', function($data) {
+						//fungsi persotoyan
+						if ($data->aktif == 1){
+							return "aktif";
+						}
+						else{
+							return "nonaktif";
+						}
+				
+					})
+			->make(true);
         }
 
         $html = $htmlBuilder
@@ -47,8 +59,9 @@ class SiswaController extends Controller
             ->addColumn(['data' => 'telp_ortu', 'name' => 'telp_ortu', 'title' => 'Telp Ortu']) //menambahkan kolom Telp Ortu
             ->addColumn(['data' => 'email', 'name' => 'email', 'title' => 'Email']) //menambahkan kolom Email
             ->addColumn(['data' => 'nama_pengguna', 'name' => 'nama_pengguna', 'title' => 'Nama Pengguna']) //menambahkan kolom Nama Pengguna
-            ->addColumn(['data' => 'katasandi', 'name' => 'katasandi', 'title' => 'Kata Sandi']) //menambahkan kolom Kata Sandi
-            ->addColumn(['data' => 'aktif', 'name' => 'aktif', 'title' => 'Aktif']) //menambahkan kolom Aktif
+            //->addColumn(['data' => 'katasandi', 'name' => 'katasandi', 'title' => 'Kata Sandi']) //menambahkan kolom Kata Sandi
+            //->addColumn(['data' => 'aktif', 'name' => 'aktif', 'title' => 'Aktif']) //menambahkan kolom Aktif
+			->addColumn(['data' => 'status', 'name' => 'status', 'title' => 'Status'])
             ->addColumn(['data' => 'action', 'name' => 'action', 'title' => 'Action', 'orderable' => false, 'searchable' => false]);
             // menambahkan kolom Action, kolom ini tidak dapat di urutkan maupun dicari, maka perlu dilakukan penambahan 'orderable' => false,
             // 'searchable' => false
@@ -60,6 +73,8 @@ class SiswaController extends Controller
     }
     public function destroy(Request $request, $id)
     {
+		$data_siswa = DB::table('siswa')->where('id',$id)->first();
+		$nama_siswa = $data_siswa->nama_lengkap;
         $data = DB::table('siswa')->where('id',$id)->delete();
 
         // Handle hapus buku via ajax
@@ -68,7 +83,7 @@ class SiswaController extends Controller
         Session::flash("flash_notification", [
             "level" => "success",
             "icon" => "fa fa-check",
-            "message" => "Data berhasil dihapus"
+            "message" => "Data siswa ".$nama_siswa." berhasil dihapus!"
         ]);
 
         return redirect()->route('siswa.index');
@@ -88,25 +103,33 @@ class SiswaController extends Controller
             'avatar' => 'nullable',
 			'kelas' => 'required|alpha_dash' ,
 			'angkatan' => 'required|numeric' ,
-			'email' => 'required|email|unique:siswa,email',
+			'email' => 'required|email',
 			'nama_pengguna' => 'required|alpha_dash' ,
 			'katasandi' => 'required',
+			'telp_ortu' => 'required|numeric',
+			'ttl' => 'required|date_format:Y-m-d',
         ], [
 			'nis.required' => 'Anda belum memasukan nomor induk siswa!',
 			'nis.numeric' => 'nis hanya dapat terdiri dari angka!',
             'nis.min' => 'nis tidak valid!',
+			//'nis.unique' => 'nis sudah terdaftar!',
 			'nama_lengkap.required' => 'Anda belum memasukan nama siswa!',
 			'nama_lengkap.regex' => 'nama hanya dapat terdiri dari alfabet dan spasi!',            
 			'kelas.required' => 'Anda belum memasukan kelas siswa!',
 			'kelas.alpha_dash' => 'Kelas hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Reguler_12',
+			//'kelas.exist' => 'Kelas belum terdaftar!',
 			'angkatan.required' => 'Anda belum memasukan angkatan siswa!',
 			'angkatan.numeric' => 'Angkatan hanya dapat terdiri dari angka!',
+			'telp_ortu.required' => 'Anda belum memasukan nomor telefon walimurid!',
+			'telp_ortu.numeric' => 'Nomor telefon hanya dapat terdiri dari angka!',
 			'email.required' => 'Anda belum memasukan email siswa!',
 			'email.email' => 'Email tidak valid!',
-			'email.unique' => 'Email sudah terdaftar pada sistem!',
+			//'email.unique' => 'Email sudah terdaftar pada sistem!',
 			'nama_pengguna.required' => 'Anda belum memasukan nama_pengguna siswa!',
 			'nama_pengguna.alpha_dash' => 'Nama pengguna hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Reguler_12',
 			'katasandi.required' => 'Anda belum memasukan nama_pengguna siswa!',
+			'ttl.required' => 'Anda belum memasukan nama_pengguna siswa!',
+			'ttl.date_format' => 'Format tanggal salah! Format: Tahun-Bulan-Hari',
         ]);
 		
         if($request->aktif!=1){
@@ -122,7 +145,7 @@ class SiswaController extends Controller
             'telp_ortu' => $request->telp_ortu,
             'email' => $request->email,
             'nama_pengguna' => $request->nama_pengguna,
-            'katasandi' => $request->katasandi,
+            'katasandi' => bcrypt($request->katasandi),
             'aktif' => $request->aktif,
             'updated_at' => date('Y-m-d H:i:s')
         ]);
@@ -165,7 +188,7 @@ class SiswaController extends Controller
         Session::flash("flash_notification", [
             "level" => "success",
             "icon" => "fa fa-check",
-            "message" => "Berhasil menyimpan! "//.$data->nama_lengkap
+            "message" => "Siswa ".$request->nama_lengkap." berhasil diubah! "
         ]);
         
         return redirect()->route('siswa.index');
@@ -175,7 +198,7 @@ class SiswaController extends Controller
     public function store(Request $request)
     {
 		$this->validate($request, [
-            'nis' => 'required|numeric|min:10' ,
+            'nis' => 'required|numeric|min:10|unique:siswa,nis' ,
             'nama_lengkap' => 'required|regex:/^[\pL\s\-]+$/u',
             'avatar' => 'nullable',
 			'kelas' => 'required|alpha_dash' ,
@@ -184,14 +207,17 @@ class SiswaController extends Controller
 			'nama_pengguna' => 'required|alpha_dash' ,
 			'katasandi' => 'required',
 			'telp_ortu' => 'required|numeric',
+			'ttl' => 'required|date_format:Y-m-d',
         ], [
 			'nis.required' => 'Anda belum memasukan nomor induk siswa!',
 			'nis.numeric' => 'nis hanya dapat terdiri dari angka!',
             'nis.min' => 'nis tidak valid!',
+			'nis.unique' => 'nis sudah terdaftar!',
 			'nama_lengkap.required' => 'Anda belum memasukan nama siswa!',
 			'nama_lengkap.regex' => 'nama hanya dapat terdiri dari alfabet dan spasi!',            
 			'kelas.required' => 'Anda belum memasukan kelas siswa!',
 			'kelas.alpha_dash' => 'Kelas hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Reguler_12',
+			//'kelas.exist' => 'Kelas belum terdaftar!',
 			'angkatan.required' => 'Anda belum memasukan angkatan siswa!',
 			'angkatan.numeric' => 'Angkatan hanya dapat terdiri dari angka!',
 			'telp_ortu.required' => 'Anda belum memasukan nomor telefon walimurid!',
@@ -202,6 +228,8 @@ class SiswaController extends Controller
 			'nama_pengguna.required' => 'Anda belum memasukan nama_pengguna siswa!',
 			'nama_pengguna.alpha_dash' => 'Nama pengguna hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Reguler_12',
 			'katasandi.required' => 'Anda belum memasukan nama_pengguna siswa!',
+			'ttl.required' => 'Anda belum memasukan nama_pengguna siswa!',
+			'ttl.date_format' => 'Format tanggal salah! Format: Tahun-Bulan-Hari',
         ]);
 		
         if($request->aktif!=1){
@@ -217,7 +245,7 @@ class SiswaController extends Controller
             'telp_ortu' => $request->telp_ortu,
             'email' => $request->email,
             'nama_pengguna' => $request->nama_pengguna,
-            'katasandi' => $request->katasandi,
+            'katasandi' => bcrypt($request->katasandi),
             'aktif' => $request->aktif,
             'token' => null,
             'created_at' => date('Y-m-d H:i:s'),
@@ -262,10 +290,62 @@ class SiswaController extends Controller
         Session::flash("flash_notification", [
             "level" => "success",
             "icon" => "fa fa-check",
-            "message" => "Berhasil Menambahkan Data! "//.$data->nama_lengkap
+            "message" => "Siswa ".$request->nama_lengkap." berhasil ditambahkan! "
         ]);
         return redirect()->route('siswa.index');
-    }   
+    }
+	public function konfirmasi()
+    {
+        return view('siswa.konfirmasi');
+    }
+	public function perbaruistatus(Request $request)
+    {
+        $this->validate($request, [
+            'konfirmasi' => 'required|in:Konfirmasi Ubah Status Siswa'
+        ], [
+			'konfirmasi.required' => 'Anda belum memasukan konfirmasi!',
+			'konfirmasi.in' => 'Pesan Konfirmasi Salah!',
+        ]);
+		
+		//if ($request->konfirmasi == "Konfirmasi Ubah Status Siswa"){
+			$tahun_ini = date("Y");
+			$int_tahun_ini = date("Y", strtotime($tahun_ini));
+			
+			//Update Data Siswa
+			$data = DB::table('siswa')->get();
+			if ($data != null){
+				foreach($data as $siswa){
+					if ($int_tahun_ini - $siswa->angkatan > 3){
+						$updated = DB::table('siswa')->where('nis',$siswa->nis)->update([
+						'aktif' => 0,
+						'updated_at' => date('Y-m-d H:i:s')
+						]);
+					}
+				}
+				Session::flash("flash_notification", [
+				"level" => "success",
+				"icon" => "fa fa-check",
+				"message" => "Berhasil mengubah status siswa! "
+				]);
+			}
+			else{
+				Session::flash("flash_notification", [
+				"level" => "warning",
+				"icon" => "fa fa-check",
+				"message" => "Gagal! Belum terdapat data siswa!"
+				]);
+			}
+			
+		//}
+		//else{
+		//	Session::flash("flash_notification", [
+		//		"level" => "warning",
+		//		"icon" => "fa fa-check",
+		//		"message" => "Pesan Konfirmasi Tidak Valid!"
+		//	]);
+		//}
+		return redirect()->route('siswa.index');
+    }
     
     // public function upload(Request $request, $id)
     // {

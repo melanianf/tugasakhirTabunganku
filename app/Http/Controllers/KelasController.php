@@ -52,6 +52,8 @@ class KelasController extends Controller
     }
     public function destroy(Request $request, $id)
     {
+		$data_kelas = DB::table('kelas')->where('id',$id)->first();
+		$nama_kelas = $data_kelas->kelas;
         $data = DB::table('kelas')->where('id',$id)->delete();
 
         // Handle hapus buku via ajax
@@ -60,7 +62,7 @@ class KelasController extends Controller
         Session::flash("flash_notification", [
             "level" => "success",
             "icon" => "fa fa-check",
-            "message" => "Data berhasil dihapus"
+            "message" => "Data ".$nama_kelas." berhasil dihapus"
         ]);
 
         return redirect()->route('kelas.index');

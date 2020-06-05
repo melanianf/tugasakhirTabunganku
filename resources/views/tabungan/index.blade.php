@@ -2,7 +2,7 @@
 
 @section('dashboard')
    Tabungan
-   <small>Total Saldo</small>
+   <small>Saldo Tabungan</small>
 @endsection
 
 @section('breadcrumb')
@@ -15,7 +15,7 @@
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h2 class="box-title">Tabungan</h2>
+                    <h2 class="box-title">Saldo Tabungan</h2>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">

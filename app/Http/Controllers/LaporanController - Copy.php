@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Html\Builder;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
-use App\Tabungan;
 
 class LaporanController extends Controller
 {
@@ -19,13 +18,10 @@ class LaporanController extends Controller
 		$from_date = date('Y-m-d H:i:s', $from); 
 		$to = strtotime($request->tanggal_akhir);
 		$to_date = date('Y-m-d H:i:s', $to); 
-		$tabsis = $request->jenistab; 
 		
-		//$data = DB::table('transaksi')->whereBetween(DB::raw('DATE(created_at)'), array($from_date, $to_date))->get();
-		$data = DB::table('transaksi')->get();
         if ($request->ajax()) {
             //$data = DB::table('transaksi')->whereBetween(DB::raw('DATE(created_at)'), array($from_date, $to_date))->get();
-			//$data = DB::table('transaksi')->where('jenis_tabungan',$request->jenistab)->get();
+			$data = DB::table('transaksi')->where('jenis_tabungan',$request->jenistab)->get();
             return Datatables::of($data)
                 ->addColumn('nama', function($data) {
                     //fungsi persotoyan

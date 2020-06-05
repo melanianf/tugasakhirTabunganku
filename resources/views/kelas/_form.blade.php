@@ -10,11 +10,13 @@
 
         {!! Form::text('wali_kelas', null, ['class' => 'form-control', 'placeholder' => 'Wali Kelas']) !!}
         {!! $errors->first('wali_kelas', '<p class="help-block">:message</p>') !!}
-    </div>
+    </div>   
+</div>
+    
 <!-- /.box-body -->
 
 <div class="box-footer">
     {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}
 
-    {!! Form::submit('Batal', ['class' => 'btn btn-batal']) !!}
+    <button type="button" class = "btn btn-batal" onclick="window.location='{{ route('kelas.index') }}'">Batal</button>
 </div>

@@ -98,7 +98,7 @@ Route::group(['midlleware' => 'web'], function() {
     //
 
     // Profile
-    Route::get('settings/profile', 'SettingsController@profile');
+    Route::get('settings/profile', 'SettingsController@profile')->name('settings.profile');
 
     // Edit Profile
     Route::get('settings/profile/edit', 'SettingsController@editProfile');
@@ -198,13 +198,22 @@ Route::group(['midlleware' => 'web'], function() {
         ]);
         
         Route::post('/walikelas/update/{id}', 'WalikelasController@upload');
-
+		
+		//Cek Status Aktif Siswa
+		Route::get('status', [
+            'as' => 'siswa.konfirmasi',
+            'uses' => 'SiswaController@konfirmasi'
+        ]);
+		Route::post('status/perbaruistatus', [
+            'as' => 'siswa.perbarui',
+            'uses' => 'SiswaController@perbaruistatus'
+        ]);
     });
 
     // Walikelas
     Route::group(['prefix' => 'walikelas', 'middleware' => ['auth', 'role:walikelas']], function() {
         Route::resource('tariktunai', 'TarikTunai');
-        Route::resource('laporan', 'LaporanController');
+        //Route::resource('laporan', 'LaporanController');
         Route::resource('setortunai', 'SetorTunaiController');
         Route::resource('siswa_view', 'SiswaViewController');
         Route::resource('jenistabungan_view', 'JenisTabunganViewController');
@@ -221,6 +230,10 @@ Route::group(['midlleware' => 'web'], function() {
             'as' => 'tariktunai.index',
             'uses' => 'TransaksiController@transaksiTarik'
         ]);
+		
+		Route::get('/periode', 'LaporanController@periode')->name('laporan.periode');
+		Route::get('/laporan', 'LaporanController@index')->name('laporan.index');
+		Route::post('/laporan', 'LaporanController@index')->name('laporan.store');
 
     });
 });

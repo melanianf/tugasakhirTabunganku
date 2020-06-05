@@ -37,7 +37,18 @@ class WalikelasController extends Controller
                         'edit_url'          => route('walikelas.edit', $data->id),
                         'confirm_message'    => 'Yakin mau menghapus ' . $data->nama_lengkap . '?'
                      ]);
-            })->make(true);
+            })
+			->addColumn('status', function($data) {
+						//fungsi persotoyan
+						if ($data->aktif == 1){
+							return "aktif";
+						}
+						else{
+							return "nonaktif";
+						}
+				
+					})
+			->make(true);
         }
 
         $html = $htmlBuilder
@@ -47,8 +58,8 @@ class WalikelasController extends Controller
             ->addColumn(['data' => 'telepon', 'name' => 'telepon', 'title' => 'Telepon'])
             ->addColumn(['data' => 'email', 'name' => 'email', 'title' => 'Email'])
             ->addColumn(['data' => 'nama_pengguna', 'name' => 'nama_pengguna', 'title' => 'Nama Pengguna'])
-            ->addColumn(['data' => 'katasandi', 'name' => 'katasandi', 'title' => 'Kata Sandi'])
-            ->addColumn(['data' => 'aktif', 'name' => 'aktif', 'title' => 'Aktif'])
+            // ->addColumn(['data' => 'katasandi', 'name' => 'katasandi', 'title' => 'Kata Sandi'])
+            ->addColumn(['data' => 'status', 'name' => 'status', 'title' => 'Status'])
             ->addColumn(['data' => 'action', 'name' => 'action', 'title' => 'Action', 'orderable' => false, 'searchable' => false]);
 
         return view('walikelas.index')->with(compact('html'));
@@ -91,7 +102,7 @@ class WalikelasController extends Controller
             'avatar' => 'nullable',
 			'alamat' => 'required',
 			'telepon' => 'required|numeric',
-			//'email' => 'required|email|unique:Walikelas,email',
+			//'email' => 'required|email|unique:wali_kelas,email',
 			'email' => 'required|email',
 			'nama_pengguna' => 'required|alpha_dash' ,
 			'katasandi' => 'required',
@@ -100,6 +111,7 @@ class WalikelasController extends Controller
 			'nip.required' => 'Anda belum memasukan nomor induk siswa!',
 			'nip.numeric' => 'nis hanya dapat terdiri dari angka!',
             'nip.min' => 'nis tidak valid!',
+			//'nip.unique' => 'NIP sudah terdaftar pada sistem!',
 			'nama_lengkap.required' => 'Anda belum memasukan nama siswa!',
 			'nama_lengkap.regex' => 'nama hanya dapat terdiri dari alfabet dan spasi!',            
 			'email.required' => 'Anda belum memasukan email siswa!',
@@ -123,7 +135,7 @@ class WalikelasController extends Controller
             'telepon' => $request->telepon,
             'email' => $request->email,
             'nama_pengguna' => $request->nama_pengguna,
-            'katasandi' => $request->katasandi,
+            'katasandi' => bcrypt($request->katasandi),
             'aktif' => $request->aktif,
             'updated_at' => date('Y-m-d H:i:s')
         ]);
@@ -181,7 +193,7 @@ class WalikelasController extends Controller
         Session::flash("flash_notification", [
             "level" => "success",
             "icon" => "fa fa-check",
-            "message" => "Data ".$request->nama_pengguna." berhasil di ubah!"
+            "message" => "Wali kelas ".$request->nama_lengkap." berhasil diubah!"
         ]);
         return redirect()->route('walikelas.index');
     }    
@@ -189,13 +201,13 @@ class WalikelasController extends Controller
     public function store(Request $request)
     {   
 		$this->validate($request, [
-            'nip' => 'required|numeric|min:18' ,
+            'nip' => 'required|numeric|min:18|unique:wali_kelas,nip' ,
             'nama_lengkap' => 'required|regex:/^[\pL\s\-]+$/u',
             'avatar' => 'nullable',
 			'alamat' => 'required',
 			'telepon' => 'required|numeric',
-			//'email' => 'required|email|unique:Walikelas,email',
-			'email' => 'required|email',
+			'email' => 'required|email|unique:wali_kelas,email',
+			//'email' => 'required|email',
 			'nama_pengguna' => 'required|alpha_dash' ,
 			'katasandi' => 'required',
 			
@@ -203,11 +215,12 @@ class WalikelasController extends Controller
 			'nip.required' => 'Anda belum memasukan nomor induk siswa!',
 			'nip.numeric' => 'nis hanya dapat terdiri dari angka!',
             'nip.min' => 'nis tidak valid!',
+			'nip.unique' => 'NIP sudah terdaftar pada sistem!',
 			'nama_lengkap.required' => 'Anda belum memasukan nama siswa!',
 			'nama_lengkap.regex' => 'nama hanya dapat terdiri dari alfabet dan spasi!',            
 			'email.required' => 'Anda belum memasukan email siswa!',
 			'email.email' => 'Email tidak valid!',
-			//'email.unique' => 'Email sudah terdaftar pada sistem!',
+			'email.unique' => 'Email sudah terdaftar pada sistem!',
 			'nama_pengguna.required' => 'Anda belum memasukan nama_pengguna siswa!',
 			'nama_pengguna.alpha_dash' => 'Nama pengguna hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Reguler_12',
 			'katasandi.required' => 'Anda belum memasukan nama_pengguna siswa!',
@@ -264,7 +277,7 @@ class WalikelasController extends Controller
             'telepon' => $request->telepon,
             'email' => $request->email,
             'nama_pengguna' => $request->nama_pengguna,
-            'katasandi' => $request->katasandi,
+            'katasandi' => bcrypt($request->katasandi),
             'aktif' => $request->aktif,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
@@ -274,7 +287,7 @@ class WalikelasController extends Controller
         Session::flash("flash_notification", [
             "level" => "success",
             "icon" => "fa fa-check",
-            "message" => "Data ".$request->nama_pengguna." berhasil di tambahkan!"
+            "message" => "Wali kelas ".$request->nama_lengkap." berhasil ditambahkan!"
         ]);
         $user->verify();
         return redirect()->route('walikelas.index');

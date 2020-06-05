@@ -16,13 +16,14 @@
     <div class="form-group has-feedback{{ $errors->has('nominal') ? ' has-error' : '' }}">
         {!! Form::label('nominal', 'Nominal') !!}
 
-        {!! Form::text('nominal', null, ['class' => 'form-control', 'placeholder' => 'Nominal']) !!}
+        {!! Form::text('nominal', null, ['class' => 'form-control', 'placeholder' => 'Nominal, ex: 100000']) !!}
         {!! $errors->first('nominal', '<p class="help-block">:message</p>') !!}
     </div>
+</div>
 <!-- /.box-body -->
 
 <div class="box-footer">
     {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}
 
-    {!! Form::submit('Batal', ['class' => 'btn btn-batal']) !!}
+    <!-- {!! Form::submit('Reset', ['class' => 'btn btn-batal']) !!} -->
 </div>

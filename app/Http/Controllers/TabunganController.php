@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Laratrust\LaratrustFacade as Laratrust;
 use App\siswa;
 use App\tabungan;
 use App\Kelas;
@@ -27,9 +28,24 @@ class TabunganController extends Controller
 {
     //
     public function index(Request $request, Builder $htmlBuilder)
-    {
+    {	
         if ($request->ajax()) {
-            $data = DB::table('tabungan')->get();
+            if (Laratrust::hasRole('walikelas')) {
+				//cari kelas dari guru yang login
+				$nama_guru = Auth::user()->name;
+				$kelas_guru = DB::table('kelas')->where('wali_kelas',$nama_guru)->first();
+				$data_siswa = DB::table('siswa')->where('kelas',$kelas_guru->kelas)->get();
+				$indeks = 0;
+				$data_nis = array();
+				foreach($data_siswa as $siswa){
+					$data_nis[$indeks] = $siswa->nis;
+					$indeks++;
+				}
+				$data = DB::table('tabungan')->whereIn('nis', $data_nis)->get();
+			}
+			else if (Laratrust::hasRole('admin')) {
+				$data = DB::table('tabungan')->get();
+			}
             return Datatables::of($data)
                 ->addColumn('nama', function($data) {
                     //fungsi persotoyan
@@ -52,6 +68,7 @@ class TabunganController extends Controller
                 })
                 ->make(true);
         }
+		$indeks = 0;
 
         $html = $htmlBuilder
             ->addColumn(['data' => 'nis', 'name' => 'nis', 'title' => 'NIS'])

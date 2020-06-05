@@ -2,20 +2,20 @@
 
 @section('dashboard')
     Profile
-    <small>Edit Profile</small>
+    <small>Edit Profil</small>
 @endsection
 
 @section('breadcrumb')
     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="{{ url('/settings/profile/') }}">Profile</a></li>
-    <li class="active">Edit Profile</li>
+    <li><a href="{{ url('/settings/profile/') }}">Profil</a></li>
+    <li class="active">Edit Profil</li>
 @endsection
 
 @section('content')
     <div class="row">
         <div class="col-md-6">
             <div class="box box-primary">
-                <div class="box-header with-border">
+                <div class="box-header">
                     <h3 class="box-title">Edit Profil</h3>
                 </div>
                 <!-- /.box-header -->
@@ -48,7 +48,7 @@
                 <div class="box-footer">
                     {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}
 
-                    {!! Form::submit('Batal', ['class' => 'btn btn-batal']) !!}
+                    <button type="button" class = "btn btn-batal" onclick="window.location='{{ route('settings.profile') }}'">Batal</button>
                 </div>
                 <!-- /.box-footer -->
                 {!! Form::close() !!}

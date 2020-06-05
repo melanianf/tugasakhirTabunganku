@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('dashboard')
-   MUTASI
-   <small>Daftar Transaksi</small>
+   LAPORAN
+   <small>Laporan per periode</small>
 @endsection
 
 @section('breadcrumb')
@@ -15,7 +15,7 @@
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h2 class="box-title">Mutasi</h2>
+                    <h2 class="box-title">Laporan per periode</h2>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">

@@ -1,10 +1,4 @@
 <div class="box-body">
-    <div class="form-group has-feedback{{ $errors->has('nama') ? ' has-error' : '' }}">
-        {!! Form::label('nama', 'Nama Tabungan') !!}
-
-        {!! Form::text('nama', null, ['class' => 'form-control', 'placeholder' => 'Nama Tabungan']) !!}
-        {!! $errors->first('nama', '<p class="help-block">:message</p>') !!}
-    </div>
     <div class="form-group has-feedback{{ $errors->has('deskripsi') ? ' has-error' : '' }}">
         {!! Form::label('deskripsi', 'Deskripsi') !!}
 
@@ -29,5 +23,5 @@
 <div class="box-footer">
     {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}
 
-    {!! Form::submit('Batal', ['class' => 'btn btn-batal']) !!}
+    <button type="button" class = "btn btn-batal" onclick="window.location='{{ route('jenistabungan.index') }}'">Batal</button>
 </div>

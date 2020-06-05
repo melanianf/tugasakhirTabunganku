@@ -41,11 +41,11 @@ class SetorTunaiController extends Controller
         //Ex : T1REG123
         //Tarik = T + Count() Transaksi where request->nis + 3 char pertama kapital jenis tabungan + NIS
 
+        //Cek apakah saldo yang akan diambil mencukupi
 		//Cek apakah siswa terdaftar
-		$cek_siswa = siswa::where('nis', $request->nis)->where('aktif', 1)->first();
-		$cek_tabungan = DB::table('jenis_tabungan')->where('nama', $request->jenis_tabungan)->first();
+		$cek_siswa = siswa::where('nis', $request->nis)->where('nis', $request->nis)->first();
         $tabsiswa = Tabungan::where('nis', $request->nis)->where('jenis_tabungan', $request->jenis_tabungan)->first();
-        if ($cek_siswa!=null and $tabsiswa!=null and $cek_tabungan!=null ){
+        if ($cek_siswa!=null && $tabsiswa!=null){
             //Menambahkan Saldo pada Tabungan
             $updated = Tabungan::where('nis', $request->nis)->where('jenis_tabungan', $request->jenis_tabungan)->update([
                 'saldo' => $tabsiswa->saldo + $request->nominal,
@@ -66,10 +66,10 @@ class SetorTunaiController extends Controller
             Session::flash("flash_notification", [
                 "level" => "success",
                 "icon" => "fa fa-check",
-                "message" => "Transaksi dengan nominal ".$request->nominal." Berhasil!"
+                "message" => "Transaksi Berhasil!"
             ]);
         }
-		else if ($cek_siswa!=null and $tabsiswa==null and $cek_tabungan!=null){
+		else if ($cek_siswa!=null && $tabsiswa==null){
 			//Membuat + Menambahkan Saldo pada Tabungan
 			$created = Tabungan::create([
 				'nis' => $request->nis,
@@ -93,14 +93,14 @@ class SetorTunaiController extends Controller
             Session::flash("flash_notification", [
                 "level" => "success",
                 "icon" => "fa fa-check",
-                "message" => "Transaksi dengan nominal ".$request->nominal." Berhasil!"
+                "message" => "Transaksi Berhasil!"
             ]);
 		}
 		else{
             Session::flash("flash_notification", [
-                "level" => "error",
-                "icon" => "fa fa-ban",
-                "message" => "Transaksi Gagal! Siswa/Jenis Tabungan Tidak Terdaftar!"
+                "level" => "success",
+                "icon" => "fa fa-check",
+                "message" => "Transaksi Gagal! Siswa Tidak Terdaftar!"
             ]);
         }
         return redirect()->route('mutasi.index');
