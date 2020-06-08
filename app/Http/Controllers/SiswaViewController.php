@@ -49,7 +49,7 @@ class SiswaViewController extends Controller
             ->addColumn(['data' => 'telp_ortu', 'name' => 'telp_ortu', 'title' => 'Telp Ortu'])
             ->addColumn(['data' => 'email', 'name' => 'email', 'title' => 'Email'])
             ->addColumn(['data' => 'nama_pengguna', 'name' => 'nama_pengguna', 'title' => 'Nama Pengguna'])
-            ->addColumn(['data' => 'katasandi', 'name' => 'katasandi', 'title' => 'Kata Sandi'])
+            //->addColumn(['data' => 'katasandi', 'name' => 'katasandi', 'title' => 'Kata Sandi'])
             ->addColumn(['data' => 'aktif', 'name' => 'aktif', 'title' => 'Aktif']);
             //->addColumn(['data' => 'action', 'name' => 'action', 'title' => 'Action', 'orderable' => false, 'searchable' => false]);
 

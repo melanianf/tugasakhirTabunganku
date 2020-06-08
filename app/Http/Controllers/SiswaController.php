@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\siswa;
 use App\Kelas;
+use App\KelasModel;
 use App\Book;
 use App\Author;
 use App\BorrowLog;
@@ -97,13 +98,14 @@ class SiswaController extends Controller
 
     public function update(Request $request, $id)
     {
+		$tahun = date("Y");
 		$this->validate($request, [
-            'nis' => 'required|numeric|min:10' ,
+            'nis' => 'required|numeric|min:10|unique:siswa,nis,'.$id ,
             'nama_lengkap' => 'required|regex:/^[\pL\s\-]+$/u',
             'avatar' => 'nullable',
-			'kelas' => 'required|alpha_dash' ,
-			'angkatan' => 'required|numeric' ,
-			'email' => 'required|email',
+			'kelas' => 'required|alpha_dash|exists:kelas,kelas' ,
+			'angkatan' => 'required|numeric|max:'.(int)$tahun ,
+			'email' => 'required|email|unique:siswa,email,'.$id,
 			'nama_pengguna' => 'required|alpha_dash' ,
 			'katasandi' => 'required',
 			'telp_ortu' => 'required|numeric',
@@ -112,21 +114,22 @@ class SiswaController extends Controller
 			'nis.required' => 'Anda belum memasukan nomor induk siswa!',
 			'nis.numeric' => 'nis hanya dapat terdiri dari angka!',
             'nis.min' => 'nis tidak valid!',
-			//'nis.unique' => 'nis sudah terdaftar!',
+			'nis.unique' => 'nis sudah terdaftar!',
 			'nama_lengkap.required' => 'Anda belum memasukan nama siswa!',
 			'nama_lengkap.regex' => 'nama hanya dapat terdiri dari alfabet dan spasi!',            
 			'kelas.required' => 'Anda belum memasukan kelas siswa!',
-			'kelas.alpha_dash' => 'Kelas hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Reguler_12',
-			//'kelas.exist' => 'Kelas belum terdaftar!',
+			'kelas.alpha_dash' => 'Kelas hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : VII-A',
+			'kelas.exist' => 'Kelas belum terdaftar!',
 			'angkatan.required' => 'Anda belum memasukan angkatan siswa!',
 			'angkatan.numeric' => 'Angkatan hanya dapat terdiri dari angka!',
+			'angkatan.max' => 'Angkatan melebihi tahun sekarang-_-!',
 			'telp_ortu.required' => 'Anda belum memasukan nomor telefon walimurid!',
 			'telp_ortu.numeric' => 'Nomor telefon hanya dapat terdiri dari angka!',
 			'email.required' => 'Anda belum memasukan email siswa!',
 			'email.email' => 'Email tidak valid!',
-			//'email.unique' => 'Email sudah terdaftar pada sistem!',
+			'email.unique' => 'Email sudah terdaftar pada sistem!',
 			'nama_pengguna.required' => 'Anda belum memasukan nama_pengguna siswa!',
-			'nama_pengguna.alpha_dash' => 'Nama pengguna hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Reguler_12',
+			'nama_pengguna.alpha_dash' => 'Nama pengguna hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Tina_12',
 			'katasandi.required' => 'Anda belum memasukan nama_pengguna siswa!',
 			'ttl.required' => 'Anda belum memasukan nama_pengguna siswa!',
 			'ttl.date_format' => 'Format tanggal salah! Format: Tahun-Bulan-Hari',
@@ -197,12 +200,13 @@ class SiswaController extends Controller
 
     public function store(Request $request)
     {
+		$tahun = date("Y");
 		$this->validate($request, [
             'nis' => 'required|numeric|min:10|unique:siswa,nis' ,
             'nama_lengkap' => 'required|regex:/^[\pL\s\-]+$/u',
             'avatar' => 'nullable',
-			'kelas' => 'required|alpha_dash' ,
-			'angkatan' => 'required|numeric' ,
+			'kelas' => 'required|alpha_dash|exists:kelas,kelas' ,
+			'angkatan' => 'required|numeric|max:'.(int)$tahun ,
 			'email' => 'required|email|unique:siswa,email',
 			'nama_pengguna' => 'required|alpha_dash' ,
 			'katasandi' => 'required',
@@ -216,17 +220,18 @@ class SiswaController extends Controller
 			'nama_lengkap.required' => 'Anda belum memasukan nama siswa!',
 			'nama_lengkap.regex' => 'nama hanya dapat terdiri dari alfabet dan spasi!',            
 			'kelas.required' => 'Anda belum memasukan kelas siswa!',
-			'kelas.alpha_dash' => 'Kelas hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Reguler_12',
-			//'kelas.exist' => 'Kelas belum terdaftar!',
+			'kelas.alpha_dash' => 'Kelas hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : VII-A',
+			'kelas.exists' => 'Kelas belum terdaftar!',
 			'angkatan.required' => 'Anda belum memasukan angkatan siswa!',
 			'angkatan.numeric' => 'Angkatan hanya dapat terdiri dari angka!',
+			'angkatan.max' => 'Angkatan melebihi tahun sekarang-_-!',
 			'telp_ortu.required' => 'Anda belum memasukan nomor telefon walimurid!',
 			'telp_ortu.numeric' => 'Nomor telefon hanya dapat terdiri dari angka!',
 			'email.required' => 'Anda belum memasukan email siswa!',
 			'email.email' => 'Email tidak valid!',
 			'email.unique' => 'Email sudah terdaftar pada sistem!',
 			'nama_pengguna.required' => 'Anda belum memasukan nama_pengguna siswa!',
-			'nama_pengguna.alpha_dash' => 'Nama pengguna hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Reguler_12',
+			'nama_pengguna.alpha_dash' => 'Nama pengguna hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Tina_12',
 			'katasandi.required' => 'Anda belum memasukan nama_pengguna siswa!',
 			'ttl.required' => 'Anda belum memasukan nama_pengguna siswa!',
 			'ttl.date_format' => 'Format tanggal salah! Format: Tahun-Bulan-Hari',

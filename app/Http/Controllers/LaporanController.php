@@ -22,7 +22,7 @@ class LaporanController extends Controller
 		$tabsis = $request->jenistab; 
 		
 		//$data = DB::table('transaksi')->whereBetween(DB::raw('DATE(created_at)'), array($from_date, $to_date))->get();
-		$data = DB::table('transaksi')->get();
+		$data = DB::table('transaksi')->where('jenis_tabungan','reguler')->get();
         if ($request->ajax()) {
             //$data = DB::table('transaksi')->whereBetween(DB::raw('DATE(created_at)'), array($from_date, $to_date))->get();
 			//$data = DB::table('transaksi')->where('jenis_tabungan',$request->jenistab)->get();

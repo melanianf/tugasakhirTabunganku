@@ -15,7 +15,7 @@ class myAPIController extends Controller
     {
 		$email = $request->email;
 		$password = $request->password;
-        $datasiswa = siswa::where('email', $email)->where('katasandi', $password)->first();
+        $datasiswa = siswa::where('email', $email)->where('katasandi', $password)->where('aktif', 1)->first();
         if ($datasiswa!=null) {
             $tokensiswa = new siswa; //Instansiasi Objek biar bisa panggil static function
 			$datasiswa->token = $tokensiswa->GenerateToken();

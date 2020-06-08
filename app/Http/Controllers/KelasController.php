@@ -78,9 +78,8 @@ class KelasController extends Controller
     {
 		// Validasi
         $this->validate($request, [
-            'kelas' => 'required|alpha_dash|unique:Kelas,kelas' ,
-            //'wali_kelas' => 'required|regex:/^[\pL\s\-]+$/u|unique:Kelas,wali_kelas|exists:Walikelas,nama_lengkap' ,
-			'wali_kelas' => 'required|regex:/^[\pL\s\-]+$/u|unique:Kelas,wali_kelas' ,
+            'kelas' => 'required|alpha_dash|unique:Kelas,kelas,'.$id ,
+			'wali_kelas' => 'required|regex:/^[\pL\s\-]+$/u|unique:Kelas,wali_kelas,'.$id ,
         ], [
 			'kelas.required' => 'Anda belum memasukan nama kelas!',
 			'kelas.alpha_dash' => 'Kelas hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : XII-A',
@@ -88,7 +87,6 @@ class KelasController extends Controller
             'wali_kelas.required' => 'Anda belum memasukan nama walikelas!',
 			'wali_kelas.regex' => 'Nama walikelas hanya dapat terdiri dari alfabet dan spasi!',
 			'wali_kelas.unique' => 'Walikelas sudah di tambahkan!',
-			//'wali_kelas.exists' => 'Walikelas belum terdaftar!',
         ]);
 		
         $data = DB::table('kelas')->where('id',$id)->first();
@@ -110,7 +108,7 @@ class KelasController extends Controller
     {
 		$this->validate($request, [
             'kelas' => 'required|alpha_dash|unique:Kelas,kelas' ,
-            'wali_kelas' => 'required|regex:/^[\pL\s\-]+$/u|unique:Kelas,wali_kelas|exists:App\Walikelas,nama_lengkap' ,
+			'wali_kelas' => 'required|regex:/^[\pL\s\-]+$/u|unique:Kelas,wali_kelas',
         ], [
 			'kelas.required' => 'Anda belum memasukan nama kelas!',
 			'kelas.alpha_dash' => 'Kelas hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : XII-A',
@@ -118,7 +116,6 @@ class KelasController extends Controller
             'wali_kelas.required' => 'Anda belum memasukan nama walikelas!',
 			'wali_kelas.regex' => 'Nama walikelas hanya dapat terdiri dari alfabet dan spasi!',
 			'wali_kelas.unique' => 'Walikelas sudah di tambahkan!',
-			'wali_kelas.exists' => 'Walikelas belum terdaftar!',
         ]);
 		
         $created = Kelas::create([

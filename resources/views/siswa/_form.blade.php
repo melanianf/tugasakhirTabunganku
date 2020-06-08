@@ -11,10 +11,13 @@
         {!! Form::text('nama_lengkap', null, ['class' => 'form-control', 'placeholder' => 'Nama Lengkap']) !!}
         {!! $errors->first('nama_lengkap', '<p class="help-block">:message</p>') !!}
     </div>
-    <div class="form-group has-feedback{{ $errors->has('kelas') ? ' has-error' : '' }}">
+    <div class="form-group has-feedback{!! $errors->has('kelas') ? 'has-error' : '' !!}">
         {!! Form::label('kelas', 'Kelas') !!}
 
-        {!! Form::text('kelas', null, ['class' => 'form-control', 'placeholder' => 'Kelas']) !!}
+        {!! Form::select('kelas', App\Kelas::pluck('kelas', 'kelas')->all(), null, [
+            'class' => 'form-control js-select2',
+			'placeholder' => 'Pilih Kelas'
+        ]) !!}
         {!! $errors->first('kelas', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group has-feedback{{ $errors->has('angkatan') ? ' has-error' : '' }}">
