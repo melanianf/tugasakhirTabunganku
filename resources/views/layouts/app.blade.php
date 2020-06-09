@@ -280,8 +280,8 @@
                                 </a>
                             </li>
 
-                            <li class="treeview {!! Request::is('walikelas/jenistabungan_view') ? 'active' : '' !!}">
-                                <a href="{{ route('jenistabungan_view.index') }}">
+                            <li class="treeview {!! Request::is('walikelas/jenistabungan') ? 'active' : '' !!}">
+                                <a href="{{ route('jenistabungansiswa.index') }}">
                                     <i class="fa fa-book"></i>
                                     <span>Jenis Tabungan</span>
                                 </a>

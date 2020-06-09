@@ -2,7 +2,7 @@
 	<div class="form-group has-feedback{{ $errors->has('nama') ? ' has-error' : '' }}">
         {!! Form::label('nama', 'Nama Tabungan') !!}
 
-        {!! Form::text('nama', null, ['class' => 'form-control', 'placeholder' => 'Nama Tabungan']) !!}
+        {!! Form::text('nama', null, ['class' => 'form-control', 'placeholder' => 'Nama Tabungan','readonly']) !!}
         {!! $errors->first('nama', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group has-feedback{{ $errors->has('deskripsi') ? ' has-error' : '' }}">

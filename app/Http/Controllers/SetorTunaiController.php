@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Tabungan;
 use App\Transaksi;
 use App\siswa;
@@ -100,7 +101,7 @@ class SetorTunaiController extends Controller
             Session::flash("flash_notification", [
                 "level" => "error",
                 "icon" => "fa fa-ban",
-                "message" => "Transaksi Gagal! Siswa/Jenis Tabungan Tidak Terdaftar!"
+                "message" => "Transaksi Gagal! Siswa/Jenis Tabungan Tidak Terdaftar/Tidak Aktif!"
             ]);
         }
         return redirect()->route('mutasi.index');

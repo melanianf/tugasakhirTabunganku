@@ -20,7 +20,7 @@ Jenis Tabungan
                 </div>
                 <!-- /.box-header -->
                 {!! Form::model($data, ['url' => route('jenistabungan.update', $data->id), 'method' => 'put']) !!}
-                    @include('jenistabungan._editform')
+                    @include('jenistabungan._form')
                 {!! Form::close() !!}
             </div>
             <!-- /.box -->

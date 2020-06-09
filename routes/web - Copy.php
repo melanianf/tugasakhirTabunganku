@@ -98,7 +98,7 @@ Route::group(['midlleware' => 'web'], function() {
     //
 
     // Profile
-    Route::get('settings/profile', 'SettingsController@profile');
+    Route::get('settings/profile', 'SettingsController@profile')->name('settings.profile');
 
     // Edit Profile
     Route::get('settings/profile/edit', 'SettingsController@editProfile');
@@ -198,6 +198,16 @@ Route::group(['midlleware' => 'web'], function() {
         ]);
         
         Route::post('/walikelas/update/{id}', 'WalikelasController@upload');
+		
+		//Cek Status Aktif Siswa
+		Route::get('status', [
+            'as' => 'siswa.konfirmasi',
+            'uses' => 'SiswaController@konfirmasi'
+        ]);
+		Route::post('status/perbaruistatus', [
+            'as' => 'siswa.perbarui',
+            'uses' => 'SiswaController@perbaruistatus'
+        ]);
     });
 
     // Walikelas
