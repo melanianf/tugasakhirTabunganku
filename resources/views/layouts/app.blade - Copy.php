@@ -25,8 +25,7 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
         folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ asset('/admin-lte/dist/css/skins/_all-skins.min.css') }}">
-	<!-- Date Picker -->
-	<link rel="stylesheet" href="{{ asset('/datepicker/dist/css/bootstrap-datepicker.min.css') }}">
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -436,17 +435,6 @@
 <script src="{{ asset('/admin-lte/plugins/select2/select2.full.min.js') }}"></script>
 <!-- Custom JS -->
 <script src="{{ asset('/js/custom.js') }}"></script>
-<!-- Date Picker -->
-<script src="{{ asset('/datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
-<script type="text/javascript">
-		$(function(){
-			$('#ttl').datepicker({
-				format: 'yyyy-mm-dd',
-				autoclose: true,
-				todayHighlight: true,
-		    });
-		});
-</script>
 
 @yield('scripts')
 

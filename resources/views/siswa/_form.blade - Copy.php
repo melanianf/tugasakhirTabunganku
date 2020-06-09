@@ -1,6 +1,5 @@
 <div class="box-body">
-	<link rel="stylesheet" href="{{ asset('/datepicker/dist/css/bootstrap-datepicker.min.css') }}">
-	<div class="form-group has-feedback{{ $errors->has('nis') ? ' has-error' : '' }}">
+    <div class="form-group has-feedback{{ $errors->has('nis') ? ' has-error' : '' }}">
         {!! Form::label('nis', 'NIS') !!}
 
         {!! Form::text('nis', null, ['class' => 'form-control', 'placeholder' => 'NIS']) !!}
@@ -29,12 +28,8 @@
     </div>
     <div class="form-group has-feedback{{ $errors->has('ttl') ? ' has-error' : '' }}">
         {!! Form::label('ttl', 'TTL') !!}
-        <div class='input-group date' id='ttl'>
-            {!! Form::text('ttl', null, ['class' => 'form-control', 'placeholder' => 'TTL']) !!}
-			<span class="input-group-addon">
-				<span class="glyphicon glyphicon-calendar"></span>
-			</span>
-        </div>
+
+        {!! Form::text('ttl', null, ['class' => 'form-control', 'placeholder' => 'TTL']) !!}
         {!! $errors->first('ttl', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group has-feedback{{ $errors->has('telp_ortu') ? ' has-error' : '' }}">
@@ -77,7 +72,6 @@
             </div>
         </div>
     </div>
-	
 
     <!-- <div class="form-group has-feedback{{ $errors->has('aktif') ? ' has-error' : '' }}">
         {!! Form::label('aktif', 'Aktif') !!}

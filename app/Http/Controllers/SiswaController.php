@@ -130,8 +130,8 @@ class SiswaController extends Controller
 			'email.unique' => 'Email sudah terdaftar pada sistem!',
 			'nama_pengguna.required' => 'Anda belum memasukan nama_pengguna siswa!',
 			'nama_pengguna.alpha_dash' => 'Nama pengguna hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Tina_12',
-			'katasandi.required' => 'Anda belum memasukan nama_pengguna siswa!',
-			'ttl.required' => 'Anda belum memasukan nama_pengguna siswa!',
+			'katasandi.required' => 'Anda belum memasukan katasandi!',
+			'ttl.required' => 'Anda belum memasukan TTL!',
 			'ttl.date_format' => 'Format tanggal salah! Format: Tahun-Bulan-Hari',
         ]);
 		
@@ -232,8 +232,8 @@ class SiswaController extends Controller
 			'email.unique' => 'Email sudah terdaftar pada sistem!',
 			'nama_pengguna.required' => 'Anda belum memasukan nama_pengguna siswa!',
 			'nama_pengguna.alpha_dash' => 'Nama pengguna hanya dapat terdiri dari alfabet, angka, _ , dan - . contoh : Tina_12',
-			'katasandi.required' => 'Anda belum memasukan nama_pengguna siswa!',
-			'ttl.required' => 'Anda belum memasukan nama_pengguna siswa!',
+			'katasandi.required' => 'Anda belum memasukan katasandi!',
+			'ttl.required' => 'Anda belum memasukan TTL!',
 			'ttl.date_format' => 'Format tanggal salah! Format: Tahun-Bulan-Hari',
         ]);
 		
