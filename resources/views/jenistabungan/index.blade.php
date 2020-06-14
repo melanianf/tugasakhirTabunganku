@@ -19,10 +19,12 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
+					@role('admin')
                     <p>
                         <a class="btn btn-success" href="{{ url('/admin/jenistabungan/create') }}">Tambah</a>
                         <!-- <a class="btn btn-warning" href="{{ url('/admin/export/books') }}">Export</a> -->
                     </p>
+					@endrole
                     {!! $html->table(['class' => 'table table-bordered table-striped']) !!}
                 </div>
                 <!-- /.box-body -->

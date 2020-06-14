@@ -73,19 +73,28 @@ class WalikelasController extends Controller
     public function destroy(Request $request, $id)
     {
         $walikelas = DB::table('wali_kelas')->where('id',$id)->first();
-        $data = DB::table('wali_kelas')->where('id',$id)->delete();
 		$nama_walikelas = $walikelas->nama_lengkap;
-        $data = DB::table('users')->where('name',$walikelas->nama_lengkap)->delete();
+		$kelas_guru = DB::table('kelas')->where('wali_kelas',$nama_walikelas)->first();
+		
+		if($kelas_guru == null){
+			$data = DB::table('wali_kelas')->where('id',$id)->delete();
+			$data = DB::table('users')->where('name',$walikelas->nama_lengkap)->delete();
+			// Handle hapus buku via ajax
+			if ($request->ajax()) return response()->json(['id' => $id]);
 
-        // Handle hapus buku via ajax
-        if ($request->ajax()) return response()->json(['id' => $id]);
-
-        Session::flash("flash_notification", [
-            "level" => "success",
-            "icon" => "fa fa-check",
-            "message" => "Data ".$nama_walikelas." berhasil dihapus!"
-        ]);
-
+			Session::flash("flash_notification", [
+				"level" => "success",
+				"icon" => "fa fa-check",
+				"message" => "Data ".$nama_walikelas." berhasil dihapus!"
+			]);
+		}
+		else if ($kelas_guru != null){
+			Session::flash("flash_notification", [
+				"level" => "warning",
+				"icon" => "fa fa-check",
+				"message" => "Gagal! Data ".$nama_walikelas." masih terdapat pada tabel Kelas!",
+			]);
+		}
         return redirect()->route('walikelas.index');
     }
 
@@ -98,7 +107,7 @@ class WalikelasController extends Controller
     public function update(Request $request, $id)
     {
 		$this->validate($request, [
-	'nip' => 'required|numeric|min:18|unique:wali_kelas,nip,'.$id,
+			'nip' => 'required|numeric|min:18|unique:wali_kelas,nip,'.$id,
             'nama_lengkap' => 'required|regex:/^[\pL\s\-]+$/u',
             'avatar' => 'nullable',
 			'alamat' => 'required',

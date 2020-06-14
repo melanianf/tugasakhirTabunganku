@@ -227,7 +227,7 @@
 							<li class="treeview {!! Request::is('admin/status') ? 'active' : '' !!}">
                                 <a href="{{ route('siswa.konfirmasi') }}">
                                     <i class="fa fa-id-card" aria-hidden="true"></i>
-                                    <span>Manual Status</span>
+                                    <span>Konfirmasi Status</span>
                                 </a>
                             </li>
                             <!-- <li class="treeview {!! Request::is('admin/authors*') ? 'active' : '' !!}">

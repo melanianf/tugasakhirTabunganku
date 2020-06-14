@@ -54,17 +54,25 @@ class KelasController extends Controller
     {
 		$data_kelas = DB::table('kelas')->where('id',$id)->first();
 		$nama_kelas = $data_kelas->kelas;
-        $data = DB::table('kelas')->where('id',$id)->delete();
-
-        // Handle hapus buku via ajax
-        if ($request->ajax()) return response()->json(['id' => $id]);
-
-        Session::flash("flash_notification", [
-            "level" => "success",
-            "icon" => "fa fa-check",
-            "message" => "Data ".$nama_kelas." berhasil dihapus"
-        ]);
-
+		//cek masih ada di tabel siswa?
+		$data_siswa = DB::table('siswa')->where('kelas',$nama_kelas)->first();
+		if($data_siswa == null){	
+			$data = DB::table('kelas')->where('id',$id)->delete();
+			// Handle hapus buku via ajax
+			if ($request->ajax()) return response()->json(['id' => $id]);
+			Session::flash("flash_notification", [
+				"level" => "success",
+				"icon" => "fa fa-check",
+				"message" => "Data ".$nama_kelas." berhasil dihapus"
+			]);
+		}
+		else if ($data_siswa != null){
+			Session::flash("flash_notification", [
+				"level" => "warning",
+				"icon" => "fa fa-check",
+				"message" => "Gagal! Data ".$nama_kelas." masih terdapat pada tabel Siswa!",
+			]);
+		}
         return redirect()->route('kelas.index');
     }
 

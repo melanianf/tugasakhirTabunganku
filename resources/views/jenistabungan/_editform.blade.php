@@ -1,23 +1,27 @@
 <div class="box-body">
 	<div class="form-group has-feedback{{ $errors->has('nama') ? ' has-error' : '' }}">
-        {!! Form::label('nama', 'Nama Tabungan') !!}
+        {!! Form::label('nama', 'Nama Tabungan*') !!}
 
         {!! Form::text('nama', null, ['class' => 'form-control', 'placeholder' => 'Nama Tabungan','readonly']) !!}
         {!! $errors->first('nama', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group has-feedback{{ $errors->has('deskripsi') ? ' has-error' : '' }}">
-        {!! Form::label('deskripsi', 'Deskripsi') !!}
+        {!! Form::label('deskripsi', 'Deskripsi*') !!}
 
         {!! Form::text('deskripsi', null, ['class' => 'form-control', 'placeholder' => 'Deskripsi']) !!}
         {!! $errors->first('deksripsi', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group row">
         <div class="col-sm-1"><b>Aktif</b></div>
-            <div class="col-sm-10">
-                <input type="checkbox" name="aktif" value=1>
-            </div>
+        <div class="col-sm-10">
+            <input type="checkbox" name="aktif" value=1>
         </div>
     </div>
+
+	<div class="form-group row">
+        <div class="col-sm-1">(*) Wajib diisi</div>
+    </div>
+</div>
     <!-- <div class="form-group has-feedback{{ $errors->has('aktif') ? ' has-error' : '' }}">
         {!! Form::label('aktif', 'Aktif') !!}
 

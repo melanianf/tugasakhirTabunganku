@@ -87,21 +87,33 @@ class TabunganController extends Controller
 
     public function exportPost(Request $request)
     {
-        $dataTabungan = Tabungan::whereIn('nis', $request->get('id_siswa'))->get();
-        //Data Enrichment
-        // $siswa = DB::table('siswa')->where('nis', $dataTabungan->nis)->get();
-        // $kelas = DB::table('kelas')->where('kelas', $siswa->kelas)->get();
-        // $dataTabungan->nama_siswa = $siswa->nama_lengkap;
-        // $dataTabungan->kelas = $siswa->kelas;
-        // $dataTabungan->walikelas = $kelas->wali_kelas;
-        foreach($dataTabungan as $data){
-            $siswa = siswa::where('nis', $data->nis)->first();
-            $kelas = DB::table('kelas')->where('kelas', $siswa->kelas)->first();
-            $data->nama_siswa = $siswa->nama_lengkap;
-            $data->kelas = $siswa->kelas;
-            $data->walikelas = $kelas->wali_kelas;
-        }
-        $handler = 'export' . ucfirst($request->get('type'));
+		$data_nis = $request->get('id_siswa');
+		//$data_kelas = $request->get('kelas');
+		if ($data_nis!=null){
+			$dataTabungan = Tabungan::whereIn('nis', $request->get('id_siswa'))->get();
+			//Data Enrichment
+			foreach($dataTabungan as $data){
+				$siswa = siswa::where('nis', $data->nis)->first();
+				$kelas = DB::table('kelas')->where('kelas', $siswa->kelas)->first();
+				$data->nama_siswa = $siswa->nama_lengkap;
+				$data->kelas = $siswa->kelas;
+				$data->walikelas = $kelas->wali_kelas;
+			}
+			$handler = 'export' . ucfirst('xls');
+		}
+		//else if ($data_nis==null and $data_kelas!=null){
+		else{
+			$dataTabungan = Tabungan::all();
+			//Data Enrichment
+			foreach($dataTabungan as $data){
+				$siswa = siswa::where('nis', $data->nis)->first();
+				$kelas = DB::table('kelas')->where('kelas', $siswa->kelas)->first();
+				$data->nama_siswa = $siswa->nama_lengkap;
+				$data->kelas = $siswa->kelas;
+				$data->walikelas = $kelas->wali_kelas;
+			}
+			$handler = 'export' . ucfirst('xls');
+		}
 
         return $this->$handler($dataTabungan);
     }

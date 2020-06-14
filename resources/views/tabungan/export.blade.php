@@ -27,19 +27,12 @@
                             {!! Form::select('id_siswa[]', App\siswa::pluck('nama_lengkap', 'nis')->all(), null, [
                                 'class' => 'form-control js-select2',
                                 'multiple' => 'multiple',
-                                'placeholder' => 'Semua Siswa'
+                                
                             ]) !!}
                             {!! $errors->first('id_siswa', '<p class="help-block">:message</p>') !!}
                         </div>
-                        
-                        <div class="form-group has-feedback{!! $errors->has('author_id') ? 'has-error' : '' !!}">
-                            {!! Form::label('id_siswa', 'Kelas') !!}
-
-                            {!! Form::select('id_siswa[]', App\siswa::pluck('nama_lengkap', 'nis')->all(), null, [
-                                'class' => 'form-control js-select2',
-                                'multiple' => 'multiple',
-                            ]) !!}
-                            {!! $errors->first('id_siswa', '<p class="help-block">:message</p>') !!}
+                        <div class="form-group row">
+                            <div class="col-sm-10">*Kosongkan form untuk mengunduh semua data tabungan</div>
                         </div>
                         <!-- <div class="form-group has-feedback{!! $errors->has('type') ? 'has-error' : '' !!}">
                             {!! Form::label('type', 'Pilih Output') !!}
@@ -61,7 +54,8 @@
                     <!-- /.box-body -->
 
                     <div class="box-footer">
-                        {!! Form::submit('Download', ['class' => 'btn btn-primary']) !!}
+                        {!! Form::submit('Unduh', ['class' => 'btn btn-primary']) !!}
+                        <button type="button" class = "btn btn-batal" onclick="window.location='{{ route('tabungan.index') }}'">Batal</button>
                     </div>
                 {!! Form::close() !!}
             </div>

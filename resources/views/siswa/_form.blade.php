@@ -1,19 +1,19 @@
 <div class="box-body">
 	<link rel="stylesheet" href="{{ asset('/datepicker/dist/css/bootstrap-datepicker.min.css') }}">
 	<div class="form-group has-feedback{{ $errors->has('nis') ? ' has-error' : '' }}">
-        {!! Form::label('nis', 'NIS') !!}
+        {!! Form::label('nis', 'NIS*') !!}
 
         {!! Form::text('nis', null, ['class' => 'form-control', 'placeholder' => 'NIS']) !!}
         {!! $errors->first('nis', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group has-feedback{{ $errors->has('nama_lengkap') ? ' has-error' : '' }}">
-        {!! Form::label('nama_lengkap', 'Nama Lengkap') !!}
+        {!! Form::label('nama_lengkap', 'Nama Lengkap*') !!}
 
         {!! Form::text('nama_lengkap', null, ['class' => 'form-control', 'placeholder' => 'Nama Lengkap']) !!}
         {!! $errors->first('nama_lengkap', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group has-feedback{!! $errors->has('kelas') ? 'has-error' : '' !!}">
-        {!! Form::label('kelas', 'Kelas') !!}
+        {!! Form::label('kelas', 'Kelas*') !!}
 
         {!! Form::select('kelas', App\Kelas::pluck('kelas', 'kelas')->all(), null, [
             'class' => 'form-control js-select2',
@@ -22,15 +22,15 @@
         {!! $errors->first('kelas', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group has-feedback{{ $errors->has('angkatan') ? ' has-error' : '' }}">
-        {!! Form::label('angkatan', 'Angkatan') !!}
+        {!! Form::label('angkatan', 'Tahun Masuk*') !!}
 
-        {!! Form::text('angkatan', null, ['class' => 'form-control', 'placeholder' => 'Angkatan']) !!}
+        {!! Form::text('angkatan', null, ['class' => 'form-control', 'placeholder' => 'Tahun Masuk']) !!}
         {!! $errors->first('angkatan', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group has-feedback{{ $errors->has('ttl') ? ' has-error' : '' }}">
-        {!! Form::label('ttl', 'TTL') !!}
+        {!! Form::label('ttl', 'Tanggal Lahir*') !!}
         <div class='input-group date' id='ttl'>
-            {!! Form::text('ttl', null, ['class' => 'form-control', 'placeholder' => 'TTL']) !!}
+            {!! Form::text('ttl', null, ['class' => 'form-control', 'placeholder' => 'Tanggal Lahir']) !!}
 			<span class="input-group-addon">
 				<span class="glyphicon glyphicon-calendar"></span>
 			</span>
@@ -38,9 +38,9 @@
         {!! $errors->first('ttl', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group has-feedback{{ $errors->has('telp_ortu') ? ' has-error' : '' }}">
-        {!! Form::label('telp_ortu', 'Telp Ortu') !!}
+        {!! Form::label('telp_ortu', 'Telepon Orang Tua*') !!}
 
-        {!! Form::text('telp_ortu', null, ['class' => 'form-control', 'placeholder' => 'Telp Ortu']) !!}
+        {!! Form::text('telp_ortu', null, ['class' => 'form-control', 'placeholder' => 'Telepon Orang Tua']) !!}
         {!! $errors->first('telp_ortu', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group has-feedback{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -50,13 +50,13 @@
         {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group has-feedback{{ $errors->has('nama_pengguna') ? ' has-error' : '' }}">
-        {!! Form::label('nama_pengguna', 'Nama Pengguna') !!}
+        {!! Form::label('nama_pengguna', 'Nama Pengguna*') !!}
 
         {!! Form::text('nama_pengguna', null, ['class' => 'form-control', 'placeholder' => 'Nama Pengguna']) !!}
         {!! $errors->first('nama_pengguna', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group has-feedback{{ $errors->has('katasandi') ? ' has-error' : '' }}">
-        {!! Form::label('katasandi', 'Kata Sandi') !!}
+        {!! Form::label('katasandi', 'Kata Sandi*') !!}
 
         {!! Form::text('katasandi', null, ['class' => 'form-control', 'placeholder' => 'Kata Sandi']) !!}
         {!! $errors->first('katasandi', '<p class="help-block">:message</p>') !!}
@@ -72,12 +72,15 @@
     </div>
     <div class="form-group row">
         <div class="col-sm-1"><b>Aktif</b></div>
-            <div class="col-sm-10">
-                <input type="checkbox" name="aktif" value=1>
-            </div>
+        <div class="col-sm-10">
+            <input type="checkbox" name="aktif" value=1>
         </div>
     </div>
-	
+
+	<div class="form-group row">
+        <div class="col-sm-1">(*) Wajib diisi</div>
+    </div>
+</div>
 
     <!-- <div class="form-group has-feedback{{ $errors->has('aktif') ? ' has-error' : '' }}">
         {!! Form::label('aktif', 'Aktif') !!}

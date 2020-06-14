@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\siswa;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 
 class myAPIController extends Controller
@@ -14,22 +15,29 @@ class myAPIController extends Controller
 	public function siswaLogin(Request $request)
     {
 		$email = $request->email;
-		$password = $request->password;
-        $datasiswa = siswa::where('email', $email)->where('katasandi', $password)->where('aktif', 1)->first();
+        $datasiswa = siswa::where('email', $email)->where('aktif', 1)->first();
         if ($datasiswa!=null) {
-            $tokensiswa = new siswa; //Instansiasi Objek biar bisa panggil static function
-			$datasiswa->token = $tokensiswa->GenerateToken();
-			$datasiswa->save();
-			return response()->json([
-				'status' => 'success',
-				'data_siswa' => $datasiswa
-			]);
+			if (Hash::check($request->password, $datasiswa->katasandi)) {
+				$tokensiswa = new siswa; //Instansiasi Objek biar bisa panggil static function
+				$datasiswa->token = $tokensiswa->GenerateToken();
+				$datasiswa->save();
+				return response()->json([
+					'status' => 'success',
+					'data_siswa' => $datasiswa
+				]);
+			}
+			else{
+				return response()->json([
+				'status' => 'fail',
+				]);
+			}
         }
 		else{
 			return response()->json([
 			'status' => 'fail',
-		]);}
+			]);
 		}
+	}
 
 	//Logout pakai api melani, tp masih belum bisa
 	public function siswaLogout(Request $request)
@@ -170,10 +178,10 @@ class myAPIController extends Controller
 	
 	//Parameter 1) token 2) katasandilama 3) katasandibaru
 	public function editPassword(Request $request){
-		$datasiswa = siswa::where('token', $request->token)->where('katasandi', $request->katasandilama)->first();
+		$datasiswa = siswa::where('token', $request->token)->where('katasandi', bcrypt($request->katasandilama))->first();
 		if ($datasiswa!=null) {
 			$datasiswa = siswa::where('token', $request->token)->update([
-				'katasandi' => $request->katasandibaru
+				'katasandi' => bcrypt($request->katasandibaru)
 			]);
 			$res['message'] = "Password Berhasil Diubah!";
 			return response($res);

@@ -120,7 +120,7 @@ class SiswaController extends Controller
 			Session::flash("flash_notification", [
 				"level" => "warning",
 				"icon" => "fa fa-check",
-				"message" => "Gagal! Data Siswa ".$nama_siswa." masih terdapat pada tabel Tabungan!",
+				"message" => "Gagal! Data Siswa ".$nama_siswa." digunakan dalam tabel Tabungan!",
 			]);
 		}
         return redirect()->route('siswa.index');
@@ -138,11 +138,10 @@ class SiswaController extends Controller
 		$this->validate($request, [
             'nis' => 'required|numeric|min:10|unique:siswa,nis,'.$id ,
             'nama_lengkap' => 'required|regex:/^[\pL\s\-]+$/u',
-			'nama_lengkap' => 'required|regex:/^[\pL\s\-]+$/u',
             'avatar' => 'nullable',
 			'kelas' => 'required|alpha_dash|exists:kelas,kelas' ,
 			'angkatan' => 'required|numeric|max:'.(int)$tahun ,
-			'email' => 'email|unique:siswa,email,'.$id.'|nullable',
+			'email' => 'required|email|unique:siswa,email,'.$id,
 			'nama_pengguna' => 'required|alpha_dash' ,
 			'katasandi' => 'required',
 			'telp_ortu' => 'required|numeric',
@@ -162,7 +161,7 @@ class SiswaController extends Controller
 			'angkatan.max' => 'Angkatan melebihi tahun sekarang-_-!',
 			'telp_ortu.required' => 'Anda belum memasukan nomor telefon walimurid!',
 			'telp_ortu.numeric' => 'Nomor telefon hanya dapat terdiri dari angka!',
-			//'email.required' => 'Anda belum memasukan email siswa!',
+			'email.required' => 'Anda belum memasukan email siswa!',
 			'email.email' => 'Email tidak valid!',
 			'email.unique' => 'Email sudah terdaftar pada sistem!',
 			'nama_pengguna.required' => 'Anda belum memasukan nama_pengguna siswa!',
@@ -228,7 +227,7 @@ class SiswaController extends Controller
         Session::flash("flash_notification", [
             "level" => "success",
             "icon" => "fa fa-check",
-            "message" => "Siswa ".$request->nama_lengkap." berhasil diubah! "
+            "message" => "Siswa ".$request->nama_lengkap." berhasil diperbarui! "
         ]);
         
         return redirect()->route('siswa.index');
@@ -244,7 +243,7 @@ class SiswaController extends Controller
             'avatar' => 'nullable',
 			'kelas' => 'required|alpha_dash|exists:kelas,kelas' ,
 			'angkatan' => 'required|numeric|max:'.(int)$tahun ,
-			'email' => 'email|unique:siswa,email|nullable',
+			'email' => 'required|email|unique:siswa,email',
 			'nama_pengguna' => 'required|alpha_dash' ,
 			'katasandi' => 'required',
 			'telp_ortu' => 'required|numeric',
@@ -264,7 +263,7 @@ class SiswaController extends Controller
 			'angkatan.max' => 'Angkatan melebihi tahun sekarang-_-!',
 			'telp_ortu.required' => 'Anda belum memasukan nomor telefon walimurid!',
 			'telp_ortu.numeric' => 'Nomor telefon hanya dapat terdiri dari angka!',
-			//'email.required' => 'Anda belum memasukan email siswa!',
+			'email.required' => 'Anda belum memasukan email siswa!',
 			'email.email' => 'Email tidak valid!',
 			'email.unique' => 'Email sudah terdaftar pada sistem!',
 			'nama_pengguna.required' => 'Anda belum memasukan nama_pengguna siswa!',
